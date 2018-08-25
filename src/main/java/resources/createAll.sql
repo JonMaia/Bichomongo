@@ -9,6 +9,7 @@ CREATE TABLE bichomongo.especies (
 	peso INT UNSIGNED NULL,
 	altura varchar(100) NULL,
 	tipo varchar(100) NULL,
+	energia_inicial INT UNSIGNED NULL,
 	url_foto varchar(100) NULL,
 	cantidad_bichos INT NULL
 )
