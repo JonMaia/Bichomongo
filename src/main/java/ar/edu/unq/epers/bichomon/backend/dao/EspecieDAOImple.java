@@ -1,18 +1,12 @@
 package ar.edu.unq.epers.bichomon.backend.dao;
 
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import java.util.List;
 
-/**
- * Esta es una implementacion mock de {@link EspecieDAO}
- * 
- */
 public class EspecieDAOImple implements EspecieDAO {
 
 
@@ -46,8 +40,35 @@ public class EspecieDAOImple implements EspecieDAO {
 
 	@Override
 	public Especie recuperar(String nombreEspecie) {
-		return null;
+		return this.executeWithConnection(conn -> {
+			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto, energia_inicial,cantidad_bichos FROM especies WHERE nombre = ?");
+			ps.setString(1, nombreEspecie);
+
+			ResultSet resultSet = ps.executeQuery();
+
+			Especie especie = null;
+			while (resultSet.next()) {
+				//si especie no es null aca significa que el while dio mas de una vuelta, eso
+				//suele pasar cuando el resultado (resultset) tiene mas de un elemento.
+				if (especie != null) {
+					throw new RuntimeException("Existe mas de una especie con el nombre " + nombreEspecie);
+				}
+
+				especie = new Especie(resultSet.getInt("id"),resultSet.getString("nombre"), TipoBicho.valueOf(resultSet.getString("tipo")));
+				especie.setAltura(resultSet.getInt("altura"));
+				especie.setPeso(resultSet.getInt("peso"));
+				especie.setUrlFoto(resultSet.getString("url_foto"));
+				especie.setEnergiaIncial(resultSet.getInt("energia_inicial"));
+				especie.setCantidadBichos(resultSet.getInt("cantidad_bichos"));
+				especie.setUrlFoto(resultSet.getString("url_foto"));
+			}
+
+			ps.close();
+			return especie;
+		});
 	}
+
+
 
 	@Override
 	public List<Especie> recuperarTodos() {
