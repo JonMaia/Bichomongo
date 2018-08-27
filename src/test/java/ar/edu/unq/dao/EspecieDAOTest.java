@@ -1,16 +1,18 @@
-package ar.edu.unq.epers.bichomon
+package ar.edu.unq.dao;
 
-
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import ar.edu.unq.epers.bichomon.backend.model.Especie.*;
+import ar.edu.unq.epers.bichomon.backend.dao.*;
+import ar.edu.unq.epers.bichomon.backend.model.especie.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class EspecieDAOTest {
 
-	private EspecieDAO dao = new EspecieDaoImple();
+	private EspecieDAO dao = new EspecieDAOImple();
 	private Especie especie;
 
 	@Before
@@ -19,10 +21,10 @@ public class EspecieDAOTest {
 		this.especie.setNombre("Pablomon");
 		this.especie.setAltura(180);
 		this.especie.setPeso(100);
-	    this.especie.setTipoBicho(TipoBicho.AGUA);
-	    this.especie.setEnergiaInicial(100);
+	    this.especie.setTipo(TipoBicho.AGUA);
+	    this.especie.setEnergiaIncial(100);
 	    this.especie.setUrlFoto("images/pablomon.jpg");
-	    this.especie.setCantidadBichos(0);
+	    this.especie.setCantidadBichos(5);
 	}
 
 	@Test
@@ -34,7 +36,7 @@ public class EspecieDAOTest {
 		assertEquals(this.especie.getNombre(), pablomon.getNombre());
 		assertEquals(this.especie.getAltura(), pablomon.getAltura());
 		assertEquals(this.especie.getPeso(), pablomon.getPeso());
-		assertEquals(this.especie.getTipoBicho(), pablomon.getTipoBicho());
+		assertEquals(this.especie.getTipo(), pablomon.getTipo());
 		assertEquals(this.especie.getEnergiaInicial(), pablomon.getEnergiaInicial());
 		assertEquals(this.especie.getUrlFoto(), pablomon.getUrlFoto());
 		assertEquals(this.especie.getCantidadBichos(), pablomon.getCantidadBichos());

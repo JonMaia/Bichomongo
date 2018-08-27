@@ -3,7 +3,7 @@ CREATE SCHEMA bichomongo;
 
 USE bichomongo;
 
-CREATE TABLE bichomongo.especies (
+CREATE TABLE bichomongo.especie (
 	id serial,
 	nombre varchar(100) NULL,
 	peso INT UNSIGNED NULL,
@@ -14,7 +14,7 @@ CREATE TABLE bichomongo.especies (
 	cantidad_bichos INT NULL
 )
 
-CREATE TABLE bichomongo.bichos (
+CREATE TABLE bichomongo.bicho (
     id serial,
     nombre varchar(100),
     especie INT NULL

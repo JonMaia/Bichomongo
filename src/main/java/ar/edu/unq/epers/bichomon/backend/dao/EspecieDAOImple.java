@@ -13,14 +13,15 @@ public class EspecieDAOImple implements EspecieDAO {
 	@Override
 	public void guardar(Especie especie) {
 		this.executeWithConnection(conn -> {
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO bichomongo.especies (nombre,peso,altura,tipo,url_foto,cantidad_bichos)" +
-					"VALUES (?,?,?,?,?,?);");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO bichomongo.especie (nombre,peso,altura,tipo,energia_inicial,url_foto,cantidad_bichos)" +
+					"VALUES (?,?,?,?,?,?,?);");
 			ps.setString(1, especie.getNombre());
 			ps.setInt(2, especie.getPeso());
 			ps.setInt(3, especie.getAltura());
 			ps.setString(4, especie.getTipo().name());
-			ps.setString(5, especie.getUrlFoto());
-			ps.setInt(6, especie.getCantidadBichos());
+            ps.setInt(5, especie.getEnergiaInicial());
+            ps.setString(6, especie.getUrlFoto());
+			ps.setInt(7, especie.getCantidadBichos());
 			//ojo, no estamos guardando el inventario!
 			ps.execute();
 
@@ -41,7 +42,7 @@ public class EspecieDAOImple implements EspecieDAO {
 	@Override
 	public Especie recuperar(String nombreEspecie) {
 		return this.executeWithConnection(conn -> {
-			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto, energia_inicial,cantidad_bichos FROM especies WHERE nombre = ?");
+			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto,energia_inicial,cantidad_bichos FROM especie WHERE nombre = ?");
 			ps.setString(1, nombreEspecie);
 
 			ResultSet resultSet = ps.executeQuery();
@@ -97,7 +98,7 @@ public class EspecieDAOImple implements EspecieDAO {
 		private Connection openConnection() {
 			try {
 				//La url de conexion no deberia estar harcodeada aca
-				return DriverManager.getConnection("jdbc:mysql://localhost:3306/bichomongo?user=root&password=very_strong_pasword");
+				return DriverManager.getConnection("jdbc:mysql://localhost:3306/bichomongo?user=root&password=root&useSSL=false");
 			} catch (SQLException e) {
 				throw new RuntimeException("No se puede establecer una conexion", e);
 			}
