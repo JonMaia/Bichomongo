@@ -5,7 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 
 import java.sql.*;
 
-import java.util.List;
+import java.util.*;
 
 public class EspecieDAOImple implements EspecieDAO {
 
@@ -55,13 +55,7 @@ public class EspecieDAOImple implements EspecieDAO {
 					throw new RuntimeException("Existe mas de una especie con el nombre " + nombreEspecie);
 				}
 
-				especie = new Especie(resultSet.getInt("id"),resultSet.getString("nombre"), TipoBicho.valueOf(resultSet.getString("tipo")));
-				especie.setAltura(resultSet.getInt("altura"));
-				especie.setPeso(resultSet.getInt("peso"));
-				especie.setUrlFoto(resultSet.getString("url_foto"));
-				especie.setEnergiaIncial(resultSet.getInt("energia_inicial"));
-				especie.setCantidadBichos(resultSet.getInt("cantidad_bichos"));
-				especie.setUrlFoto(resultSet.getString("url_foto"));
+				especie = especieFromesultSet(resultSet);
 			}
 
 			ps.close();
@@ -73,9 +67,38 @@ public class EspecieDAOImple implements EspecieDAO {
 
 	@Override
 	public List<Especie> recuperarTodos() {
-		return null;
+		return this.executeWithConnection(conn -> {
+			List<Especie> especies = new ArrayList<Especie>();
+
+			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto,energia_inicial,cantidad_bichos FROM especie");
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				especies.add(especieFromesultSet(resultSet));
+			}
+			ps.close();
+
+			return especies;
+		});
+
 	}
 
+	/**
+	 * Recibe un ResultSet y devuelve una especie en base a los datos que recibe
+	 * @param resultSet
+	 * @return
+	 */
+	private Especie especieFromesultSet(ResultSet resultSet) throws SQLException {
+		Especie especie = new Especie(resultSet.getInt("id"),resultSet.getString("nombre"), TipoBicho.valueOf(resultSet.getString("tipo")));
+		especie.setAltura(resultSet.getInt("altura"));
+		especie.setPeso(resultSet.getInt("peso"));
+		especie.setUrlFoto(resultSet.getString("url_foto"));
+		especie.setEnergiaIncial(resultSet.getInt("energia_inicial"));
+		especie.setCantidadBichos(resultSet.getInt("cantidad_bichos"));
+		especie.setUrlFoto(resultSet.getString("url_foto"));
+
+		return especie;
+	}
 
 	/**
 	 * Ejecuta un bloque de codigo contra una conexion.
