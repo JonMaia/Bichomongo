@@ -61,7 +61,9 @@ public class JDBCEspecieDAOTest {
 
 		List<Especie> especies = new ArrayList<Especie>();
 
-		Especie red = new Especie(1, "Rojomon", TipoBicho.FUEGO);
+		Especie red = new Especie();
+		red.setNombre("Rojomon");
+		red.setTipo(TipoBicho.FUEGO);
 		red.setAltura(180);
 		red.setPeso(75);
 		red.setEnergiaIncial(100);
@@ -70,7 +72,9 @@ public class JDBCEspecieDAOTest {
 		this.dao.guardar(red);
 		especies.add(red);
 
-		Especie amarillo = new Especie(2, "Amarillomon", TipoBicho.ELECTRICIDAD);
+		Especie amarillo = new Especie();
+		amarillo.setNombre("Amarillomon");
+		amarillo.setTipo(TipoBicho.ELECTRICIDAD);
 		amarillo.setAltura(170);
 		amarillo.setPeso(69);
 		amarillo.setEnergiaIncial(300);
@@ -79,7 +83,9 @@ public class JDBCEspecieDAOTest {
 		this.dao.guardar(amarillo);
 		especies.add(amarillo);
 
-		Especie green = new Especie(3, "Verdemon", TipoBicho.PLANTA);
+		Especie green = new Especie();
+		green.setNombre("Verdemon");
+		green.setTipo(TipoBicho.PLANTA);
 		green.setAltura(150);
 		green.setPeso(55);
 		green.setEnergiaIncial(5000);
@@ -88,7 +94,9 @@ public class JDBCEspecieDAOTest {
 		this.dao.guardar(green);
 		especies.add(green);
 
-		Especie turronmon = new Especie(4, "Tierramon", TipoBicho.TIERRA);
+		Especie turronmon = new Especie();
+		turronmon.setNombre("Tierramon");
+		turronmon.setTipo(TipoBicho.TIERRA);
 		turronmon.setAltura(1050);
 		turronmon.setPeso(99);
 		turronmon.setEnergiaIncial(5000);
@@ -97,7 +105,9 @@ public class JDBCEspecieDAOTest {
 		this.dao.guardar(turronmon);
 		especies.add(turronmon);
 
-		Especie fantasmon = new Especie(5, "Fantasmon", TipoBicho.AIRE);
+		Especie fantasmon = new Especie();
+		fantasmon.setNombre("Fantasmon");
+		fantasmon.setTipo(TipoBicho.AIRE);
 		fantasmon.setAltura(1050);
 		fantasmon.setPeso(99);
 		fantasmon.setEnergiaIncial(5000);
@@ -106,7 +116,9 @@ public class JDBCEspecieDAOTest {
 		this.dao.guardar(fantasmon);
 		especies.add(fantasmon);
 
-		Especie vampiron = new Especie(6, "Vanpiron", TipoBicho.AIRE);
+		Especie vampiron = new Especie();
+		vampiron.setNombre("Vanpiron");
+		vampiron.setTipo(TipoBicho.AIRE);
 		vampiron.setAltura(1050);
 		vampiron.setPeso(99);
 		vampiron.setEnergiaIncial(5000);
@@ -115,7 +127,9 @@ public class JDBCEspecieDAOTest {
 		this.dao.guardar(vampiron);
 		especies.add(vampiron);
 
-		Especie fortmon = new Especie(7, "Fortmon", TipoBicho.CHOCOLATE);
+		Especie fortmon = new Especie();
+		fortmon.setNombre("Fortmon");
+		fortmon.setTipo(TipoBicho.CHOCOLATE);
 		fortmon.setAltura(1050);
 		fortmon.setPeso(99);
 		fortmon.setEnergiaIncial(5000);
@@ -124,7 +138,9 @@ public class JDBCEspecieDAOTest {
 		this.dao.guardar(fortmon);
 		especies.add(fortmon);
 
-		Especie dientemon = new Especie(8, "Dientemon", TipoBicho.AGUA);
+		Especie dientemon = new Especie();
+		dientemon.setNombre("Dientemon");
+		dientemon.setTipo(TipoBicho.AGUA);
 		dientemon.setAltura(1050);
 		dientemon.setPeso(99);
 		dientemon.setEnergiaIncial(5000);
