@@ -1,13 +1,14 @@
-package ar.edu.unq.epers.bichomon.backend.dao;
+package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
+import ar.edu.unq.epers.bichomon.backend.dao.ConnectionBlock;
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
-
 import java.sql.*;
 
 import java.util.*;
 
-public class EspecieDAOImple implements EspecieDAO {
+public class JDBCEspecieDAO implements EspecieDAO {
 
 
 	@Override
@@ -77,16 +78,12 @@ public class EspecieDAOImple implements EspecieDAO {
 				especies.add(especieFromesultSet(resultSet));
 			}
 			ps.close();
-
 			return especies;
 		});
-
 	}
 
 	/**
 	 * Recibe un ResultSet y devuelve una especie en base a los datos que recibe
-	 * @param resultSet
-	 * @return
 	 */
 	private Especie especieFromesultSet(ResultSet resultSet) throws SQLException {
 		Especie especie = new Especie(resultSet.getInt("id"),resultSet.getString("nombre"), TipoBicho.valueOf(resultSet.getString("tipo")));

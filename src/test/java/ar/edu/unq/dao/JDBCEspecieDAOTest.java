@@ -1,18 +1,17 @@
 package ar.edu.unq.dao;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import ar.edu.unq.epers.bichomon.backend.dao.*;
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
 
-public class EspecieDAOTest {
+public class JDBCEspecieDAOTest {
 
-	private EspecieDAO dao = new EspecieDAOImple();
+	private EspecieDAO dao = new JDBCEspecieDAO();
 	private Especie especie;
 
 	@Before
@@ -42,6 +41,11 @@ public class EspecieDAOTest {
 		assertEquals(this.especie.getCantidadBichos(), pablomon.getCantidadBichos());
 		//Pero no son el mismo objeto =(
 		assertTrue(this.especie != pablomon);
+	}
+
+	@Test
+	public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_objetos_similares(){
+
 	}
 
 }
