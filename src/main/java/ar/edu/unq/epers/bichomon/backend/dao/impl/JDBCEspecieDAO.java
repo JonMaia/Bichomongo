@@ -56,7 +56,7 @@ public class JDBCEspecieDAO implements EspecieDAO {
 					throw new RuntimeException("Existe mas de una especie con el nombre " + nombreEspecie);
 				}
 
-				especie = especieFromesultSet(resultSet);
+				especie = especieFromResultSet(resultSet);
 			}
 
 			ps.close();
@@ -75,7 +75,7 @@ public class JDBCEspecieDAO implements EspecieDAO {
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
-				especies.add(especieFromesultSet(resultSet));
+				especies.add(especieFromResultSet(resultSet));
 			}
 			ps.close();
 			return especies;
@@ -85,7 +85,7 @@ public class JDBCEspecieDAO implements EspecieDAO {
 	/**
 	 * Recibe un ResultSet y devuelve una especie en base a los datos que recibe
 	 */
-	private Especie especieFromesultSet(ResultSet resultSet) throws SQLException {
+	private Especie especieFromResultSet(ResultSet resultSet) throws SQLException {
 		Especie especie = new Especie(resultSet.getInt("id"),resultSet.getString("nombre"), TipoBicho.valueOf(resultSet.getString("tipo")));
 		especie.setAltura(resultSet.getInt("altura"));
 		especie.setPeso(resultSet.getInt("peso"));
