@@ -64,8 +64,6 @@ public class JDBCEspecieDAO implements EspecieDAO {
 		});
 	}
 
-
-
 	@Override
 	public List<Especie> recuperarTodos() {
 		return this.executeWithConnection(conn -> {
@@ -82,6 +80,15 @@ public class JDBCEspecieDAO implements EspecieDAO {
 		});
 	}
 
+	@Override
+	public void eliminarEspecies() {
+		this.executeWithConnection(conn -> {
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM especie");
+			ps.executeUpdate();
+			ps.close();
+			return null; // consultar como hacer que no retorne nada
+		});
+	}
 	/**
 	 * Recibe un ResultSet y devuelve una especie en base a los datos que recibe
 	 */

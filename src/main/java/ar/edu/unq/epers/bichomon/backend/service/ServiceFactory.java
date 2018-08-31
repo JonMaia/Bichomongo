@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.service;
 
 import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
+import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
 
@@ -10,10 +11,7 @@ import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
  * para hacerse con implementaciones a los servicios.
  * 
  * @author Steve Frontend
- * 
- * TODO: Gente de backend, una vez que tengan las implementaciones de sus
- * servicios propiamente realizadas apunten a ellas en los metodos provistos
- * debajo. Gracias!
+ *
  */
 public class ServiceFactory {
 	
@@ -27,8 +25,6 @@ public class ServiceFactory {
 	/**
 	 * @return un objeto que implementa {@link DataService}
 	 */
-	public DataService getDataService() {
-		throw new RuntimeException("Todavia no se ha implementado este metodo");
-	}
+	public DataService getDataService() { return new DataServiceImpl(new JDBCEspecieDAO());	}
 
 }

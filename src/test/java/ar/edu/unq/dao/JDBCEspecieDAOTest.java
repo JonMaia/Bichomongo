@@ -5,10 +5,10 @@ import static org.junit.Assert.assertTrue;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.*;
+import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
+import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,6 +17,7 @@ public class JDBCEspecieDAOTest {
 	// TODO: Lograr que rolbackee al finalizar los test.
 
 	private EspecieDAO dao = new JDBCEspecieDAO();
+	private DataService dataService = new DataServiceImpl(dao);
 	private Especie especie;
 
 	@Before
@@ -31,10 +32,9 @@ public class JDBCEspecieDAOTest {
 	    this.especie.setCantidadBichos(5);
 	}
 
-	//TODO: crear test que verifique que al insertar dos especies con el mismo nombre lanza una excepcion.
-
 	@Test
 	public void al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
+		this.dataService.eliminarDatos();
 		this.dao.guardar(this.especie);
 
 		//Las especies son iguales
@@ -53,117 +53,18 @@ public class JDBCEspecieDAOTest {
 
 	@Test(expected = RuntimeException.class)
 	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_lanza_una_excepcion() {
+		this.dataService.eliminarDatos();
 		this.dao.guardar(this.especie);
 		this.dao.guardar(this.especie);
 	}
-
 
 	@Test
-	public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_la_misma_Cantidad_o_mayor(){
-		// Se considera como valido que la cantidad obtenida sea igual o mayor por que no se sabe cuantos elementos hay en la base de datos.
-		// Si se ejecuta el script que genera una base de datos limpia antes de correr el test, se puede pedir que la cantidad sea igual.
-
-		List<Especie> especiesOriginales = generarTodos();
+	public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_la_misma_Cantidad(){
+		this.dataService.eliminarDatos();
+		this.dataService.crearSetDatosIniciales();
 		List<Especie> especiesRecuperadas = this.dao.recuperarTodos();
 
-		assertTrue(especiesRecuperadas.size() >= especiesOriginales.size());
+		assertTrue(especiesRecuperadas.size() == 8);
 	}
 
-	/**
-	 * Crea todos los bichomongos, los guarda y lso devuelve en una lista.
-	 */
-	private List<Especie> generarTodos(){
-
-		List<Especie> especies = new ArrayList<Especie>();
-
-		Especie red = new Especie();
-		red.setNombre("Rojomon");
-		red.setTipo(TipoBicho.FUEGO);
-		red.setAltura(180);
-		red.setPeso(75);
-		red.setEnergiaIncial(100);
-		red.setUrlFoto("/image/rojomon.jpg");
-		red.getNombre();
-		this.dao.guardar(red);
-		especies.add(red);
-
-		Especie amarillo = new Especie();
-		amarillo.setNombre("Amarillomon");
-		amarillo.setTipo(TipoBicho.ELECTRICIDAD);
-		amarillo.setAltura(170);
-		amarillo.setPeso(69);
-		amarillo.setEnergiaIncial(300);
-		amarillo.setUrlFoto("/image/amarillomon.png");
-		amarillo.getNombre();
-		this.dao.guardar(amarillo);
-		especies.add(amarillo);
-
-		Especie green = new Especie();
-		green.setNombre("Verdemon");
-		green.setTipo(TipoBicho.PLANTA);
-		green.setAltura(150);
-		green.setPeso(55);
-		green.setEnergiaIncial(5000);
-		green.setUrlFoto("/image/verdemon.jpg");
-		green.getNombre();
-		this.dao.guardar(green);
-		especies.add(green);
-
-		Especie turronmon = new Especie();
-		turronmon.setNombre("Tierramon");
-		turronmon.setTipo(TipoBicho.TIERRA);
-		turronmon.setAltura(1050);
-		turronmon.setPeso(99);
-		turronmon.setEnergiaIncial(5000);
-		turronmon.setUrlFoto("/image/tierramon.jpg");
-		turronmon.getNombre();
-		this.dao.guardar(turronmon);
-		especies.add(turronmon);
-
-		Especie fantasmon = new Especie();
-		fantasmon.setNombre("Fantasmon");
-		fantasmon.setTipo(TipoBicho.AIRE);
-		fantasmon.setAltura(1050);
-		fantasmon.setPeso(99);
-		fantasmon.setEnergiaIncial(5000);
-		fantasmon.setUrlFoto("/image/fantasmon.jpg");
-		fantasmon.getNombre();
-		this.dao.guardar(fantasmon);
-		especies.add(fantasmon);
-
-		Especie vampiron = new Especie();
-		vampiron.setNombre("Vanpiron");
-		vampiron.setTipo(TipoBicho.AIRE);
-		vampiron.setAltura(1050);
-		vampiron.setPeso(99);
-		vampiron.setEnergiaIncial(5000);
-		vampiron.setUrlFoto("/image/vampiromon.jpg");
-		vampiron.getNombre();
-		this.dao.guardar(vampiron);
-		especies.add(vampiron);
-
-		Especie fortmon = new Especie();
-		fortmon.setNombre("Fortmon");
-		fortmon.setTipo(TipoBicho.CHOCOLATE);
-		fortmon.setAltura(1050);
-		fortmon.setPeso(99);
-		fortmon.setEnergiaIncial(5000);
-		fortmon.setUrlFoto("/image/fortmon.png");
-		fortmon.getNombre();
-		this.dao.guardar(fortmon);
-		especies.add(fortmon);
-
-		Especie dientemon = new Especie();
-		dientemon.setNombre("Dientemon");
-		dientemon.setTipo(TipoBicho.AGUA);
-		dientemon.setAltura(1050);
-		dientemon.setPeso(99);
-		dientemon.setEnergiaIncial(5000);
-		dientemon.setUrlFoto("/image/dientmon.jpg");
-		dientemon.getNombre();
-		this.dao.guardar(dientemon);
-		especies.add(dientemon);
-
-		return especies;
-	}
 }

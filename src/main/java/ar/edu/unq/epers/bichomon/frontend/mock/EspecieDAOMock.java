@@ -96,4 +96,9 @@ public class EspecieDAOMock implements EspecieDAO {
 	public void actualizar(Especie especie) {
 	}
 
+	@Override
+	public void eliminarEspecies() {
+		//no hace nada
+	}
+
 }
