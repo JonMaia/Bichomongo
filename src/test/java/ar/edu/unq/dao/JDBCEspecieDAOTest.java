@@ -14,6 +14,8 @@ import java.util.List;
 
 public class JDBCEspecieDAOTest {
 
+	// TODO: Lograr que rolbackee al finalizar los test.
+
 	private EspecieDAO dao = new JDBCEspecieDAO();
 	private Especie especie;
 
@@ -28,6 +30,8 @@ public class JDBCEspecieDAOTest {
 	    this.especie.setUrlFoto("image/pablomon.jpg");
 	    this.especie.setCantidadBichos(5);
 	}
+
+	//TODO: crear test que verifique que al insertar dos especies con el mismo nombre lanza una excepcion.
 
 	@Test
 	public void al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
@@ -46,8 +50,19 @@ public class JDBCEspecieDAOTest {
 		assertTrue(this.especie != pablomon);
 	}
 
+
+	@Test(expected = RuntimeException.class)
+	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_lanza_una_excepcion() {
+		this.dao.guardar(this.especie);
+		this.dao.guardar(this.especie);
+	}
+
+
 	@Test
 	public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_la_misma_Cantidad_o_mayor(){
+		// Se considera como valido que la cantidad obtenida sea igual o mayor por que no se sabe cuantos elementos hay en la base de datos.
+		// Si se ejecuta el script que genera una base de datos limpia antes de correr el test, se puede pedir que la cantidad sea igual.
+
 		List<Especie> especiesOriginales = generarTodos();
 		List<Especie> especiesRecuperadas = this.dao.recuperarTodos();
 
