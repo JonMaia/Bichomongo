@@ -67,4 +67,25 @@ public class JDBCEspecieDAOTest {
 		assertTrue(especiesRecuperadas.size() == 8);
 	}
 
+	@Test
+	public void al_actualizar_y_luego_recuperar_se_obtiene_objetos_similares() {
+
+		this.dao.guardar(especie);
+		especie = this.dao.recuperar("Pablomon");
+		especie.setNombre("Fidelmon");
+		especie.setAltura(200);
+		this.dao.actualizar(especie);
+
+		Especie fidelmon = this.dao.recuperar("Fidelmon");
+		assertEquals(fidelmon.getNombre(), "Fidelmon");
+		assertEquals(fidelmon.getAltura(), 200);
+		/*assertEquals(this.especie2.getPeso(), pablomon2.getPeso());
+		assertEquals(this.especie2.getTipo(), pablomon2.getTipo());
+		assertEquals(this.especie2.getEnergiaInicial(), pablomon2.getEnergiaInicial());
+		assertEquals(this.especie2.getUrlFoto(), pablomon2.getUrlFoto());
+		assertEquals(this.especie2.getCantidadBichos(), pablomon2.getCantidadBichos());
+		*/
+		assertTrue( this.especie != fidelmon);
+	}
 }
+

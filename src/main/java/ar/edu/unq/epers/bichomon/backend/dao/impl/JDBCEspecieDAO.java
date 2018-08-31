@@ -4,6 +4,8 @@ import ar.edu.unq.epers.bichomon.backend.dao.ConnectionBlock;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+
+import javax.swing.*;
 import java.sql.*;
 
 import java.util.*;
@@ -37,7 +39,27 @@ public class JDBCEspecieDAO implements EspecieDAO {
 
 	@Override
 	public void actualizar(Especie especie) {
+		this.executeWithConnection( conn -> {
+			PreparedStatement ps = conn.prepareStatement("UPDATE bichomongo.especie SET nombre = ?,peso = ?,altura = ?,tipo = ?,energia_inicial = ?,url_foto = ?,cantidad_bichos = ? WHERE id = ? ");
+			ps.setString(1, especie.getNombre());
+			ps.setInt(2, especie.getPeso());
+			ps.setInt(3, especie.getAltura());
+			ps.setString(4, especie.getTipo().name());
+			ps.setInt(5, especie.getEnergiaInicial());
+			ps.setString(6, especie.getUrlFoto());
+			ps.setInt(7, especie.getCantidadBichos());
+			ps.setInt(8, especie.getId());
 
+			int n = ps.executeUpdate();
+
+			if (n>0) {
+				JOptionPane.showMessageDialog(null, "Los datos se actualizaron sastifactoriamente");
+			}
+
+			ps.close();
+
+			return null;
+		});
 	}
 
 	@Override
@@ -125,7 +147,7 @@ public class JDBCEspecieDAO implements EspecieDAO {
 		private Connection openConnection() {
 			try {
 				//La url de conexion no deberia estar harcodeada aca
-				return DriverManager.getConnection("jdbc:mysql://localhost:3306/bichomongo?user=root&password=root&useSSL=false");
+				return DriverManager.getConnection("jdbc:mysql://localhost:3306/bichomongo?user=root&password=root&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
 			} catch (SQLException e) {
 				throw new RuntimeException("No se puede establecer una conexion", e);
 			}
