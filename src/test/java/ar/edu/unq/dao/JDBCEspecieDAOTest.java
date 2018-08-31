@@ -18,44 +18,53 @@ public class JDBCEspecieDAOTest {
 
 	private EspecieDAO dao = new JDBCEspecieDAO();
 	private DataService dataService = new DataServiceImpl(dao);
-	private Especie especie;
+
 
 	@Before
 	public void crearModelo() {
-		this.especie = new Especie();
-		this.especie.setNombre("Pablomon");
-		this.especie.setAltura(180);
-		this.especie.setPeso(100);
-	    this.especie.setTipo(TipoBicho.AGUA);
-	    this.especie.setEnergiaIncial(100);
-	    this.especie.setUrlFoto("image/pablomon.jpg");
-	    this.especie.setCantidadBichos(5);
+		this.dataService.eliminarDatos();
+		this.dataService.crearSetDatosIniciales();
 	}
 
 	@Test
 	public void al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
-		this.dataService.eliminarDatos();
-		this.dao.guardar(this.especie);
+
+
+		Especie especie = crearDefaultEspecie("FidelMon");
+
+		this.dao.guardar(especie);
 
 		//Las especies son iguales
-		Especie pablomon = this.dao.recuperar("Pablomon");
-		assertEquals(this.especie.getNombre(), pablomon.getNombre());
-		assertEquals(this.especie.getAltura(), pablomon.getAltura());
-		assertEquals(this.especie.getPeso(), pablomon.getPeso());
-		assertEquals(this.especie.getTipo(), pablomon.getTipo());
-		assertEquals(this.especie.getEnergiaInicial(), pablomon.getEnergiaInicial());
-		assertEquals(this.especie.getUrlFoto(), pablomon.getUrlFoto());
-		assertEquals(this.especie.getCantidadBichos(), pablomon.getCantidadBichos());
+		Especie fidelMon = this.dao.recuperar("FidelMon");
+		assertEquals(especie.getNombre(), fidelMon.getNombre());
+		assertEquals(especie.getAltura(), fidelMon.getAltura());
+		assertEquals(especie.getPeso(), fidelMon.getPeso());
+		assertEquals(especie.getTipo(), fidelMon.getTipo());
+		assertEquals(especie.getEnergiaInicial(), fidelMon.getEnergiaInicial());
+		assertEquals(especie.getUrlFoto(), fidelMon.getUrlFoto());
+		assertEquals(especie.getCantidadBichos(), fidelMon.getCantidadBichos());
 		//Pero no son el mismo objeto =(
-		assertTrue(this.especie != pablomon);
+		assertTrue(especie != fidelMon);
+	}
+
+	private Especie crearDefaultEspecie(String nombre) {
+		Especie especie = new Especie();
+		especie.setNombre(nombre);
+		especie.setAltura(180);
+		especie.setPeso(100);
+		especie.setTipo(TipoBicho.AGUA);
+		especie.setEnergiaIncial(100);
+		especie.setUrlFoto("https://i.ytimg.com/vi/MSV1z4-14Pw/hqdefault.jpg");
+		especie.setCantidadBichos(5);
+		return especie;
 	}
 
 
 	@Test(expected = RuntimeException.class)
 	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_lanza_una_excepcion() {
 		this.dataService.eliminarDatos();
-		this.dao.guardar(this.especie);
-		this.dao.guardar(this.especie);
+		this.dao.guardar(crearDefaultEspecie("FidelMon"));
+		this.dao.guardar(crearDefaultEspecie("FidelMon"));
 	}
 
 	@Test
@@ -70,8 +79,7 @@ public class JDBCEspecieDAOTest {
 	@Test
 	public void al_actualizar_y_luego_recuperar_se_obtiene_objetos_similares() {
 
-		this.dao.guardar(especie);
-		especie = this.dao.recuperar("Pablomon");
+		Especie especie = this.dao.recuperar("Rojomon");
 		especie.setNombre("Fidelmon");
 		especie.setAltura(200);
 		this.dao.actualizar(especie);
@@ -85,7 +93,7 @@ public class JDBCEspecieDAOTest {
 		assertEquals(this.especie2.getUrlFoto(), pablomon2.getUrlFoto());
 		assertEquals(this.especie2.getCantidadBichos(), pablomon2.getCantidadBichos());
 		*/
-		assertTrue( this.especie != fidelmon);
+		assertTrue( especie != fidelmon);
 	}
 }
 
