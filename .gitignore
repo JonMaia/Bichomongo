@@ -1,6 +1,7 @@
 .classpath
 .settings
 .project
-/target
 .idea
+/target
 bichomon-go.iml
+src/main/java/ar/edu/unq/epers/bichomon/backend/dao/impl/JDBCConection.java
