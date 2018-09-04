@@ -1,14 +1,15 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
-import ar.edu.unq.epers.bichomon.backend.dao.ConnectionBlock;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 
 import javax.swing.*;
-import java.sql.*;
-
-import java.util.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public  class JDBCEspecieDAO implements EspecieDAO {
 
@@ -54,11 +55,10 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 			int n = ps.executeUpdate();
 
 			if (n>0) {
-				JOptionPane.showMessageDialog(null, "Los datos se actualizaron sastifactoriamente");
+				//Mensaje para verificar la actualizacion exitosa en la base de datos. Se deja comentado para utilizarse en caso de ser necesario
+				//JOptionPane.showMessageDialog(null, "Los datos se actualizaron sastifactoriamente");
 			}
-
 			ps.close();
-
 			return null;
 		});
 	}
@@ -73,7 +73,7 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 
 			Especie especie = null;
 			while (resultSet.next()) {
-				//si especie no es null aca significa que el while dio mas de una vuelta, eso
+				//si especie no es null significa que el while dio mas de una vuelta, eso
 				//suele pasar cuando el resultado (resultset) tiene mas de un elemento.
 				if (especie != null) {
 					throw new RuntimeException("Existe mas de una especie con el nombre " + nombreEspecie);
@@ -112,9 +112,10 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 			return null; // consultar como hacer que no retorne nada
 		});
 	}
+
 	/**
 	 * Recibe un ResultSet y devuelve una especie en base a los datos que recibe
-	 */
+	 **/
 	private Especie especieFromResultSet(ResultSet resultSet) throws SQLException {
 		Especie especie = new Especie(resultSet.getInt("id"),resultSet.getString("nombre"), TipoBicho.valueOf(resultSet.getString("tipo")));
 		especie.setAltura(resultSet.getInt("altura"));

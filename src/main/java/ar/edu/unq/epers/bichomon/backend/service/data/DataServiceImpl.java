@@ -11,15 +11,14 @@ public class DataServiceImpl implements DataService {
     public DataServiceImpl(EspecieDAO dao){
         this.dao = dao;
     }
+
     @Override
     public void eliminarDatos() {
         this.dao.eliminarEspecies();
-        // TODO: Implementar eliminarBichos()
     }
 
     @Override
     public void crearSetDatosIniciales() {
-
         Especie red = new Especie();
         red.setNombre("Rojomon");
         red.setTipo(TipoBicho.FUEGO);

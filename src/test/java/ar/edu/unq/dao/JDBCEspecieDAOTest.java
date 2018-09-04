@@ -14,11 +14,20 @@ import java.util.List;
 
 public class JDBCEspecieDAOTest {
 
-	// TODO: Lograr que rolbackee al finalizar los test.
-
 	private EspecieDAO dao = new JDBCEspecieDAO();
 	private DataService dataService = new DataServiceImpl(dao);
 
+	private Especie crearDefaultEspecie(String nombre) {
+		Especie especie = new Especie();
+		especie.setNombre(nombre);
+		especie.setAltura(180);
+		especie.setPeso(100);
+		especie.setTipo(TipoBicho.AGUA);
+		especie.setEnergiaIncial(100);
+		especie.setUrlFoto("https://i.ytimg.com/vi/MSV1z4-14Pw/hqdefault.jpg");
+		especie.setCantidadBichos(5);
+		return especie;
+	}
 
 	@Before
 	public void crearModelo() {
@@ -29,9 +38,7 @@ public class JDBCEspecieDAOTest {
 	@Test
 	public void al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
 
-
 		Especie especie = crearDefaultEspecie("FidelMon");
-
 		this.dao.guardar(especie);
 
 		//Las especies son iguales
@@ -47,19 +54,6 @@ public class JDBCEspecieDAOTest {
 		assertTrue(especie != fidelMon);
 	}
 
-	private Especie crearDefaultEspecie(String nombre) {
-		Especie especie = new Especie();
-		especie.setNombre(nombre);
-		especie.setAltura(180);
-		especie.setPeso(100);
-		especie.setTipo(TipoBicho.AGUA);
-		especie.setEnergiaIncial(100);
-		especie.setUrlFoto("https://i.ytimg.com/vi/MSV1z4-14Pw/hqdefault.jpg");
-		especie.setCantidadBichos(5);
-		return especie;
-	}
-
-
 	@Test(expected = RuntimeException.class)
 	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_lanza_una_excepcion() {
 		this.dataService.eliminarDatos();
@@ -69,15 +63,21 @@ public class JDBCEspecieDAOTest {
 
 	@Test
 	public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_la_misma_Cantidad(){
-		this.dataService.eliminarDatos();
-		this.dataService.crearSetDatosIniciales();
+		// En el @before se limpio la base y se insertaron 8 especies
 		List<Especie> especiesRecuperadas = this.dao.recuperarTodos();
 
 		assertTrue(especiesRecuperadas.size() == 8);
 	}
 
 	@Test
-	public void al_actualizar_y_luego_recuperar_se_obtiene_objetos_similares() {
+	public void al_recuperar_todos_de_una_base_sin_datos_devuelve_una_lista_vacia(){
+		this.dataService.eliminarDatos();
+		List<Especie> especiesRecuperadas = this.dao.recuperarTodos();
+		assertTrue(especiesRecuperadas.isEmpty());
+	}
+
+	@Test
+	public void al_actualizar_y_luego_recuperar_se_obtiene_la_especie_modificada_pero_no_el_mismo_objeto() {
 
 		Especie especie = this.dao.recuperar("Rojomon");
 		especie.setNombre("Fidelmon");
@@ -85,14 +85,8 @@ public class JDBCEspecieDAOTest {
 		this.dao.actualizar(especie);
 
 		Especie fidelmon = this.dao.recuperar("Fidelmon");
-		assertEquals(fidelmon.getNombre(), "Fidelmon");
-		assertEquals(fidelmon.getAltura(), 200);
-		/*assertEquals(this.especie2.getPeso(), pablomon2.getPeso());
-		assertEquals(this.especie2.getTipo(), pablomon2.getTipo());
-		assertEquals(this.especie2.getEnergiaInicial(), pablomon2.getEnergiaInicial());
-		assertEquals(this.especie2.getUrlFoto(), pablomon2.getUrlFoto());
-		assertEquals(this.especie2.getCantidadBichos(), pablomon2.getCantidadBichos());
-		*/
+		assertEquals(fidelmon.getNombre(), especie.getNombre());
+		assertEquals(fidelmon.getAltura(), especie.getAltura());
 		assertTrue( especie != fidelmon);
 	}
 }
