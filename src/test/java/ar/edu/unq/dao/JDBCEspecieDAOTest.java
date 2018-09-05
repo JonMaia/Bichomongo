@@ -1,6 +1,7 @@
 package ar.edu.unq.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
@@ -59,6 +60,13 @@ public class JDBCEspecieDAOTest {
 		this.dataService.eliminarDatos();
 		this.dao.guardar(crearDefaultEspecie("FidelMon"));
 		this.dao.guardar(crearDefaultEspecie("FidelMon"));
+	}
+
+	@Test
+	public void al_recuperar_una_especie_que_no_existe_devuelve_null() {
+		this.dataService.eliminarDatos();
+		Especie especieQueNoExiste = this.dao.recuperar("NombreQueNoExiste");
+		assertNull(especieQueNoExiste);
 	}
 
 	@Test
