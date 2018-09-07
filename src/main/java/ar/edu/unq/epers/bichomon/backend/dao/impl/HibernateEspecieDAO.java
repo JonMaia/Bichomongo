@@ -2,13 +2,16 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.hibernate.Session;
 
 import java.util.List;
 
 public class HibernateEspecieDAO implements EspecieDAO {
     @Override
     public void guardar(Especie especie) {
-
+        Session session = Runner.getCurrentSession();
+        session.save(especie);
     }
 
     @Override
@@ -18,7 +21,8 @@ public class HibernateEspecieDAO implements EspecieDAO {
 
     @Override
     public Especie recuperar(String nombreEspecie) {
-        return null;
+        Session session = Runner.getCurrentSession();
+        return session.get(Especie.class, nombreEspecie);
     }
 
     @Override
