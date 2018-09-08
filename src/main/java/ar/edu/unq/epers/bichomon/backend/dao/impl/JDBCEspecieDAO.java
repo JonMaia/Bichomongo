@@ -88,6 +88,11 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 	}
 
 	@Override
+	public Especie getById(Integer id) {
+		throw new RuntimeException("Pendiente implementacion");
+	}
+
+	@Override
 	public List<Especie> recuperarTodos() {
 		return conection.executeWithConnection(conn -> {
 			List<Especie> especies = new ArrayList<Especie>();

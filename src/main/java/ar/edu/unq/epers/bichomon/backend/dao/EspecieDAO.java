@@ -12,6 +12,8 @@ public interface EspecieDAO {
 
 	Especie recuperar(String nombreEspecie);
 
+	Especie getById(Integer id);
+
 	List<Especie> recuperarTodos();
 
 	void eliminarEspecies();

@@ -26,6 +26,12 @@ public class HibernateEspecieDAO implements EspecieDAO {
     }
 
     @Override
+    public Especie getById(Integer id) {
+        Session session = Runner.getCurrentSession();
+        return session.get(Especie.class, id);
+    }
+
+    @Override
     public List<Especie> recuperarTodos() {
         return null;
     }

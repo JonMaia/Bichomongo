@@ -14,7 +14,7 @@ public class JDBCConection {
     public Connection openConnection() {
         try {
             //La url de conexion no deberia estar harcodeada aca
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/bichomongo?user=root&password=very_strong_pasword&useSSL=false");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/bichomongo?user=root&password=root&useSSL=false");
         } catch (SQLException e) {
             throw new RuntimeException("No se puede establecer una conexion", e);
         }

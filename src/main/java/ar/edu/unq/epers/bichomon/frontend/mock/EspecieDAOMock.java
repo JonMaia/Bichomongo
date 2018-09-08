@@ -88,6 +88,11 @@ public class EspecieDAOMock implements EspecieDAO {
 	}
 
 	@Override
+	public Especie getById(Integer id) {
+		return null;
+	}
+
+	@Override
 	public List<Especie> recuperarTodos() {
 		return new ArrayList<>(DATA.values());
 	}
