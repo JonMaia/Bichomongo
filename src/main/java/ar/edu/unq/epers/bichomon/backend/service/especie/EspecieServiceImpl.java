@@ -41,7 +41,7 @@ public class EspecieServiceImpl implements EspecieService {
 	@Override
 	public Bicho crearBicho(String nombreEspecie, String nombreBicho){
 		Especie especie = especieDAO.recuperar(nombreEspecie);
-		Bicho bicho = especie.crearBicho(nombreBicho);
+		Bicho bicho = especie.crearBicho();
 		especieDAO.actualizar(especie);
 		return bicho;
 	}
