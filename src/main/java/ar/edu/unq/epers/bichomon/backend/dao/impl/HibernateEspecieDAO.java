@@ -10,8 +10,12 @@ import java.util.List;
 public class HibernateEspecieDAO implements EspecieDAO {
     @Override
     public void guardar(Especie especie) {
-        Session session = Runner.getCurrentSession();
-        session.save(especie);
+        try {
+            Session session = Runner.getCurrentSession();
+            session.save(especie);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -40,4 +44,5 @@ public class HibernateEspecieDAO implements EspecieDAO {
     public void eliminarEspecies() {
 
     }
+
 }

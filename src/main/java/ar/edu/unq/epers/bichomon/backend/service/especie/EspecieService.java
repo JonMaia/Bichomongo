@@ -26,7 +26,7 @@ public interface EspecieService {
      * @param nombreEspecie - el nombre de la especie que se busca
      * @return la especie encontrada
      * @throws la excepción {@link EspecieNoExistente} (no chequeada)
-     */
+     **/
     Especie getEspecie(String nombreEspecie);
 
     /**
