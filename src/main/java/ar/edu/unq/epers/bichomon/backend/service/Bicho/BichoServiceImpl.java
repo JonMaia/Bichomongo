@@ -17,12 +17,10 @@ public class BichoServiceImpl {
         this.entrenadorDAO = entrenadorDAO;
     }
 
-    Bicho buscar (String entrenador){
-        Runner.runInSession(() -> {
-            Entrenador entrenador = this.entrenadorDAO.recuperar(entrenador);
-            //return entrenador.buscar();
-            return true;
-        }
-
-    }
+    //Bicho buscar (String entrenador){
+    //   Runner.runInSession(() -> {
+    //       //Entrenador entrenador = this.entrenadorDAO.recuperar(entrenador);
+    //       //return entrenador.buscar();
+    //  }
+    //   }
 }
