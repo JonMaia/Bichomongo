@@ -5,13 +5,10 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionService;
 
 public class MapaServiceImpl implements MapaService {
+   
+  @Override
+    void mover(String entrenador, String ubicacion) {
 
-    private UbicacionService ubicacionService;
-    private HibernateEntrenadorDAO entrenadorDAO;
-
-    @Override
-    public void mover(String entrenador, String ubicacion) {
-    /*se cambiará al entrenador desde su ubicación actual a la especificada por parametro.*/
         entrenadorDAO.setUbicacionDAO(ubicacion);
     }
 
@@ -31,5 +28,7 @@ public class MapaServiceImpl implements MapaService {
     public Bicho campeonHistorico(String dojo) {
         /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
         return null;
+
     }
+    **/
 }
