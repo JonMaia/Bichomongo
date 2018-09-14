@@ -32,6 +32,10 @@ public class Bicho {
 	private int edad;
 	private Date fechaCaptura;
 	private List<Condicion> condicionesEvolucion;
+
+	public Bicho (Especie especie){
+	    this.especie = especie;
+    }
 	
 	public Especie getEspecie() {
 		return this.especie;
