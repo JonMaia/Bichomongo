@@ -6,4 +6,6 @@ public interface EntrenadorDao extends GenericDAO<String, Entrenador>{
 
     void setUbicacionDAO(String ubicacion);
 
+    void setNombreDAO(String entrenador);
+
 }

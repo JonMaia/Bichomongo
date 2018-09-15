@@ -1,22 +1,23 @@
 package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
-import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionService;
+import ar.edu.unq.epers.bichomon.backend.service.Entrenador.EntrenadorService;
 
 public class MapaServiceImpl implements MapaService {
-   
-  @Override
-    void mover(String entrenador, String ubicacion) {
 
-        entrenadorDAO.setUbicacionDAO(ubicacion);
+    private EntrenadorService entrenadorService;
+
+    @Override
+    public void mover(String entrenador, String ubicacion) {
+
+        entrenadorService.setUbicacionEntrenador(entrenador, ubicacion);
     }
 
     @Override
     public int cantidadEntrenadores(String ubicacion) {
         /*se deberá devolver la cantidad de entrenadores que se encuentren actualmente en dicha localización.*/
-       return ubicacionService.getEntrenadoresEnUbicacion(ubicacion);
-    }
+       return 0;
+  }
 
     @Override
     public Bicho campeon(String dojo) {
@@ -30,5 +31,4 @@ public class MapaServiceImpl implements MapaService {
         return null;
 
     }
-    **/
 }

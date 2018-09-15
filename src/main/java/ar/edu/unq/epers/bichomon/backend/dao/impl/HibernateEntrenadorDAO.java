@@ -10,10 +10,14 @@ public class HibernateEntrenadorDAO extends BaseDAO<String, Entrenador> implemen
         super(claz);
     }
 
-    private  Entrenador entrenador;
 
     @Override
     public void setUbicacionDAO(String ubicacion) {
-        entrenador.setUbicacion(ubicacion);
+
+    }
+
+    @Override
+    public void setNombreDAO(String entrenador) {
+
     }
 }

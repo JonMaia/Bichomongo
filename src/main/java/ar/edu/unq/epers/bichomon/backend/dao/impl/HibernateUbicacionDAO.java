@@ -1,4 +1,4 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
-public class HibernateUbicacionDao {
+public class HibernateUbicacionDAO {
 }
