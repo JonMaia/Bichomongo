@@ -63,6 +63,11 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 	}
 
 	@Override
+	public void eliminar(Especie object) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Especie recuperar(String nombreEspecie) {
 		return conection.executeWithConnection(conn -> {
 			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto,energia_inicial,cantidad_bichos FROM especie WHERE nombre = ?");
