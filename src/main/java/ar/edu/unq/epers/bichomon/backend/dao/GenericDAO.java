@@ -7,8 +7,6 @@ public interface GenericDAO<T, ID extends Serializable> {
 
     T getById(ID id);
 
-    List<T> recuperarTodos();
-
     void guardar(T object);
 
     void actualizar(T object);

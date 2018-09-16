@@ -28,11 +28,6 @@ public abstract class BaseHibernateDAO<T, ID extends Serializable> implements Ge
     }
 
     @Override
-    public List<T> recuperarTodos() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void guardar(T object) {
         try {
             Session session = Runner.getCurrentSession();

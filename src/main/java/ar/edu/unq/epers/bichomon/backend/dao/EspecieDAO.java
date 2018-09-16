@@ -10,4 +10,6 @@ public interface EspecieDAO extends GenericDAO<Especie, Integer>{
 
 	void eliminarEspecies();
 
+	List<Especie> recuperarTodos();
+
 }
