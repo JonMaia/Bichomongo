@@ -1,18 +1,14 @@
 package ar.edu.unq.epers.bichomon.backend.service.Bicho;
 
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
-import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
-import org.hibernate.Session;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoHibernateDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorHibernateDAO;
 
 public class BichoServiceImpl {
 
-    private HibernateBichoDAO bichoDAO;
-    private HibernateEntrenadorDAO entrenadorDAO;
+    private HibernateBichoHibernateDAO bichoDAO;
+    private HibernateEntrenadorHibernateDAO entrenadorDAO;
 
-    public BichoServiceImpl (HibernateBichoDAO bichoDAO, HibernateEntrenadorDAO entrenadorDAO){
+    public BichoServiceImpl (HibernateBichoHibernateDAO bichoDAO, HibernateEntrenadorHibernateDAO entrenadorDAO){
         this.bichoDAO = bichoDAO;
         this.entrenadorDAO = entrenadorDAO;
     }

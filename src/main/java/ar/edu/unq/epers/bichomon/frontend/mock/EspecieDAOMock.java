@@ -97,10 +97,17 @@ public class EspecieDAOMock implements EspecieDAO {
 
 	@Override
 	public void actualizar(Especie especie) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void eliminar(Especie object) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void eliminarEspecies() {
+		throw new UnsupportedOperationException();
 		//no hace nada
 	}
 

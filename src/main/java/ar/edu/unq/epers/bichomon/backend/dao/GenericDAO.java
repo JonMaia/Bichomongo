@@ -1,9 +1,17 @@
 package ar.edu.unq.epers.bichomon.backend.dao;
 
-public interface GenericDAO<K, T> {
-    T findById(K id);
+import java.io.Serializable;
+import java.util.List;
 
-    void save(T object);
+public interface GenericDAO<T, ID extends Serializable> {
 
-    void delete(K id);
+    T getById(ID id);
+
+    List<T> recuperarTodos();
+
+    void guardar(T object);
+
+    void actualizar(T object);
+
+    void eliminar(T object);
 }
