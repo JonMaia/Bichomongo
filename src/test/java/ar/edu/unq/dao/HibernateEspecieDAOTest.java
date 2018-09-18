@@ -7,9 +7,15 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 public class HibernateEspecieDAOTest {
@@ -29,6 +35,15 @@ public class HibernateEspecieDAOTest {
         return especie;
     }
 
+    @Before
+    public void crearModelo() {
+        //this.dataService.crearSetDatosIniciales();
+    }
+
+    @After
+    public void eliminarModelo() {
+        //this.dataService.eliminarDatos();
+    }
 
     @Test
     public void al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
@@ -49,7 +64,25 @@ public class HibernateEspecieDAOTest {
         assertEquals(especie.getCantidadBichos(), fidelMon.getCantidadBichos());
     }
 
+    @Test
+    public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_en_una_lista_ordenada_ascendente() {
+        // En el @before se insertaron 8 especies
+        List<Especie> especiesRecuperadas =  Runner.runInSession(() -> {
+            this.dataService.crearSetDatosIniciales();
+            return this.dao.recuperarTodos();
+        });
 
+        assertNotNull(especiesRecuperadas);
+        assertTrue(especiesRecuperadas.size()>0);
+
+        if(especiesRecuperadas.size()>0){
+            Especie especieAnterior = especiesRecuperadas.get(0);
+            for (int i = 1; i < especiesRecuperadas.size(); i++) {
+                assertTrue(especieAnterior.getNombre().compareToIgnoreCase(especiesRecuperadas.get(i).getNombre()) < 0);
+                especieAnterior = especiesRecuperadas.get(i);
+            }
+        }
+    }
 
 
 }
