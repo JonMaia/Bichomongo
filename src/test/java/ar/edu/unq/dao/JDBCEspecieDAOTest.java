@@ -1,19 +1,15 @@
 package ar.edu.unq.dao;
-
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
+/*
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import javax.validation.constraints.AssertFalse;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 import java.util.List;
 
@@ -22,7 +18,7 @@ import static org.junit.Assert.*;
 
 public class JDBCEspecieDAOTest {
 
-	private EspecieDAO dao = new JDBCEspecieDAO();
+	private EspecieDao dao = new JDBCEspecieDAO();
 	private DataService dataService = new DataServiceImpl(dao);
 
 	private Especie crearDefaultEspecie(String nombre) {
@@ -118,5 +114,7 @@ public class JDBCEspecieDAOTest {
 		assertEquals(fidelmon.getAltura(), especie.getAltura());
 		assertTrue( especie != fidelmon);
 	}
+
 }
 
+*/

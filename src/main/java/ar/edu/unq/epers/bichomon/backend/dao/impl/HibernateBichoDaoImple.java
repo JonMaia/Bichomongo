@@ -1,11 +1,11 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
-import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 
-public class HibernateBichoHibernateDAO extends BaseHibernateDAO<Bicho, String> implements BichoDAO {
+public class HibernateBichoDaoImple extends BaseHibernateDAO<Bicho, String> implements BichoDao {
 
-    public HibernateBichoHibernateDAO(Class<Bicho> claz) {
+    public HibernateBichoDaoImple(Class<Bicho> claz) {
         super(claz);
     }
 

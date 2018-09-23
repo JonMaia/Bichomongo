@@ -63,4 +63,9 @@ public class EspecieServiceREST implements EspecieService {
 		return this.decorado.crearBicho(nombreEspecie, nombreBicho);
 	}
 
+	@Override
+	public void evolucionar() {
+
+	}
+
 }

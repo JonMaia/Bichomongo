@@ -1,10 +1,10 @@
 package ar.edu.unq.epers.bichomon.backend.service.ubicacion;
 
-import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
 
 public class UbicacionService {
 
-    private UbicacionDAO ubicacionDAO;
+    private UbicacionDao ubicacionDAO;
 
     public int getEntrenadoresEnUbicacion(String ubicacion) {
 

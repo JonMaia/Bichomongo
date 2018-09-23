@@ -1,14 +1,14 @@
 package ar.edu.unq.epers.bichomon.backend.service.data;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 
 public class DataServiceImpl implements DataService {
 
-    private EspecieDAO dao;
+    private EspecieDao dao;
 
-    public DataServiceImpl(EspecieDAO dao){
+    public DataServiceImpl(EspecieDao dao){
         this.dao = dao;
     }
 

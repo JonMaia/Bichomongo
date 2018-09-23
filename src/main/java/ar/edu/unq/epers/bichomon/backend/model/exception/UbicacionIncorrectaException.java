@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.model.Exception;
+package ar.edu.unq.epers.bichomon.backend.model.exception;
 
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 

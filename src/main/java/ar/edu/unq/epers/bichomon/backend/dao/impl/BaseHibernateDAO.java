@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
-import ar.edu.unq.epers.bichomon.backend.dao.GenericDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.GenericDao;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class BaseHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID> {
+public abstract class BaseHibernateDAO<T, ID extends Serializable> implements GenericDao<T, ID> {
 
     private final Class<T> entityClass;
 

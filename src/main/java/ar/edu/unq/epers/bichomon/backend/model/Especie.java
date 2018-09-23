@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
-import ar.edu.unq.epers.bichomon.backend.model.Condicion.Condicion;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +23,9 @@ public class Especie {
 	private int energiaInicial;
 	private String urlFoto;
 	private int cantidadBichos;
+	@OneToOne
 	private Especie evolucion;
+	@ManyToMany
 	private List<Condicion> condicionDeEvolucion;
 
 	public Especie(){
@@ -136,4 +138,14 @@ public class Especie {
     public void setEvolucion(Especie evolucion) {
         this.evolucion = evolucion;
     }
+
+
+	public boolean puedeEvolucionar(Bicho bicho){
+		boolean esEvolucionable = true;
+		for ( Condicion condicion : condicionDeEvolucion)
+			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(bicho);
+
+		return esEvolucionable;
+	}
+
 }

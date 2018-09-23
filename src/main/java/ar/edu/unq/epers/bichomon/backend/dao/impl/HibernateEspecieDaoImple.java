@@ -1,16 +1,12 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 
 
-
-import javax.naming.OperationNotSupportedException;
-import java.util.List;
-
-public class HibernateEspecieDAO extends BaseHibernateDAO<Especie,Integer> implements EspecieDAO {
+public class HibernateEspecieDaoImple extends BaseHibernateDAO<Especie,Integer> implements EspecieDao {
     @Override
     public void guardar(Especie especie) {
         try {

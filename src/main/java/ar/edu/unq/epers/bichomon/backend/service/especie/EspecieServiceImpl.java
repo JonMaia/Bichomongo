@@ -2,16 +2,16 @@ package ar.edu.unq.epers.bichomon.backend.service.especie;
 
 import java.util.List;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 
 
 public class EspecieServiceImpl implements EspecieService {
 
-	private EspecieDAO especieDAO;
+	private HibernateEspecieDaoImple especieDAO;
 
-	public EspecieServiceImpl(EspecieDAO dao){
+	public EspecieServiceImpl(HibernateEspecieDaoImple dao){
 		this.especieDAO = dao;
 	}
 	
@@ -44,6 +44,11 @@ public class EspecieServiceImpl implements EspecieService {
 		Bicho bicho = especie.crearBicho();
 		especieDAO.actualizar(especie);
 		return bicho;
+	}
+
+	@Override
+	public void evolucionar() {
+
 	}
 
 }

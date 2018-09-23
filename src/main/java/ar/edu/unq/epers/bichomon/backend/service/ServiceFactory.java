@@ -1,7 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.service;
 
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
@@ -20,12 +19,12 @@ public class ServiceFactory {
 	 * @return un objeto que implementa {@link EspecieService}
 	 */
 	public EspecieService getEspecieService() {
-		return new EspecieServiceImpl(new HibernateEspecieDAO());
+		return new EspecieServiceImpl(new HibernateEspecieDaoImple());
 	}
 	
 	/**
 	 * @return un objeto que implementa {@link DataService}
 	 */
-	public DataService getDataService() { return new DataServiceImpl(new JDBCEspecieDAO());	}
+	public DataService getDataService() { return new DataServiceImpl(new HibernateEspecieDaoImple());	}
 
 }

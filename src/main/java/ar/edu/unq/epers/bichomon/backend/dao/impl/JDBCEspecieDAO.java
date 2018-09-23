@@ -1,16 +1,14 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-public  class JDBCEspecieDAO implements EspecieDAO {
+/*
+public  class JDBCEspecieDAO implements EspecieDao {
 
     JDBCConection conection = new JDBCConection();
 
@@ -86,10 +84,6 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 		});
 	}
 
-	@Override
-	public void eliminar(Especie object) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public Especie recuperar(String nombreEspecie) {
@@ -115,11 +109,7 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 		});
 	}
 
-	@Override
-	public Especie getById(Integer id) {
-		throw new RuntimeException("Pendiente implementacion");
-	}
-
+/*
 	@Override
 	public List<Especie> recuperarTodos() {
 		return conection.executeWithConnection(conn -> {
@@ -148,7 +138,7 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 
 	/**
 	 * Recibe un ResultSet y devuelve una especie en base a los datos que recibe
-	 **/
+	 *
 	private Especie especieFromResultSet(ResultSet resultSet) throws SQLException {
 		Especie especie = new Especie(resultSet.getInt("id"),resultSet.getString("nombre"), TipoBicho.valueOf(resultSet.getString("tipo")));
 		especie.setAltura(resultSet.getInt("altura"));
@@ -166,3 +156,4 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 
 
 	}
+*/

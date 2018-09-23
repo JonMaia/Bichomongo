@@ -25,9 +25,10 @@
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Ubicacion" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Bicho" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Entrenador" />
-        <mapping class="ar.edu.unq.epers.bichomon.backend.model.ResultadoCombate" />
-        <mapping class="ar.edu.unq.epers.bichomon.backend.model.Condicion.Condicion" />
-        <mapping class="ar.edu.unq.epers.bichomon.backend.model." />
+        <mapping class="ar.edu.unq.epers.bichomon.backend.model.Combate" />
+        <mapping class="ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion" />
+        <mapping class="ar.edu.unq.epers.bichomon.backend.model.Experiencia" />
+        <mapping class="ar.edu.unq.epers.bichomon.backend.model.Nivel" />
         <!--
         <mapping class="ar.edu.unq.unidad3.wop.modelo.Bicho" />
         -->
