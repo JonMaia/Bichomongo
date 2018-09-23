@@ -5,6 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
 public class HibernateEspecieDAO implements EspecieDAO {
@@ -16,6 +17,12 @@ public class HibernateEspecieDAO implements EspecieDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Boolean guardarValidado(Especie especie) {
+        throw new RuntimeException("No Implementado");
+        //TODO: implementar
     }
 
     @Override

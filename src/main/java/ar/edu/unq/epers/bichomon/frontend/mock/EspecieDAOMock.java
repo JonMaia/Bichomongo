@@ -82,6 +82,13 @@ public class EspecieDAOMock implements EspecieDAO {
 		DATA.put(especie.getNombre(), especie);
 	}
 
+
+	@Override
+	public Boolean guardarValidado(Especie especie) {
+		throw new RuntimeException("No Implementado");
+		//TODO: implementar
+	}
+
 	@Override
 	public Especie recuperar(String nombreEspecie) {
 		return DATA.get(nombreEspecie);
