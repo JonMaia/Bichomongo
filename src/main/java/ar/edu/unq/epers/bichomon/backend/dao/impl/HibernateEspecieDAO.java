@@ -5,6 +5,8 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 
+
+
 import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
@@ -34,17 +36,6 @@ public class HibernateEspecieDAO implements EspecieDAO {
     public Especie recuperar(String nombreEspecie) {
         Session session = Runner.getCurrentSession();
         return session.get(Especie.class, nombreEspecie);
-    }
-
-    @Override
-    public Especie getById(Integer id) {
-        Session session = Runner.getCurrentSession();
-        return session.get(Especie.class, id);
-    }
-
-    @Override
-    public List<Especie> recuperarTodos() {
-        return null;
     }
 
     @Override

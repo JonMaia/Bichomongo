@@ -4,7 +4,6 @@ import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 
-import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -88,6 +87,11 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 	}
 
 	@Override
+	public void eliminar(Especie object) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Especie recuperar(String nombreEspecie) {
 		return conection.executeWithConnection(conn -> {
 			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto,energia_inicial,cantidad_bichos FROM especie WHERE nombre = ?");
@@ -121,7 +125,7 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 		return conection.executeWithConnection(conn -> {
 			List<Especie> especies = new ArrayList<Especie>();
 
-			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto,energia_inicial,cantidad_bichos FROM especie");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM especie ORDER BY nombre ASC");
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {

@@ -1,7 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.Leaderboard;
 
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
 
 import java.util.List;
 

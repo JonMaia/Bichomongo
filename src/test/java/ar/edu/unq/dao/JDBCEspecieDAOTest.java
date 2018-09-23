@@ -2,15 +2,19 @@ package ar.edu.unq.dao;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.especie.*;
+import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 import javax.validation.constraints.AssertFalse;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -35,8 +39,13 @@ public class JDBCEspecieDAOTest {
 
 	@Before
 	public void crearModelo() {
-		this.dataService.eliminarDatos();
+
 		this.dataService.crearSetDatosIniciales();
+	}
+
+	@After
+	public void eliminarModelo() {
+		this.dataService.eliminarDatos();
 	}
 
 	@Test
@@ -58,6 +67,7 @@ public class JDBCEspecieDAOTest {
 		assertTrue(especie != fidelMon);
 	}
 
+
 	@Test
 	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_no_la_persiste_y_devuelve_false() {
 		this.dataService.eliminarDatos();
@@ -74,22 +84,23 @@ public class JDBCEspecieDAOTest {
 
 	@Test
 	public void al_recuperar_una_especie_que_no_existe_devuelve_null() {
-		this.dataService.eliminarDatos();
+
 		Especie especieQueNoExiste = this.dao.recuperar("NombreQueNoExiste");
 		assertNull(especieQueNoExiste);
 	}
 
 	@Test
-	public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_la_misma_Cantidad(){
-		// En el @before se limpio la base y se insertaron 8 especies
+	public void al_guardar_varios_y_luego_recuperar_todos_se_obtienen_en_una_lista_ordenada_ascendente() {
+		// En el @before se insertaron 8 especies
 		List<Especie> especiesRecuperadas = this.dao.recuperarTodos();
-
-		assertTrue(especiesRecuperadas.size() == 8);
+		for (int i = 0; i < especiesRecuperadas.size(); i++) {
+			assertTrue(especiesRecuperadas.get(i).getNombre().equalsIgnoreCase(this.dao.recuperarTodos().get(i).getNombre()));
+		}
 	}
 
 	@Test
 	public void al_recuperar_todos_de_una_base_sin_datos_devuelve_una_lista_vacia(){
-		this.dataService.eliminarDatos();
+		eliminarModelo();
 		List<Especie> especiesRecuperadas = this.dao.recuperarTodos();
 		assertTrue(especiesRecuperadas.isEmpty());
 	}

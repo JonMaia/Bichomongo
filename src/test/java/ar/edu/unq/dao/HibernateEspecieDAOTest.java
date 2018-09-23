@@ -2,15 +2,14 @@ package ar.edu.unq.dao;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class HibernateEspecieDAOTest {
 
