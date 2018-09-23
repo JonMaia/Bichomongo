@@ -1,7 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 
@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
-public class HibernateEspecieDAO implements EspecieDAO {
+public class HibernateEspecieDAO extends BaseHibernateDAO<Especie,Integer> implements EspecieDAO {
     @Override
     public void guardar(Especie especie) {
         try {
