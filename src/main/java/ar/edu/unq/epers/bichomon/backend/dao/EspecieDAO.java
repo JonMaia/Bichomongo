@@ -4,7 +4,14 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
 import java.util.List;
 
-public interface EspecieDAO extends GenericDAO<Especie, Integer>{
+
+public interface EspecieDAO {
+	
+	void guardar(Especie especie);
+
+	Boolean guardarValidado(Especie especie);
+
+    void actualizar(Especie especie);
 
 	Especie recuperar(String nombreEspecie);
 

@@ -38,6 +38,30 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 		});
 	}
 
+	public Boolean guardarValidado(Especie especie) {
+		if (recuperar(especie.getNombre()) == null) {
+			return conection.executeWithConnection(conn -> {
+				PreparedStatement ps = conn.prepareStatement("INSERT INTO bichomongo.especie (nombre,peso,altura,tipo,energia_inicial,url_foto,cantidad_bichos)" +
+						"VALUES (?,?,?,?,?,?,?);");
+				ps.setString(1, especie.getNombre());
+				ps.setInt(2, especie.getPeso());
+				ps.setInt(3, especie.getAltura());
+				ps.setString(4, especie.getTipo().name());
+				ps.setInt(5, especie.getEnergiaInicial());
+				ps.setString(6, especie.getUrlFoto());
+				ps.setInt(7, especie.getCantidadBichos());
+				//ojo, no estamos guardando el inventario!
+				ps.execute();
+
+				boolean result = (ps.getUpdateCount() == 1);
+				ps.close();
+				return result;
+			});
+		}else{
+			return false;
+		}
+	}
+
 	@Override
 	public void actualizar(Especie especie) {
         conection.executeWithConnection( conn -> {

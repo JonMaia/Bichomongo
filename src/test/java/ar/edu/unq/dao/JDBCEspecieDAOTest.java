@@ -10,6 +10,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+
+import javax.validation.constraints.AssertFalse;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -62,11 +67,19 @@ public class JDBCEspecieDAOTest {
 		assertTrue(especie != fidelMon);
 	}
 
-	@Test(expected = RuntimeException.class)
-	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_lanza_una_excepcion() {
 
-		this.dao.guardar(crearDefaultEspecie("FidelMon"));
-		this.dao.guardar(crearDefaultEspecie("FidelMon"));
+	@Test
+	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_no_la_persiste_y_devuelve_false() {
+		this.dataService.eliminarDatos();
+		Especie fidelmon = crearDefaultEspecie("FidelMon");
+		assertFalse(this.dao.guardarValidado(fidelmon) && this.dao.guardarValidado(fidelmon));
+	}
+
+	@Test
+	public void al_guardar_una_especie_verifica_que_no_haya_otra_con_el_mismo_nombre_y_devuelve_true() {
+		this.dataService.eliminarDatos();
+		Especie fidelmon = crearDefaultEspecie("FidelMon");
+		assertTrue(this.dao.guardarValidado(fidelmon));
 	}
 
 	@Test
