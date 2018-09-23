@@ -1,7 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 
 public class HibernateEntrenadorHibernateDAO extends BaseHibernateDAO<Entrenador, String> implements EntrenadorDao{
 

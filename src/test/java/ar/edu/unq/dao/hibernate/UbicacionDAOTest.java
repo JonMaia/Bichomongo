@@ -1,6 +1,7 @@
 package ar.edu.unq.dao.hibernate;
 
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionService;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +23,12 @@ public class UbicacionDAOTest {
 
 		Entrenador brock = new Entrenador();
 
-		brock.setUbicacion("CiudadPlateada");
+		Ubicacion ubicacion = new Ubicacion();
 
-		assertEquals(brock.getUbicacion(), "CiudadPlateada");
+		ubicacion.setNombre("CiudadPlateada");
+
+		brock.setUbicacion(ubicacion);
+		assertEquals(brock.getUbicacion().getNombre(), "CiudadPlateada");
 
 	}
 }

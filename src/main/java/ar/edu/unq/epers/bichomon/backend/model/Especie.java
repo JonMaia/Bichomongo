@@ -1,8 +1,9 @@
-package ar.edu.unq.epers.bichomon.backend.model.especie;
+package ar.edu.unq.epers.bichomon.backend.model;
 
-import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Condicion.Condicion;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Representa una {@link Especie} de bicho.
@@ -19,12 +20,11 @@ public class Especie {
 	private int altura;
 	private int peso;
 	private TipoBicho tipo;
-
 	private int energiaInicial;
-	
 	private String urlFoto;
-	
 	private int cantidadBichos;
+	private Especie evolucion;
+	private List<Condicion> condicionDeEvolucion;
 
 	public Especie(){
 
@@ -120,5 +120,20 @@ public class Especie {
 		this.cantidadBichos++;
 		return new Bicho(this);
 	}
-	
+
+    public List<Condicion> getCondicionDeEvolucion() {
+        return condicionDeEvolucion;
+    }
+
+    public void setCondicionDeEvolucion(List<Condicion> condicionDeEvolucion) {
+        this.condicionDeEvolucion = condicionDeEvolucion;
+    }
+
+    public Especie getEvolucion() {
+        return evolucion;
+    }
+
+    public void setEvolucion(Especie evolucion) {
+        this.evolucion = evolucion;
+    }
 }

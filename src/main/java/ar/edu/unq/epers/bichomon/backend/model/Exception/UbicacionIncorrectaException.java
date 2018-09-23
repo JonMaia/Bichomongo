@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model.Exception;
 
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 
 public class UbicacionIncorrectaException extends RuntimeException {
 
