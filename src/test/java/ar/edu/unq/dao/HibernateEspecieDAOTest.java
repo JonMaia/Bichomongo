@@ -1,7 +1,9 @@
 package ar.edu.unq.dao;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
+import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
@@ -13,8 +15,10 @@ import static org.junit.Assert.assertEquals;
 
 public class HibernateEspecieDAOTest {
 
-    private EspecieDao dao = new HibernateEspecieDaoImple();
-    private DataService dataService = new DataServiceImpl(dao);
+    private EspecieDao especieDao = new HibernateEspecieDaoImple();
+    private NivelDao nivelDao = new HibernateNivelDaoImple();
+    private DataService dataService = new DataServiceImpl(especieDao, nivelDao);
+
 
     private Especie crearDefaultEspecie(String nombre) {
         Especie especie = new Especie();
@@ -34,9 +38,9 @@ public class HibernateEspecieDAOTest {
 
         Especie especie = crearDefaultEspecie("FidelMon");
         Especie fidelMon = Runner.runInSession(() -> {
-            this.dao.guardar(especie);
+            this.especieDao.guardar(especie);
 
-            return this.dao.getById(especie.getId());
+            return this.especieDao.getById(especie.getId());
         });
 
         assertEquals(especie.getNombre(), fidelMon.getNombre());

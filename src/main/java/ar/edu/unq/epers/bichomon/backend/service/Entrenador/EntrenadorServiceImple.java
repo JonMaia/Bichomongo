@@ -1,11 +1,22 @@
 package ar.edu.unq.epers.bichomon.backend.service.Entrenador;
 
+import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
+import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
 import org.junit.Before;
 
+import java.util.Date;
+
 public class EntrenadorServiceImple implements EntrenadorService{
 
+    private EntrenadorDao dao;
+
+    public EntrenadorServiceImple(EntrenadorDao dao){
+        this.dao = dao;
+    }
 
     @Override
     public void setUbicacionEntrenador(String entrenador, String ubicacion) {
@@ -14,6 +25,22 @@ public class EntrenadorServiceImple implements EntrenadorService{
 
     @Override
     public Nivel getNivel(Entrenador entrenador) {
-        return null;
+        return dao.getNivel(entrenador);
     }
+
+    @Override
+    public void capturaBicho(Entrenador entrenador, Bicho bicho){
+        if(puedeCapturarOtroBichomon(entrenador)) {
+            bicho.setEntrenador(entrenador);
+            bicho.setFechaCaptura(new Date());
+        }
+    }
+
+    @Override
+    public boolean puedeCapturarOtroBichomon(Entrenador entrenador) {
+        Nivel nivel = getNivel(entrenador);
+        return entrenador.getBichomones().size()<nivel.getMaximoDeBichos();
+    }
+
+
 }

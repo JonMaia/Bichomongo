@@ -53,4 +53,7 @@ public abstract class BaseHibernateDAO<T, ID extends Serializable> implements Ge
         Session session = Runner.getCurrentSession();
         session.delete(object);
     }
+
+
+
 }
