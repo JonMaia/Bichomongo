@@ -1,7 +1,11 @@
 package ar.edu.unq.epers.bichomon.backend.service;
 
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.service.Entrenador.EntrenadorService;
+import ar.edu.unq.epers.bichomon.backend.service.Entrenador.EntrenadorServiceImple;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
@@ -20,12 +24,16 @@ public class ServiceFactory {
 	 * @return un objeto que implementa {@link EspecieService}
 	 */
 	public EspecieService getEspecieService() {
-		return new EspecieServiceImpl(new HibernateEspecieDAO());
+		return new EspecieServiceImpl(new HibernateEspecieDaoImple());
 	}
-	
+
+	public EntrenadorService getEntrenadorService() {
+		return new EntrenadorServiceImple(new HibernateEntrenadorDaoImple(Entrenador.class));
+	}
+
 	/**
 	 * @return un objeto que implementa {@link DataService}
 	 */
-	public DataService getDataService() { return new DataServiceImpl(new JDBCEspecieDAO());	}
+	public DataService getDataService() { return new DataServiceImpl(new HibernateEspecieDaoImple(), new HibernateNivelDaoImple());	}
 
 }

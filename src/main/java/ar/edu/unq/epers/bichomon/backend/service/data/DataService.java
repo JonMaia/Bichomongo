@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.service.data;
 
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
 
 /**
  * Este servicio solo será utilizado para pruebas.
@@ -20,5 +20,6 @@ public interface DataService {
 	 * facilitar las pruebas de frontend.
 	 */
 	void crearSetDatosIniciales();
-	
+
+	void crearSetEspeciesIniciales();
 }

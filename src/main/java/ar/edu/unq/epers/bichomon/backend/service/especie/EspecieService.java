@@ -1,7 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.especie;
 
-import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public interface EspecieService {
      *
      * @param nombreEspecie - el nombre de la especie que se busca
      * @return la especie encontrada
-     * @throws la excepción {@link EspecieNoExistente} (no chequeada)
+     //* @throws la excepción {@link EspecieNoExistente} (no chequeada)
      **/
     Especie getEspecie(String nombreEspecie);
 
@@ -48,4 +48,6 @@ public interface EspecieService {
      * @return un objeto {@link Bicho} instanciado
      */
     Bicho crearBicho(String nombreEspecie, String nombreBicho);
+
+    void evolucionar();
 }

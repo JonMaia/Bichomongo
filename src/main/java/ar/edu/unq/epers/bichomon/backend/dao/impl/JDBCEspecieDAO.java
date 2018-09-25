@@ -1,17 +1,24 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class JDBCEspecieDAO implements EspecieDAO {
+public class JDBCEspecieDAO implements EspecieDao {
 
-    JDBCConection conection = new JDBCConection();
+    public JDBCConection conection = new JDBCConection();
+
+
+    @Override
+    public Especie getById(Integer id) {
+        //TODO: implementar
+        throw new RuntimeException("Pendiente implementacion");
+    }
 
 	@Override
 	public void guardar(Especie especie) {
@@ -35,6 +42,30 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 
 			return null;
 		});
+	}
+
+	public Boolean guardarValidado(Especie especie) {
+		if (recuperar(especie.getNombre()) == null) {
+			return conection.executeWithConnection(conn -> {
+				PreparedStatement ps = conn.prepareStatement("INSERT INTO bichomongo.especie (nombre,peso,altura,tipo,energia_inicial,url_foto,cantidad_bichos)" +
+						"VALUES (?,?,?,?,?,?,?);");
+				ps.setString(1, especie.getNombre());
+				ps.setInt(2, especie.getPeso());
+				ps.setInt(3, especie.getAltura());
+				ps.setString(4, especie.getTipo().name());
+				ps.setInt(5, especie.getEnergiaInicial());
+				ps.setString(6, especie.getUrlFoto());
+				ps.setInt(7, especie.getCantidadBichos());
+				//ojo, no estamos guardando el inventario!
+				ps.execute();
+
+				boolean result = (ps.getUpdateCount() == 1);
+				ps.close();
+				return result;
+			});
+		}else{
+			return false;
+		}
 	}
 
 	@Override
@@ -61,12 +92,14 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 		});
 	}
 
-	@Override
-	public void eliminar(Especie object) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void eliminar(Especie object) {
+        //TODO: implementar
+        throw new RuntimeException("Pendiente implementacion");
+    }
 
-	@Override
+
+    @Override
 	public Especie recuperar(String nombreEspecie) {
 		return conection.executeWithConnection(conn -> {
 			PreparedStatement ps = conn.prepareStatement("SELECT id,nombre,peso,altura,tipo,url_foto,energia_inicial,cantidad_bichos FROM especie WHERE nombre = ?");
@@ -90,10 +123,6 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 		});
 	}
 
-	@Override
-	public Especie getById(Integer id) {
-		throw new RuntimeException("Pendiente implementacion");
-	}
 
 	@Override
 	public List<Especie> recuperarTodos() {
@@ -117,7 +146,7 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM especie");
 			ps.executeUpdate();
 			ps.close();
-			return null; // consultar como hacer que no retorne nada
+			return null;
 		});
 	}
 
@@ -135,9 +164,4 @@ public  class JDBCEspecieDAO implements EspecieDAO {
 
 		return especie;
 	}
-
-
-
-
-
-	}
+}

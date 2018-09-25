@@ -1,14 +1,17 @@
 package ar.edu.unq.dao;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
+import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 import java.util.List;
 
@@ -17,24 +20,18 @@ import static org.junit.Assert.*;
 
 public class JDBCEspecieDAOTest {
 
-	private EspecieDAO dao = new JDBCEspecieDAO();
-	private DataService dataService = new DataServiceImpl(dao);
+	private EspecieDao dao = new JDBCEspecieDAO();
+    private NivelDao nivelDao = new HibernateNivelDaoImple();
+    private DataService dataService = new DataServiceImpl(dao, nivelDao);
 
-	private Especie crearDefaultEspecie(String nombre) {
-		Especie especie = new Especie();
-		especie.setNombre(nombre);
-		especie.setAltura(180);
-		especie.setPeso(100);
-		especie.setTipo(TipoBicho.AGUA);
-		especie.setEnergiaIncial(100);
-		especie.setUrlFoto("https://i.ytimg.com/vi/MSV1z4-14Pw/hqdefault.jpg");
-		especie.setCantidadBichos(5);
-		return especie;
-	}
+    private Especie crearDefaultEspecie(String nombre) {
+        Especie especie = new Especie(nombre, TipoBicho.AGUA,180, 100, 100, "https://i.ytimg.com/vi/MSV1z4-14Pw/hqdefault.jpg");
+        especie.setCantidadBichos(5);
+        return especie;
+    }
 
 	@Before
 	public void crearModelo() {
-
 		this.dataService.crearSetDatosIniciales();
 	}
 
@@ -62,11 +59,19 @@ public class JDBCEspecieDAOTest {
 		assertTrue(especie != fidelMon);
 	}
 
-	@Test(expected = RuntimeException.class)
-	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_lanza_una_excepcion() {
 
-		this.dao.guardar(crearDefaultEspecie("FidelMon"));
-		this.dao.guardar(crearDefaultEspecie("FidelMon"));
+	@Test
+	public void al_guardar_mas_de_una_especie_con_el_mismo_nombre_no_la_persiste_y_devuelve_false() {
+		this.dataService.eliminarDatos();
+		Especie fidelmon = crearDefaultEspecie("FidelMon");
+		assertFalse(this.dao.guardarValidado(fidelmon) && this.dao.guardarValidado(fidelmon));
+	}
+
+	@Test
+	public void al_guardar_una_especie_verifica_que_no_haya_otra_con_el_mismo_nombre_y_devuelve_true() {
+		this.dataService.eliminarDatos();
+		Especie fidelmon = crearDefaultEspecie("FidelMon");
+		assertTrue(this.dao.guardarValidado(fidelmon));
 	}
 
 	@Test
@@ -105,5 +110,5 @@ public class JDBCEspecieDAOTest {
 		assertEquals(fidelmon.getAltura(), especie.getAltura());
 		assertTrue( especie != fidelmon);
 	}
-}
 
+}

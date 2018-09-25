@@ -1,6 +1,6 @@
-package ar.edu.unq.epers.bichomon.backend.model.Condicion;
+package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
-import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 
 public class CondicionEnergia extends Condicion {
 

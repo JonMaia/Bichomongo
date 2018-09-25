@@ -1,8 +1,9 @@
-package ar.edu.unq.epers.bichomon.backend.model.especie;
+package ar.edu.unq.epers.bichomon.backend.model;
 
-import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Representa una {@link Especie} de bicho.
@@ -19,23 +20,14 @@ public class Especie {
 	private int altura;
 	private int peso;
 	private TipoBicho tipo;
-
 	private int energiaInicial;
-	
 	private String urlFoto;
-	
 	private int cantidadBichos;
+	@OneToOne
+	private Especie evolucion;
+	@ManyToMany
+	private List<Condicion> condicionDeEvolucion;
 
-	public Especie(){
-
-	}
-
-	public Especie(int id, String nombre, TipoBicho tipo) {
-	    this.id = id;
-		this.nombre = nombre;
-		this.tipo = tipo;
-	}
-	
 	/**
 	 * @return el nombre de la especie (por ejemplo: Perromon)
 	 */
@@ -116,9 +108,55 @@ public class Especie {
 		this.id = id;
 	}
 
+
+	public Especie(){
+
+	}
+
+	public Especie(String nombre, TipoBicho tipo, Integer altura, Integer peso, Integer energia, String foto) {
+		this.setNombre(nombre);
+		this.setTipo(tipo);
+		this.setAltura(altura);
+		this.setPeso(peso);
+		this.setEnergiaIncial(energia);
+		this.setUrlFoto(foto);
+	}
+
+	public Especie(int id, String nombre, TipoBicho tipo) {
+		this.id = id;
+		this.nombre = nombre;
+		this.tipo = tipo;
+	}
+
+
 	public Bicho crearBicho(){
 		this.cantidadBichos++;
 		return new Bicho(this);
 	}
-	
+
+    public List<Condicion> getCondicionDeEvolucion() {
+        return condicionDeEvolucion;
+    }
+
+    public void setCondicionDeEvolucion(List<Condicion> condicionDeEvolucion) {
+        this.condicionDeEvolucion = condicionDeEvolucion;
+    }
+
+    public Especie getEvolucion() {
+        return evolucion;
+    }
+
+    public void setEvolucion(Especie evolucion) {
+        this.evolucion = evolucion;
+    }
+
+
+	public boolean puedeEvolucionar(Bicho bicho){
+		boolean esEvolucionable = true;
+		for ( Condicion condicion : condicionDeEvolucion)
+			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(bicho);
+
+		return esEvolucionable;
+	}
+
 }

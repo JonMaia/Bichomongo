@@ -1,13 +1,8 @@
-package ar.edu.unq.epers.bichomon.backend.model.bicho;
+package ar.edu.unq.epers.bichomon.backend.model;
 
-import ar.edu.unq.epers.bichomon.backend.model.Condicion.Condicion;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -17,21 +12,23 @@ import java.util.List;
  * 
  * @author Charly Backend
  */
+@Entity
 public class Bicho {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private int id;
 
+	@OneToOne
 	private Entrenador entrenador;
 
+	@OneToOne
 	private Especie especie;
 
 	private int energia;
 	private int victorias;
 	private int edad;
 	private Date fechaCaptura;
-	private List<Condicion> condicionesEvolucion;
 
 	public Bicho (Especie especie){
 	    this.especie = especie;
@@ -57,13 +54,7 @@ public class Bicho {
 		return this.fechaCaptura;
 	}
 
-	public void setCondicionesEvolucion(List<Condicion> condicionesEvolucion){
-		this.condicionesEvolucion = condicionesEvolucion;
-	}
 
-	public List<Condicion> getCondicionesEvolucion(){
-		return this.condicionesEvolucion;
-	}
 
 	public void setEntrenador(Entrenador entrenador) { this.entrenador = entrenador; }
 
@@ -83,13 +74,6 @@ public class Bicho {
 		this.energia = energia;
 	}
 
-	public boolean puedeEvolucionar(){
-		boolean esEvolucionable = true;
-		for ( Condicion condicion : condicionesEvolucion){
-			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(this);
 
-		}
-		return esEvolucionable;
-	}
 
 }
