@@ -1,6 +1,8 @@
 package ar.edu.unq.dao.hibernate;
 
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Guarderia;
+import ar.edu.unq.epers.bichomon.backend.model.Nivel;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionService;
 import org.junit.Before;
@@ -21,9 +23,12 @@ public class UbicacionDAOTest {
 	@Test
 	public void retornaLaUbicacionDelEntrenador() {
 
-		Entrenador brock = new Entrenador();
+		Ubicacion ubicacion = new Guarderia();
 
-		Ubicacion ubicacion = new Ubicacion();
+		Nivel nivel = new Nivel("I", 100, 50, null);
+
+		Entrenador brock = new Entrenador("Brock", ubicacion, nivel );
+
 
 		ubicacion.setNombre("CiudadPlateada");
 

@@ -2,12 +2,22 @@ package ar.edu.unq.epers.bichomon.backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
-public class Ubicacion {
+public abstract class Ubicacion {
 
     @Id
-    private String nombre = "";
+    private String nombre;
+
+    @OneToMany
+    protected List<Entrenador> entrenadores;
+
+    @OneToMany
+    protected List<Bicho> bichomones;
+
+    protected Busqueda unaBusqueda;
 
 
     public String getNombre() {
@@ -17,4 +27,29 @@ public class Ubicacion {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public List<Entrenador> getEntrenadores(){
+        return entrenadores;
+    }
+
+    public void setEntrenadores(List<Entrenador> entrenadores) {
+        entrenadores = entrenadores;
+    }
+
+    public void moverEntrenador(Entrenador entrenador) {
+        entrenadores.add(entrenador);
+    }
+
+    public abstract List<Bicho> getBichomones();
+
+    public void setBichomones(List<Bicho> bichomones){
+        bichomones = bichomones;
+    }
+
+    public abstract Boolean dejarBicho(Bicho unBicho);
+
+    public abstract Bicho entregarBicho(Bicho unBicho);
+
+    public abstract void buscar(Entrenador entrenador);
+
 }
