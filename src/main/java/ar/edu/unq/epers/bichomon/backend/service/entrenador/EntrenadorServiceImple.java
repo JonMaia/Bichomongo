@@ -5,7 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 public class EntrenadorServiceImple implements EntrenadorService{
 
@@ -29,7 +29,7 @@ public class EntrenadorServiceImple implements EntrenadorService{
     public void capturaBicho(Entrenador entrenador, Bicho bicho){
         if(puedeCapturarOtroBichomon(entrenador)) {
             bicho.setEntrenador(entrenador);
-            bicho.setFechaCaptura(new Date());
+            bicho.setFechaCaptura(LocalDate.now());
         }
     }
 

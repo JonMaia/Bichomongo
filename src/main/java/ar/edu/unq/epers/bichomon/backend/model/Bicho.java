@@ -3,8 +3,8 @@ package ar.edu.unq.epers.bichomon.backend.model;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import org.joda.time.LocalDate;
+
 
 /**
  * Un {@link Bicho} existente en el sistema, el mismo tiene un nombre
@@ -27,11 +27,15 @@ public class Bicho {
 
 	private int energia;
 	private int victorias;
+	private LocalDate fechaNacimiento;
+	private LocalDate fechaCaptura;
 	private int edad;
-	private Date fechaCaptura;
 
 	public Bicho (Especie especie){
 	    this.especie = especie;
+	    this.victorias = 0;
+	    this.fechaNacimiento = LocalDate.now();
+
     }
 	
 	public Especie getEspecie() {
@@ -46,11 +50,11 @@ public class Bicho {
 
 	public Entrenador getEntrenador() { return entrenador; }
 
-	public void setFechaCaptura(Date fecha){
+	public void setFechaCaptura(LocalDate fecha){
 		this.fechaCaptura = fecha;
 	}
 
-	public Date getFechaCaptura (){
+	public LocalDate getFechaCaptura (){
 		return this.fechaCaptura;
 	}
 
@@ -73,6 +77,15 @@ public class Bicho {
 	public void setEnergia(int energia) {
 		this.energia = energia;
 	}
+
+	public boolean puedeEvolucionar(Bicho bicho){
+		boolean esEvolucionable = true;
+		for ( Condicion condicion : this.getEspecie().getCondicionDeEvolucion())
+			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(bicho);
+
+		return esEvolucionable;
+	}
+
 
 
 
