@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.service.Entrenador;
+package ar.edu.unq.epers.bichomon.backend.service.entrenador;
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;

@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.service.Bicho;
+package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
@@ -30,7 +30,7 @@ public interface BichoService {
 
     boolean puedeEvolucionar(String entrenador, int bicho);
 
-    //Bicho evoluciona el bicho especificado (si cumple con las codiciones para evolucionar)
+    //bicho evoluciona el bicho especificado (si cumple con las codiciones para evolucionar)
 
     Bicho evolucionar(String entrenador, int bicho);
 }

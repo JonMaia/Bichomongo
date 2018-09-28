@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.service.Bicho;
+package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
@@ -13,9 +13,9 @@ public class BichoServiceImpl {
         this.entrenadorDAO = entrenadorDAO;
     }
 
-    //Bicho buscar (String entrenador){
+    //bicho buscar (String entrenador){
     //   Runner.runInSession(() -> {
-    //       //Entrenador entrenador = this.entrenadorDAO.recuperar(entrenador);
+    //       //entrenador entrenador = this.entrenadorDAO.recuperar(entrenador);
     //       //return entrenador.buscar();
     //  }
     //   }

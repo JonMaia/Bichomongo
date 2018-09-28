@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.service.Leaderboard;
+package ar.edu.unq.epers.bichomon.backend.service.leaderboard;
 
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;

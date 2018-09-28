@@ -36,7 +36,7 @@ public interface EspecieService {
     List<Especie> getAllEspecies();
 
     /**
-     * Crea un nuevo Bicho perteneciente a la especie especificada. El nuevo objeto Bicho no es
+     * Crea un nuevo bicho perteneciente a la especie especificada. El nuevo objeto bicho no es
      * persistido (de momento), solo devuelto.
      *
      * Para llevar una mejor estadística de los bichos que han sido creados cada objeto

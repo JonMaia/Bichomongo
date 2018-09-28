@@ -1,12 +1,9 @@
-package ar.edu.unq.epers.bichomon.backend.service.Entrenador;
+package ar.edu.unq.epers.bichomon.backend.service.entrenador;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
-import org.junit.Before;
 
 import java.util.Date;
 
