@@ -17,12 +17,15 @@ public class Nivel {
 
     private Nivel nextNivel;
 
+    Double factorDeNivel;
 
-    public Nivel(String nombre,Integer expMaxima, Integer maximoDeBichos,Nivel nextLevel) {
+
+    public Nivel(String nombre,Integer expMaxima, Integer maximoDeBichos,Nivel nextLevel,Double factorDeBusqueda) {
         this.setNombre(nombre);
         this.setExpMaxima(expMaxima);
         this.setMaximoDeBichos(maximoDeBichos);
         this.setNextNivel(nextLevel);
+        this.setFactorDeNivel(factorDeBusqueda);
     }
 
     public Integer getId() {
@@ -63,5 +66,17 @@ public class Nivel {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Nivel getNextNivel() {
+        return nextNivel;
+    }
+
+    public Double getFactorDeNivel() {
+        return factorDeNivel;
+    }
+
+    public void setFactorDeNivel(Double factorDeNivel) {
+        this.factorDeNivel = factorDeNivel;
     }
 }
