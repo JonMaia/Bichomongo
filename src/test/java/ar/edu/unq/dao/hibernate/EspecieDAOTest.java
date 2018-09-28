@@ -23,12 +23,14 @@ public class EspecieDAOTest {
     private DataService dataService = new DataServiceImpl(especieDao, nivelDao);
 
 
+
+
     private Especie crearDefaultEspecie(String nombre) {
         Especie especie = new Especie(nombre, TipoBicho.AGUA,180, 100, 100, "https://i.ytimg.com/vi/MSV1z4-14Pw/hqdefault.jpg");
         especie.setCantidadBichos(5);
         return especie;
     }
-
+/*
     @Before
     public void crearModelo() {
         //this.dataService.crearSetDatosIniciales();
@@ -38,7 +40,7 @@ public class EspecieDAOTest {
     public void eliminarModelo() {
         //this.dataService.eliminarDatos();
     }
-
+*/
     @Test
     public void al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
 
