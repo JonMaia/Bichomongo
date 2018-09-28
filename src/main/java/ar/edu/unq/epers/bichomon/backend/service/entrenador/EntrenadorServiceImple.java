@@ -21,11 +21,6 @@ public class EntrenadorServiceImple implements EntrenadorService{
     }
 
     @Override
-    public Nivel getNivel(Entrenador entrenador) {
-        return dao.getNivel(entrenador);
-    }
-
-    @Override
     public void capturaBicho(Entrenador entrenador, Bicho bicho){
         if(puedeCapturarOtroBichomon(entrenador)) {
             bicho.setEntrenador(entrenador);
@@ -35,7 +30,7 @@ public class EntrenadorServiceImple implements EntrenadorService{
 
     @Override
     public boolean puedeCapturarOtroBichomon(Entrenador entrenador) {
-        Nivel nivel = getNivel(entrenador);
+        Nivel nivel = entrenador.getNivel();
         return entrenador.getBichomones().size()<nivel.getMaximoDeBichos();
     }
 

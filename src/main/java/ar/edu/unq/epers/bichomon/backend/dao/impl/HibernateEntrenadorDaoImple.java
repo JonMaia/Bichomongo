@@ -13,7 +13,7 @@ public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, St
     public HibernateEntrenadorDaoImple(Class<Entrenador> claz) {
         super(claz);
     }
-
+/*
     @Override
     public Nivel getNivel(Entrenador entrenador) {
         StringBuffer squery = new StringBuffer();
@@ -28,4 +28,5 @@ public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, St
         query.setParameter("experiencia", entrenador.getExperiencia());
         return (Nivel) query.uniqueResult();
     }
+    */
 }

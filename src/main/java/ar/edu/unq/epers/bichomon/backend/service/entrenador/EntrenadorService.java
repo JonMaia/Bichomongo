@@ -8,8 +8,6 @@ public interface EntrenadorService {
 
     void setUbicacionEntrenador(String entrenador, String ubicacion);
 
-    Nivel getNivel(Entrenador entrenador);
-
 
     void capturaBicho(Entrenador entrenador, Bicho bicho);
 
