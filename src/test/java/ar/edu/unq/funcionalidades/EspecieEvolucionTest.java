@@ -1,4 +1,4 @@
-package ar.edu.unq.service;
+package ar.edu.unq.funcionalidades;
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
