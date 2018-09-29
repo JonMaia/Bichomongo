@@ -9,8 +9,6 @@ import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -22,9 +20,6 @@ public class EspecieDAOTest {
     private NivelDao nivelDao = new HibernateNivelDaoImple();
     private DataService dataService = new DataServiceImpl(especieDao, nivelDao);
 
-
-
-
     private Especie crearDefaultEspecie(String nombre) {
         Especie especie = new Especie(nombre, TipoBicho.AGUA,180, 100, 100, "https://i.ytimg.com/vi/MSV1z4-14Pw/hqdefault.jpg");
         especie.setCantidadBichos(5);
@@ -34,20 +29,23 @@ public class EspecieDAOTest {
     @Test
     public void al_guardar_y_luego_recuperar_se_obtiene_objetos_similares() {
 
-        Especie especie = crearDefaultEspecie("FidelMon");
+        Especie especie = crearDefaultEspecie("TotoMon");
         Especie fidelMon = Runner.runInSession(() -> {
             this.especieDao.guardar(especie);
 
             return this.especieDao.getById(especie.getId());
         });
 
-        assertEquals(especie.getNombre(), fidelMon.getNombre());
-        assertEquals(especie.getAltura(), fidelMon.getAltura());
-        assertEquals(especie.getPeso(), fidelMon.getPeso());
-        assertEquals(especie.getTipo(), fidelMon.getTipo());
-        assertEquals(especie.getEnergiaInicial(), fidelMon.getEnergiaInicial());
-        assertEquals(especie.getUrlFoto(), fidelMon.getUrlFoto());
-        assertEquals(especie.getCantidadBichos(), fidelMon.getCantidadBichos());
+        assertEquals(fidelMon.getNombre(), especie.getNombre());
+        assertEquals(fidelMon.getTipo(), especie.getTipo());
+        assertEquals(fidelMon.getCantidadBichos(), especie.getCantidadBichos());
+        assertEquals(fidelMon.getEnergiaInicial(), especie.getEnergiaInicial());
+        assertEquals(fidelMon.getPeso(), especie.getPeso());
+        assertEquals(fidelMon.getUrlFoto(), especie.getUrlFoto());
+        assertEquals(fidelMon.getEvolucion(), especie.getEvolucion());
+        assertEquals(fidelMon.getCondicionDeEvolucion(), especie.getCondicionDeEvolucion());
+        assertEquals(fidelMon.getAltura(), especie.getAltura());
+        assertTrue( especie == fidelMon);
     }
 
     @Test
@@ -78,46 +76,53 @@ public class EspecieDAOTest {
             return (this.especieDao.guardarValidado(especie) && this.especieDao.guardarValidado(especie));
             }));
     }
-/*
+
     @Test
     public void al_guardar_una_especie_verifica_que_no_haya_otra_con_el_mismo_nombre_y_devuelve_true() {
-        this.dataService.eliminarDatos();
-        Especie fidelmon = crearDefaultEspecie("FidelMon");
-        assertTrue(this.dao.guardarValidado(fidelmon));
+
+        Especie especie = crearDefaultEspecie("FidelMon");
+        assertTrue( Runner.runInSession(() -> {
+            return (this.especieDao.guardarValidado(especie));
+        }));
     }
 
     @Test
     public void al_recuperar_una_especie_que_no_existe_devuelve_null() {
-
-        Especie especieQueNoExiste = this.dao.recuperar("NombreQueNoExiste");
-        assertNull(especieQueNoExiste);
+        assertNull(Runner.runInSession(() -> {
+            return (this.especieDao.recuperar("NombreQueNoExiste"));
+        }));
     }
 
     @Test
     public void al_recuperar_todos_de_una_base_sin_datos_devuelve_una_lista_vacia(){
-        eliminarModelo();
-        List<Especie> especiesRecuperadas = this.dao.recuperarTodos();
-        assertTrue(especiesRecuperadas.isEmpty());
+        assertTrue(Runner.runInSession(() -> {
+            return (this.especieDao.recuperarTodos().isEmpty());
+        }));
     }
 
     @Test
-    public void al_actualizar_y_luego_recuperar_se_obtiene_la_especie_modificada_pero_no_el_mismo_objeto() {
+    public void al_actualizar_y_luego_recuperar_se_obtiene_la_especie_modificada() {
 
-        Especie especie = this.dao.recuperar("Rojomon");
-        especie.setNombre("Fidelmon");
-        especie.setAltura(200);
-        this.dao.actualizar(especie);
 
-        Especie fidelmon = this.dao.recuperar("Fidelmon");
-        assertEquals(fidelmon.getNombre(), especie.getNombre());
-        assertEquals(fidelmon.getAltura(), especie.getAltura());
-        assertTrue( especie != fidelmon);
+        Especie especie = crearDefaultEspecie("PepeMon");
+        Especie monomon = Runner.runInSession(() -> {
+            this.especieDao.guardar(especie);
+            especie.setNombre("Monomon");
+            this.especieDao.actualizar(especie);
+            return (this.especieDao.recuperar("Monomon"));
+        });
+
+        assertEquals(monomon.getNombre(), especie.getNombre());
+        assertEquals(monomon.getTipo(), especie.getTipo());
+        assertEquals(monomon.getCantidadBichos(), especie.getCantidadBichos());
+        assertEquals(monomon.getEnergiaInicial(), especie.getEnergiaInicial());
+        assertEquals(monomon.getPeso(), especie.getPeso());
+        assertEquals(monomon.getUrlFoto(), especie.getUrlFoto());
+        assertEquals(monomon.getEvolucion(), especie.getEvolucion());
+        assertEquals(monomon.getCondicionDeEvolucion(), especie.getCondicionDeEvolucion());
+        assertEquals(monomon.getAltura(), especie.getAltura());
+        assertTrue( especie == monomon);
     }
-
-
-
-*/
-
 
 }
 
