@@ -25,15 +25,23 @@ public class HibernateEspecieDaoImple extends BaseHibernateDAO<Especie,Integer> 
 
     @Override
     public Boolean guardarValidado(Especie especie) {
-        //TODO: Implementar
-        throw new RuntimeException("Pendiente implementacion");
+        if (recuperar(especie.getNombre()) == null) {
+                guardar(especie);
+                return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
     public Especie recuperar(String nombreEspecie) {
         Session session = Runner.getCurrentSession();
-        return session.get(Especie.class, nombreEspecie);
-    }
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Especie> criteriaQuery = cb.createQuery(Especie.class);
+        Root<Especie> root = criteriaQuery.from(Especie.class);
+        criteriaQuery.select(root).where(cb.equal(root.get("nombre"), nombreEspecie));
+        return session.createQuery(criteriaQuery).uniqueResult();
+        }
 
     @Override
     public void eliminarEspecies() {
