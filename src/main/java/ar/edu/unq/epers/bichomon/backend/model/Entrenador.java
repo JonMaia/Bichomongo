@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -35,6 +36,8 @@ public class Entrenador {
         this.nivel = nivel;
 
     }
+
+    //GETTERS AND SETTERS
 
     public String getNombre() {
         return nombre;
@@ -76,6 +79,14 @@ public class Entrenador {
         this.nivel = nivel;
     }
 
+    public void setFechaUltimoBichoEncontra(Date date){
+        this.fechaUltimoBichoEncontra = date;
+    }
+    public Date getFechaUltimoBichoEncontra(){
+        return this.fechaUltimoBichoEncontra;
+    }
+
+
     public void addExperiencia(Experiencia exp){
         this.experiencia += exp.getExperiencia();
         pasaDeNivel();
@@ -87,15 +98,32 @@ public class Entrenador {
         this.setNivel(this.getNivel().next());
     }
 
-    public Boolean capturarBicho(Bicho bicho){
-        return false;
+    public void obtenerBicho(Bicho bicho){
+        setFechaUltimoBichoEncontra(new Date());
     }
 
+    public void buscarBicho(){
+        if(puedoBuscar())
+            ubicacion.buscar(this);
+    }
+
+    private boolean puedoBuscar() {
+        return getBichomones().size() < getNivel().getMaximoDeBichos();
+    }
+
+/*
     public void abandonarBicho(Bicho bicho){
-        //if(ubicacion.dejarBicho(bicho)){
-
-        //}
+        if(ubicacion.dejarBicho(bicho)){
+            Iterator<Bicho> iterator = getBichomones().iterator();
+            while (iterator.hasNext()){
+                Bicho bichomon = iterator.next();
+                if(bichomon.equals(bicho)){
+                    getBichomones().remove(bichomon);
+                    break;
+                }
+            }
+        }
     }
-
+*/
 
 }
