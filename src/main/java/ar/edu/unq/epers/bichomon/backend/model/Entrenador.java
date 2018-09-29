@@ -1,5 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -26,7 +29,7 @@ public class Entrenador {
     @OneToMany
     private Nivel nivel;
 
-    Date fechaUltimoBichoEncontra;
+    LocalDate fechaUltimoBichoEncontra;
 
     public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel) {
         this.nombre = nombre;
@@ -79,10 +82,10 @@ public class Entrenador {
         this.nivel = nivel;
     }
 
-    public void setFechaUltimoBichoEncontra(Date date){
+    public void setFechaUltimoBichoEncontra(LocalDate date){
         this.fechaUltimoBichoEncontra = date;
     }
-    public Date getFechaUltimoBichoEncontra(){
+    public LocalDate getFechaUltimoBichoEncontra(){
         return this.fechaUltimoBichoEncontra;
     }
 
@@ -99,7 +102,7 @@ public class Entrenador {
     }
 
     public void obtenerBicho(Bicho bicho){
-        setFechaUltimoBichoEncontra(new Date());
+        setFechaUltimoBichoEncontra(LocalDate.now());
     }
 
     public void buscarBicho(){
@@ -111,7 +114,7 @@ public class Entrenador {
         return getBichomones().size() < getNivel().getMaximoDeBichos();
     }
 
-/*
+
     public void abandonarBicho(Bicho bicho){
         if(ubicacion.dejarBicho(bicho)){
             Iterator<Bicho> iterator = getBichomones().iterator();
@@ -124,6 +127,5 @@ public class Entrenador {
             }
         }
     }
-*/
 
 }
