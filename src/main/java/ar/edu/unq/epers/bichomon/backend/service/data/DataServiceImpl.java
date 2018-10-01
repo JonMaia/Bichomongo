@@ -3,7 +3,11 @@ package ar.edu.unq.epers.bichomon.backend.service.data;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionEnergia;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionNivel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataServiceImpl implements DataService {
@@ -38,8 +42,20 @@ public class DataServiceImpl implements DataService {
     @Override
     public void crearSetEspeciesIniciales() {
 
+        Condicion condicionEnergia = new CondicionEnergia(0);
+        List<Condicion> condiciones = new ArrayList<Condicion>();
+        condiciones.add(condicionEnergia);
+
+        Especie rojomonsote = nuevaEspecie("Rojomonsote", TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
         Especie rojomon = nuevaEspecie("Rojomon", TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
+        rojomon.setEvolucion(rojomonsote);
+        rojomon.setCondicionDeEvolucion(condiciones);
+
+        Especie amarillomonsote = nuevaEspecie("Amarillomonsote", TipoBicho.ELECTRICIDAD,170, 69, 300, "/image/amarillomon.png");
         Especie amarillomon = nuevaEspecie("Amarillomon", TipoBicho.ELECTRICIDAD,170, 69, 300, "/image/amarillomon.png");
+        amarillomon.setEvolucion(amarillomonsote);
+        amarillomon.setCondicionDeEvolucion(new ArrayList<Condicion>());
+
         Especie verdemon = nuevaEspecie("Verdemon", TipoBicho.PLANTA,150, 55 , 5000, "/image/verdemon.png");
         Especie tierramon = nuevaEspecie("Tierramon", TipoBicho.TIERRA,1050, 99 , 5000, "/image/tierramon.png");
         Especie fantasmon = nuevaEspecie("Fantasmon", TipoBicho.AIRE,1900, 0 , 400, "/image/fantasmon.png");

@@ -28,7 +28,7 @@ public class ServiceFactory {
 	}
 
 	public EntrenadorService getEntrenadorService() {
-		return new EntrenadorServiceImple(new HibernateEntrenadorDaoImple(Entrenador.class));
+		return new EntrenadorServiceImple(new HibernateEntrenadorDaoImple());
 	}
 
 	/**

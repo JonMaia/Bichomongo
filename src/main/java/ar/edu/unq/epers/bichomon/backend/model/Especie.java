@@ -1,8 +1,10 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +25,9 @@ public class Especie {
 	private int energiaInicial;
 	private String urlFoto;
 	private int cantidadBichos;
-	@OneToOne
+	@OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Especie evolucion;
-	@ManyToMany
+	@ManyToMany @Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Condicion> condicionDeEvolucion;
 
 	/**
@@ -135,7 +137,9 @@ public class Especie {
 	}
 
     public List<Condicion> getCondicionDeEvolucion() {
-        return condicionDeEvolucion;
+        if(condicionDeEvolucion == null)
+        	this.condicionDeEvolucion = new ArrayList<>(0);
+		return condicionDeEvolucion;
     }
 
     public void setCondicionDeEvolucion(List<Condicion> condicionDeEvolucion) {
