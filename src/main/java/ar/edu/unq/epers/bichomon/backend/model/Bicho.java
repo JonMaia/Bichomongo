@@ -31,6 +31,8 @@ public class Bicho {
 	private LocalDate fechaCaptura;
 	private int edad;
 
+	public Bicho (){}
+
 	public Bicho (Especie especie){
 	    this.especie = especie;
 	    this.victorias = 0;
@@ -78,10 +80,11 @@ public class Bicho {
 		this.energia = energia;
 	}
 
-	public boolean puedeEvolucionar(Bicho bicho){
-		boolean esEvolucionable = true;
+	public boolean puedeEvolucionar(){
+
+		boolean esEvolucionable = (this.especie.getEvolucion() != null ? true : false);
 		for ( Condicion condicion : this.getEspecie().getCondicionDeEvolucion())
-			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(bicho);
+			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(this);
 
 		return esEvolucionable;
 	}

@@ -38,7 +38,7 @@ public class BichoServiceImpl implements BichoService{
 
     @Override
     public boolean puedeEvolucionar(String entrenador, int bicho) {
-        return false;
+        return bichoDAO.getById(bicho).puedeEvolucionar();
     }
 
     @Override

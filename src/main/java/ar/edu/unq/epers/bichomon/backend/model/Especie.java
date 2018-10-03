@@ -27,7 +27,7 @@ public class Especie {
 	private int cantidadBichos;
 	@OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Especie evolucion;
-	@ManyToMany @Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.EAGER) @Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Condicion> condicionDeEvolucion;
 
 	/**
