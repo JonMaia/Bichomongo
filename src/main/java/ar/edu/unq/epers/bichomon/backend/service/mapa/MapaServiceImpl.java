@@ -21,13 +21,13 @@ public class MapaServiceImpl implements MapaService {
 
     @Override
     public Bicho campeon(String dojo) {
-        /*retorna el actual campeon del Dojo especificado.*/
+        /*retorna el actual campeon del Guarderia especificado.*/
         return null;
     }
 
     @Override
     public Bicho campeonHistorico(String dojo) {
-        /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
+        /*retorna el bicho que haya sido campeon por mas tiempo en el Guarderia.*/
         return null;
 
     }

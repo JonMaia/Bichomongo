@@ -13,10 +13,10 @@ public interface MapaService {
 
 
     Bicho campeon(String dojo);
-        /*retorna el actual campeon del Dojo especificado.*/
+        /*retorna el actual campeon del Guarderia especificado.*/
 
 
     Bicho campeonHistorico(String dojo);
-    /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
+    /*retorna el bicho que haya sido campeon por mas tiempo en el Guarderia.*/
 
 }

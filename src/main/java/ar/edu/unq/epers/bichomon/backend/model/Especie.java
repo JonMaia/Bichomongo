@@ -154,13 +154,4 @@ public class Especie {
         this.evolucion = evolucion;
     }
 
-
-	public boolean puedeEvolucionar(Bicho bicho){
-		boolean esEvolucionable = true;
-		for ( Condicion condicion : condicionDeEvolucion)
-			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(bicho);
-
-		return esEvolucionable;
-	}
-
 }

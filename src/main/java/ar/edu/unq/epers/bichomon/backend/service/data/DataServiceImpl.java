@@ -29,12 +29,13 @@ public class DataServiceImpl implements DataService {
     public void crearSetDatosIniciales() {
 
         crearSetEspeciesIniciales();
-
-        nuevoNivel(1,99,2);
-        nuevoNivel(100,399,3);
-        nuevoNivel(400,999,4);
-        nuevoNivel(1000,1999,5);
-        nuevoNivel(2000,2999,6);
+        /*
+        Nivel nivel5 = new Nivel("V" ,2999, 6, null);
+        Nivel nivel4 = new Nivel("IV",1999,5, nivel5);
+        Nivel nivel3 = new Nivel("III",999,4,nivel4);
+        Nivel nivel2 = new Nivel("II",399,3, nivel3);
+        Nivel nivel1 = new Nivel("I",99,2, nivel2);
+        */
 
        // Ubicacion ciudadLuz = nuevaUbicacion("ciudadLuz");
 
@@ -64,12 +65,9 @@ public class DataServiceImpl implements DataService {
         Especie dientemon = nuevaEspecie("Dientemon", TipoBicho.AGUA,60, 3 , 80, "/image/dientmon.png");
     }
 
-    private void nuevoEntrenador(String nombre, Ubicacion ubicacion, List<Bicho> bichomones, Integer experiencia){
-        Entrenador entrenador = new Entrenador();
-        entrenador.setNombre(nombre);
-        entrenador.setUbicacion(ubicacion);
+    private void nuevoEntrenador(String nombre, Ubicacion ubicacion, List<Bicho> bichomones, Integer experiencia,Nivel nivel1){
+        Entrenador entrenador = new Entrenador(nombre,ubicacion,nivel1);
         entrenador.setBichomones(bichomones);
-        entrenador.setExperiencia(experiencia);
 
     }
 
@@ -80,21 +78,14 @@ public class DataServiceImpl implements DataService {
         return bicho;
 
     }
-
+/*
     private Ubicacion nuevaUbicacion(String nombre){
         Ubicacion ubicacion = new Ubicacion();
         ubicacion.setNombre(nombre);
         return ubicacion;
     }
+*/
 
-    private void nuevoNivel(Integer expMinima,Integer expMaxima, Integer maximoDeBichos) {
-        Nivel nivel = new Nivel();
-        nivel.setExpMinima(expMinima);
-        nivel.setExpMaxima(expMaxima);
-        nivel.setMaximoDeBichos(maximoDeBichos);
-
-        this.nivelDao.guardar(nivel);
-    }
 
     private Especie nuevaEspecie(String nombre, TipoBicho tipo, Integer altura, Integer peso, Integer energia, String foto) {
         Especie especie = new Especie(nombre, tipo, altura, peso, energia, foto);

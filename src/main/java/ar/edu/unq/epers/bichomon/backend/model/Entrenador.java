@@ -1,10 +1,12 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -21,6 +23,25 @@ public class Entrenador {
     @OneToMany
     private List<Bicho> bichomones;
 
+    @OneToOne
+    private Nivel nivel;
+
+    LocalDate fechaUltimoBichoEncontra;
+
+    public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel) {
+        this.nombre = nombre;
+        this.ubicacion = ubicacion;
+        this.bichomones = new ArrayList<>();
+        this.experiencia = 0;
+        this.nivel = nivel;
+
+    }
+
+    public Entrenador() {
+
+    }
+
+    //GETTERS AND SETTERS
 
     public String getNombre() {
         return nombre;
@@ -53,4 +74,59 @@ public class Entrenador {
     public void setBichomones(List<Bicho> bichomones) {
         this.bichomones = bichomones;
     }
+
+    public Nivel getNivel() {
+        return this.nivel;
+    }
+
+    public void setNivel(Nivel nivel){
+        this.nivel = nivel;
+    }
+
+    public void setFechaUltimoBichoEncontra(LocalDate date){
+        this.fechaUltimoBichoEncontra = date;
+    }
+    public LocalDate getFechaUltimoBichoEncontra(){
+        return this.fechaUltimoBichoEncontra;
+    }
+
+
+    public void addExperiencia(Experiencia exp){
+        this.experiencia += exp.getExperiencia();
+        pasaDeNivel();
+    }
+
+    private void pasaDeNivel() {
+        if(experiencia <getNivel().getExpMaxima())
+            return;
+        this.setNivel(this.getNivel().next());
+    }
+
+    public void obtenerBicho(Bicho bicho){
+        setFechaUltimoBichoEncontra(LocalDate.now());
+    }
+
+    public void buscarBicho(){
+        if(puedoBuscar())
+            ubicacion.buscar(this);
+    }
+
+    private boolean puedoBuscar() {
+        return getBichomones().size() < getNivel().getMaximoDeBichos();
+    }
+
+
+    public void abandonarBicho(Bicho bicho){
+        if(ubicacion.dejarBicho(bicho)){
+            Iterator<Bicho> iterator = getBichomones().iterator();
+            while (iterator.hasNext()){
+                Bicho bichomon = iterator.next();
+                if(bichomon.equals(bicho)){
+                    getBichomones().remove(bichomon);
+                    break;
+                }
+            }
+        }
+    }
+
 }

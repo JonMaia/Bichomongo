@@ -10,7 +10,7 @@ import org.hibernate.query.Query;
 
 public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, String> implements EntrenadorDao{
 
-    @Override
+    //@Override
     public Nivel getNivel(Entrenador entrenador) {
         StringBuffer squery = new StringBuffer();
 

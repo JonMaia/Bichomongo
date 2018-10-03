@@ -20,7 +20,7 @@ public interface BichoService {
     void abandonar(String entrenador, int bicho);
 
     /*ResultadoCombate el entrenador desafiará al actual campeon del dojo a duelo.
-     Si la ubicación no es un Dojo se arrojará UbicacionIncorrectaException.
+     Si la ubicación no es un Guarderia se arrojará UbicacionIncorrectaException.
      El objeto resultante ResultadoCombate informará no solo quién fue el ganador del
      combate sino el resultado de cada uno de los ataques realizados. */
 
