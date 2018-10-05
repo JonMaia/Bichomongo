@@ -236,37 +236,37 @@ public class EspecieEvolucionTest {
     @Test
     public void si_una_especie_tiene_evolucion_y_no_tiene_condiciones_de_evolucion_el_bicho_puede_evolucionar_siempre() {
         Bicho bichoBase = crearBichoConEntrenadorYEspecieConEvolucionSinCondicionDeEvolucion();
-        assertTrue(bichoService.puedeEvolucionar(bichoBase.getEntrenador().getNombre(),bichoBase.getId()));
+        assertTrue(bichoService.puedeEvolucionar(bichoBase.getId()));
     }
 
     @Test
     public void si_una_especie_no_tiene_evolucion_el_bicho_no_puede_evolucionar() {
         Bicho bichoBase = crearBichoConEntrenadorYEspecieSinEvolucion();
-        assertFalse(bichoService.puedeEvolucionar(bichoBase.getEntrenador().getNombre(),bichoBase.getId()));
+        assertFalse(bichoService.puedeEvolucionar(bichoBase.getId()));
     }
 
     @Test
     public void si_una_especie_tiene_evolucion_y_condiciones_de_energia_y_el_bicho_las_cumple_puede_evolucionar() {
         Bicho bichoBase = crearBichoConEnergia10ConEntrenadorYEspecieConEvolucionConCondicionDeEnergia0();
-        assertTrue(bichoService.puedeEvolucionar(bichoBase.getEntrenador().getNombre(),bichoBase.getId()));
+        assertTrue(bichoService.puedeEvolucionar(bichoBase.getId()));
     }
 
     @Test
     public void si_una_especie_tiene_evolucion_y_condiciones_de_victorias_y_el_bicho_las_cumple_puede_evolucionar() {
         Bicho bichoBase = crearBichoConVictorias10ConEntrenadorYEspecieConEvolucionConCondicionDeVictorias0();
-        assertTrue(bichoService.puedeEvolucionar(bichoBase.getEntrenador().getNombre(),bichoBase.getId()));
+        assertTrue(bichoService.puedeEvolucionar(bichoBase.getId()));
     }
 
     @Test
     public void si_una_especie_tiene_evolucion_y_condiciones_de_edad_y_el_bicho_las_cumple_puede_evolucionar() {
         Bicho bichoBase = crearBichoConEdad10ConEntrenadorYEspecieConEvolucionConCondicionDeEdad0();
-        assertTrue(bichoService.puedeEvolucionar(bichoBase.getEntrenador().getNombre(),bichoBase.getId()));
+        assertTrue(bichoService.puedeEvolucionar(bichoBase.getId()));
     }
 
     @Test
     public void si_una_especie_tiene_evolucion_y_condiciones_de_nivel_y_el_bicho_las_cumple_puede_evolucionar() {
         Bicho bichoBase = crearBichoConNivel10ConEntrenadorYEspecieConEvolucionConCondicionDeNivel0();
-        assertTrue(bichoService.puedeEvolucionar(bichoBase.getEntrenador().getNombre(),bichoBase.getId()));
+        assertTrue(bichoService.puedeEvolucionar(bichoBase.getId()));
     }
 
     @Test
@@ -274,7 +274,7 @@ public class EspecieEvolucionTest {
         Bicho bichoBase = crearBichoConEntrenadorYEspecieConEvolucionSinCondicionDeEvolucion();
         Especie especieBase = bichoBase.getEspecie();
 
-        bichoService.evolucionar(bichoBase.getEntrenador().getNombre(),bichoBase.getId());
+        bichoService.evolucionar(bichoBase.getId());
 
         assertNotEquals(bichoBase.getEspecie(), especieBase);
         assertEquals(bichoBase.getEspecie(), especieBase.getEvolucion());

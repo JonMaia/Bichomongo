@@ -23,12 +23,16 @@ public class BichoServiceImpl implements BichoService{
 
     @Override
     public Bicho buscar(String entrenador) {
+        Entrenador trainer = this.entrenadorDAO.getById(entrenador);
+        //return trainer.buscarBicho();
         return null;
     }
 
     @Override
     public void abandonar(String entrenador, int bicho) {
-
+        Entrenador trainer = this.entrenadorDAO.getById(entrenador);
+        Bicho bichomon = this.bichoDAO.getById(bicho);
+        trainer.abandonarBicho(bichomon);
     }
 
     @Override
@@ -37,19 +41,16 @@ public class BichoServiceImpl implements BichoService{
     }
 
     @Override
-    public boolean puedeEvolucionar(String entrenador, int bicho) {
+    public boolean puedeEvolucionar(int bicho) {
         return bichoDAO.getById(bicho).puedeEvolucionar();
     }
 
     @Override
-    public Bicho evolucionar(String entrenador, int bicho) {
-        return null;
+    public Bicho evolucionar(int bicho) {
+        Bicho bichomon = this.bichoDAO.getById(bicho);
+        if(bichomon.puedeEvolucionar()){
+            bichomon = bichomon.evolucionar();
+        }
+        return bichomon;
     }
-
-    //bicho buscar (String entrenador){
-    //   Runner.runInSession(() -> {
-    //       //entrenador entrenador = this.entrenadorDAO.recuperar(entrenador);
-    //       //return entrenador.buscar();
-    //  }
-    //   }
 }
