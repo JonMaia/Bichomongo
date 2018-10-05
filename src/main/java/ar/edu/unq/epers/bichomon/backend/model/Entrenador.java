@@ -139,8 +139,8 @@ public class Entrenador {
         addExperiencia(accion.getExperienciaPorEvolucion());
     }
 
-    public void iniciarDuelo() throws RuntimeException{
-        ubicacion.duelo(this);
+    public void iniciarDuelo(){
+        ubicacion.combatirCon(Bicho bicho);
     }
 
 
