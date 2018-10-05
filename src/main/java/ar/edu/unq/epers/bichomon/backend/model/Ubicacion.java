@@ -45,10 +45,16 @@ public abstract class Ubicacion {
         bichomones = bichomones;
     }
 
-    public abstract Boolean dejarBicho(Bicho unBicho);
+    public void dejarBicho(Bicho unBicho) throws Exception {
+        throw new Exception();
+    }
 
-    public abstract Bicho entregarBicho(Bicho unBicho);
+    public abstract Bicho entregarBicho(Entrenador unEntrenador);
 
-    public abstract void buscar(Entrenador entrenador);
+    public abstract void buscar(Entrenador unEntrenador);
+
+    public void combatirCon(Bicho unBicho) throws  Exception {
+
+    }
 
 }
