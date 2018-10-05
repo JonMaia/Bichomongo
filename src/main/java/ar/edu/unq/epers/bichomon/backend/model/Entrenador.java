@@ -140,8 +140,13 @@ public class Entrenador {
     }
 
     public void iniciarDuelo(){
-        ubicacion.combatirCon(Bicho bicho);
-    }
+        try {
+            ubicacion.combatirCon(Bicho bicho);
+            addExperiencia(accion.getExperienciaPorCombatir());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        }
 
 
 }
