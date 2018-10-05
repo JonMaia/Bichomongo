@@ -92,7 +92,7 @@ public class Bicho {
 
 	public boolean puedeEvolucionar(){
 
-		boolean esEvolucionable = (this.especie.getEvolucion() != null ? true : false);
+		boolean esEvolucionable = (this.getEspecie().getEvolucion() != null ? true : false);
 		for ( Condicion condicion : this.getEspecie().getCondicionDeEvolucion())
 			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(this);
 

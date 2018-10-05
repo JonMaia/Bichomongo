@@ -5,6 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Combate;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 public class BichoServiceImpl implements BichoService{
 
@@ -42,7 +43,7 @@ public class BichoServiceImpl implements BichoService{
 
     @Override
     public boolean puedeEvolucionar(int bicho) {
-        return bichoDAO.getById(bicho).puedeEvolucionar();
+        return Runner.runInSession(() -> bichoDAO.getById(bicho).puedeEvolucionar());
     }
 
     @Override
