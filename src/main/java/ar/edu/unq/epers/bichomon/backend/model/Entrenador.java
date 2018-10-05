@@ -123,7 +123,8 @@ public class Entrenador {
 
 
     public void abandonarBicho(Bicho bicho){
-        if(ubicacion.dejarBicho(bicho)){
+        try{
+            ubicacion.dejarBicho(bicho);
             Iterator<Bicho> iterator = getBichomones().iterator();
             while (iterator.hasNext()){
                 Bicho bichomon = iterator.next();
@@ -132,16 +133,19 @@ public class Entrenador {
                     break;
                 }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
     public void ganarExperienciaPorEvolucion(){
         addExperiencia(accion.getExperienciaPorEvolucion());
     }
 
-    public void iniciarDuelo(){
+    public void iniciarDuelo(Bicho bicho){
         try {
-            ubicacion.combatirCon(Bicho bicho);
+            ubicacion.combatirCon(bicho);
             addExperiencia(accion.getExperienciaPorCombatir());
         }catch(Exception e){
             e.printStackTrace();
