@@ -25,7 +25,8 @@ public class Bicho {
 	@OneToOne
 	private Especie especie;
 
-	private int energia;
+	private float energia;
+	private float danioRecibidoCombate;
 	private int victorias;
 	private LocalDate fechaNacimiento;
 	private LocalDate fechaCaptura;
@@ -37,12 +38,21 @@ public class Bicho {
 	    this.fechaNacimiento = LocalDate.now();
 
     }
+
 	
 	public Especie getEspecie() {
 		return this.especie;
 	}
 
 	public void setEspecie(Especie especie) { this.especie = especie; }
+
+	public float getDanioRecibidoCombate() {
+		return danioRecibidoCombate;
+	}
+
+	public void setDanioRecibidoCombate(float danio){
+		this.setDanioRecibidoCombate(danio);
+	}
 
 	public int getId() { return id; }
 
@@ -70,23 +80,36 @@ public class Bicho {
 
 	public void setEdad(int edad) { this.edad = edad; }
 
-	public int getEnergia() {
+	public float getEnergia() {
 		return this.energia;
 	}
 
-	public void setEnergia(int energia) {
+	public void setEnergia(float energia) {
 		this.energia = energia;
 	}
 
-	public boolean puedeEvolucionar(Bicho bicho){
+	public boolean puedeEvolucionar(){
 		boolean esEvolucionable = true;
 		for ( Condicion condicion : this.getEspecie().getCondicionDeEvolucion())
-			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(bicho);
-
+			esEvolucionable = esEvolucionable && condicion.cumpleCondicion(this);
 		return esEvolucionable;
 	}
 
+	public Bicho evolucionar(){
+		if(this.puedeEvolucionar()){
+			Especie evolucion = this.getEspecie().getEvolucion();
+			this.setEspecie(evolucion);
+		}
+		return this;
+	}
 
 
+	public void atacar(Bicho bicho, float calculadorAtaque) {
+		float danioRecibido = bicho.getDanioRecibidoCombate() + calculadorAtaque;
+		bicho.setDanioRecibidoCombate(danioRecibido);
+	}
 
+	public void aumentarEnergiaCombate() {
+		//this.energia = this.energia + Math.random();
+	}
 }
