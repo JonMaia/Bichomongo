@@ -28,9 +28,9 @@ public interface BichoService {
 
     //deberá devolver true si el bicho especificado está en condiciones de evolucionar.
 
-    boolean puedeEvolucionar(String entrenador, int bicho);
+    boolean puedeEvolucionar(int bicho);
 
     //bicho evoluciona el bicho especificado (si cumple con las codiciones para evolucionar)
 
-    Bicho evolucionar(String entrenador, int bicho);
+    Bicho evolucionar(int bicho);
 }
