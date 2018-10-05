@@ -1,9 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -16,17 +13,21 @@ public class Combate {
 
     Date fecha;
 
-    @ManyToOne
+    @OneToOne
     Bicho retador;
     float danioRecibidoRetador;
-    private List<Float> ataquesRetador;
 
-    @ManyToOne
+    @ElementCollection(targetClass = Float.class)
+    List<Float> ataquesRetador;
+
+    @OneToOne
     Bicho campeon;
     float getDanioRecibidoCampeon;
-    private List<Float> ataquesCampeon;
 
-    @ManyToOne
+    @ElementCollection(targetClass = Float.class)
+    List<Float> ataquesCampeon;
+
+    @OneToOne
     Ubicacion dojo;
 
     Boolean triunfoRetador;
