@@ -3,7 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.service.bicho;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Combate;
+import ar.edu.unq.epers.bichomon.backend.model.Duelo;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 
 public class BichoServiceImpl implements BichoService{
@@ -36,7 +36,7 @@ public class BichoServiceImpl implements BichoService{
     }
 
     @Override
-    public Combate duelo(String entrenador, int bicho) {
+    public Duelo duelo(String entrenador, int bicho) {
         return null;
     }
 

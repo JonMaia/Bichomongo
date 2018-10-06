@@ -2,7 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Combate;
+import ar.edu.unq.epers.bichomon.backend.model.Duelo;
 
 public interface BichoService {
 
@@ -24,7 +24,7 @@ public interface BichoService {
      El objeto resultante ResultadoCombate informará no solo quién fue el ganador del
      combate sino el resultado de cada uno de los ataques realizados. */
 
-    Combate duelo(String entrenador, int bicho);
+    Duelo duelo(String entrenador, int bicho);
 
     //deberá devolver true si el bicho especificado está en condiciones de evolucionar.
 

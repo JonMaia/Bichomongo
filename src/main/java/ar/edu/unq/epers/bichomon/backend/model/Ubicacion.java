@@ -12,8 +12,6 @@ public abstract class Ubicacion {
     @OneToMany
     protected List<Entrenador> entrenadores;
 
-    @OneToMany
-    protected List<Bicho> bichomones;
 
     protected Double factorPoblacion;
 
@@ -38,8 +36,6 @@ public abstract class Ubicacion {
         entrenadores.add(entrenador);
     }
 
-    public abstract List<Bicho> getBichomones();
-
     public void setBichomones(List<Bicho> bichomones){
         bichomones = bichomones;
     }
@@ -48,11 +44,22 @@ public abstract class Ubicacion {
         throw new Exception();
     }
 
-    public abstract void entregarBicho(Entrenador unEntrenador, Bicho unBicho);
+    public void buscar(Entrenador entrenador) {
+        if(exitoDeBusqueda(entrenador.getFactorCaptura(), entrenador.getNivel().getFactorDeNivel())){
+            encontrarBichomon(entrenador);
+        }
+    }
 
-    public abstract void buscar(Entrenador unEntrenador);
 
-    public abstract Boolean exitoDeBusqueda(Double factorTiempo, Double factorNivel);
+    public void entregarBicho(Entrenador unEntrenador, Bicho unBicho){
+        unEntrenador.obtenerBicho(unBicho);
+    };
+
+    public abstract void encontrarBichomon(Entrenador unEntrenador);
+
+    public Boolean exitoDeBusqueda(Double factorTiempo, Double factorNivel){
+        return factorTiempo * factorNivel * this.factorPoblacion * Math.random() > 0.5;
+    };
 
     public void combatirCon(Bicho unBicho) throws  Exception {
         throw new Exception();

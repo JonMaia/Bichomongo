@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 @Entity
-public class Combate {
+public class Duelo {
 
     @Id
     Integer id;

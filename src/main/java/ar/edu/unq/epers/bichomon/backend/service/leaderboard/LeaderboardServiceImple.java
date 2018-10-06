@@ -17,7 +17,6 @@ public class LeaderboardServiceImple implements LeaderboardService {
 
     @Override
     public List<Entrenador> campeones() {
-
         return null;
     }
 
