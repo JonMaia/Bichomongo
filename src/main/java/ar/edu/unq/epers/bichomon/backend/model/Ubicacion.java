@@ -17,7 +17,7 @@ public abstract class Ubicacion {
     protected List<Entrenador> entrenadores;
 
 
-    protected Double factorPoblacion;
+    private Double factorPoblacion = 1.0;
 
     private ExitoDeBusqueda exitoDeBusqueda = new ExitoDeBusquedaNormal();
 

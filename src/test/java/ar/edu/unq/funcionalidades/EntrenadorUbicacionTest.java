@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class EntrenadorUbicacionTest {
 
@@ -108,6 +109,40 @@ public class EntrenadorUbicacionTest {
 
         assertEquals(gimnasioCiudadCarmín, entrenador.getUbicacion());
         assertEquals(bichoElegido, gimnasioCiudadCarmín.getCampeon());
+
+    }
+
+    @Test
+    public void unEntrenadorIntentaCapturarUnBichoEnUnDojoVacioPeroNoPuede(){
+        gimnasioCiudadCarmín.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
+
+        entrenador.moverA(gimnasioCiudadCarmín);
+
+        entrenador.buscarBicho();
+
+        assertEquals(gimnasioCiudadCarmín, entrenador.getUbicacion());
+        assertEquals(0, entrenador.getBichomones().size());
+
+    }
+
+
+    @Test
+    public void unEntrenadorCapturaUnbichoEnunDojo(){
+        gimnasioCiudadCarmín.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
+        Especie libroMon = new Especie("libroMon",TipoBicho.AGUA,20,10,5,null);
+        Especie paperMon = new Especie("paperMon",TipoBicho.AGUA,20,10,5,null);
+        paperMon.setEvolucion(libroMon);
+        libroMon.setEspecieInicial(paperMon);
+        gimnasioCiudadCarmín.setCampeon(new Bicho(libroMon));
+
+        entrenador.moverA(gimnasioCiudadCarmín);
+
+        entrenador.buscarBicho();
+
+        assertEquals(gimnasioCiudadCarmín, entrenador.getUbicacion());
+        assertEquals(1, entrenador.getBichomones().size());
+        assertEquals(paperMon, entrenador.getBichomones().get(0).getEspecie());
+        assertNotEquals(libroMon, entrenador.getBichomones().get(0).getEspecie());
 
     }
 
