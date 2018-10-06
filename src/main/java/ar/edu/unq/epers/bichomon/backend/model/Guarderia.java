@@ -1,16 +1,19 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Guarderia extends Ubicacion {
 
     @OneToMany
-    protected List<Bicho> bichomones;
+    protected List<Bicho> bichomones = new ArrayList<>();
 
     public List<Bicho> getBichomones() {
         return bichomones;
     }
+
+
 
     @Override
     public void dejarBicho(Bicho unBicho) {
@@ -25,7 +28,7 @@ public class Guarderia extends Ubicacion {
         if(this.getBichomones().isEmpty())
             return;
         while(this.getBichomones().size()>i &&
-                this.getBichomones().get(i).getPadresDeNelson().contains(entrenador)){
+                this.getBichomones().get(i).getExEntrenadores().contains(entrenador)){
             i++;
         }
         if(this.getBichomones().size()==i)

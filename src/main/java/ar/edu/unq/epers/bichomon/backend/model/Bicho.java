@@ -5,6 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 import javax.persistence.*;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +30,7 @@ public class Bicho {
 	private Especie especie;
 
 	@ElementCollection(targetClass = Entrenador.class)
-	private List<Entrenador> padresDeNelson;
+	private List<Entrenador> exEntrenadores = new ArrayList<>();
 
 	private float energia;
 	private float danioRecibidoCombate;
@@ -74,12 +75,12 @@ public class Bicho {
 		return this.fechaCaptura;
 	}
 
-	public List<Entrenador> getPadresDeNelson(){
-		return this.padresDeNelson;
+	public List<Entrenador> getExEntrenadores(){
+		return this.exEntrenadores;
 	}
 
-	public void setPadresDeNelson(List<Entrenador> entrenadores){
-		this.padresDeNelson = entrenadores;
+	public void setExEntrenadores(List<Entrenador> entrenadores){
+		this.exEntrenadores = entrenadores;
 	}
 
 	public void setEntrenador(Entrenador entrenador) { this.entrenador = entrenador; }

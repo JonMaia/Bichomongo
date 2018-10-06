@@ -19,11 +19,14 @@ public class EntrenadorUbicacionTest {
     Entrenador entrenador = null;
     Pueblo ciudadCarmín = null;
     Dojo gimnasioCiudadCarmín = null;
+    Guarderia guarderiaCIudadCarmin = null;
+
 
     @Before
     public void iniciaTodo(){
         ciudadCarmín = new Pueblo();
         gimnasioCiudadCarmín = new Dojo();
+        guarderiaCIudadCarmin = new Guarderia();
         Especie macriMon = new Especie();
         Especie peniaMon = new Especie();
         List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
@@ -145,5 +148,48 @@ public class EntrenadorUbicacionTest {
         assertNotEquals(libroMon, entrenador.getBichomones().get(0).getEspecie());
 
     }
+
+
+    @Test
+    public void unEntrenadorCapturaUnbichoYLoDejaEnUnaGuarderia(){
+        ciudadCarmín.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
+
+        entrenador.buscarBicho();
+
+        entrenador.moverA(guarderiaCIudadCarmin);
+        Bicho abandonado = entrenador.getBichomones().get(0);
+        entrenador.abandonarBicho(abandonado);
+        assertEquals(guarderiaCIudadCarmin, entrenador.getUbicacion());
+        assertEquals(0, entrenador.getBichomones().size());
+        assertEquals(1, guarderiaCIudadCarmin.getBichomones().size());
+
+
+
+    }
+
+    @Test
+    public void unEntrenadorBuscaUnBichoEnUnaGuarderia(){
+        guarderiaCIudadCarmin.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
+        Especie paperMon = new Especie("paperMon",TipoBicho.AGUA,20,10,5,null);
+
+        Bicho bicho = new Bicho(paperMon);
+        guarderiaCIudadCarmin.dejarBicho(bicho);
+
+        entrenador.moverA(guarderiaCIudadCarmin);
+
+        assertEquals(1, guarderiaCIudadCarmin.getBichomones().size());
+
+        entrenador.buscarBicho();
+
+        assertEquals(guarderiaCIudadCarmin, entrenador.getUbicacion());
+        assertEquals(1, entrenador.getBichomones().size());
+        assertEquals(bicho, entrenador.getBichomones().get(0));
+
+        assertEquals(0, guarderiaCIudadCarmin.getBichomones().size());
+
+
+
+    }
+
 
 }
