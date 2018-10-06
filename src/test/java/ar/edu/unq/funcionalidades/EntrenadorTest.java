@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class EntrenadorTest {
 
@@ -40,29 +39,29 @@ public class EntrenadorTest {
 
     @Test
     public void unNuevoEntrenadorEmpiezaConElNivelInicial(){
-        assertTrue(entrenador.getNivel().getNumero()== 1);
+        assertEquals(1, (int) entrenador.getNivel().getNumero());
     }
 
     @Test
     public void unNuevoEntrenadorCapturaUnBichomonAdquiereExperienciaYbichomon(){
         puebloPaleta.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
         entrenador.buscarBicho();
-        assertTrue(entrenador.getExperiencia()==10);
-        assertTrue(entrenador.getBichomones().size()== 1);
+        assertEquals(10, (int) entrenador.getExperiencia());
+        assertEquals(1, entrenador.getBichomones().size());
     }
 
     @Test
     public void unNuevoEntrenadorIntentaCapturarUnBichomonyFallaNoTieneNingunoEnSuInventario(){
         puebloPaleta.setExitoDeBusqueda(new ExitoDeBusquedaSiempreFalse());
         entrenador.buscarBicho();
-        assertTrue(entrenador.getExperiencia()==0);
-        assertTrue(entrenador.getBichomones().size()== 0);
+        assertEquals(0, (int) entrenador.getExperiencia());
+        assertEquals(0, entrenador.getBichomones().size());
     }
 
     @Test
     public void unEntrenadorConsigueSuficienteExperienciaParaPasarDeNivel(){
         entrenador.addExperiencia(101);
-        assertTrue(entrenador.getNivel().getNumero()== 2);
+        assertEquals(2, (int) entrenador.getNivel().getNumero());
     }
 
 
@@ -71,8 +70,8 @@ public class EntrenadorTest {
         puebloPaleta.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
         entrenador.buscarBicho();
         entrenador.buscarBicho();
-        assertTrue(entrenador.getExperiencia()==10);
-        assertTrue(entrenador.getBichomones().size()== 1);
+        assertEquals(10, (int) entrenador.getExperiencia());
+        assertEquals(1, entrenador.getBichomones().size());
     }
 
     @Test
@@ -81,9 +80,9 @@ public class EntrenadorTest {
         entrenador.addExperiencia(95);
         entrenador.buscarBicho();
         entrenador.buscarBicho();
-        assertTrue(entrenador.getExperiencia()==115);
-        assertTrue(entrenador.getNivel().getNumero()== 2);
-        assertTrue(entrenador.getBichomones().size()== 2);
+        assertEquals(115, (int) entrenador.getExperiencia());
+        assertEquals(2, (int) entrenador.getNivel().getNumero());
+        assertEquals(2, entrenador.getBichomones().size());
     }
 
 }
