@@ -102,6 +102,7 @@ public class Entrenador {
 
     public void obtenerBicho(Bicho bicho){
         addExperiencia(accion.getExperienciaPorCapturarBicho());
+        this.bichomones.add(bicho);
         setFechaUltimoBichoEncontra(LocalDate.now());
     }
 
@@ -145,6 +146,9 @@ public class Entrenador {
     }
 
     public Double getFactorCaptura(){
+        //En caso de no tener ningun bichomon le otorgamos una gran posibilidad de obtener uno!!
+        if(getFechaUltimoBichoEncontra() == null)
+            return 20.0;
         Integer minutosTranscurridos = (Minutes.minutesBetween(getFechaUltimoBichoEncontra(), LocalDate.now())).getMinutes();
         return minutosTranscurridos.doubleValue() / 10;
 

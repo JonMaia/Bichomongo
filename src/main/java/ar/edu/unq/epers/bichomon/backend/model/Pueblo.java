@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Pueblo extends Ubicacion {
 
-    List<ProbabilidadDeOcurrencia> especiesEnPueblo;
+    private List<ProbabilidadDeOcurrencia> especiesEnPueblo;
 
     @Override
     public void encontrarBichomon(Entrenador unEntrenador) {
@@ -28,6 +28,7 @@ public class Pueblo extends Ubicacion {
         return res.getEspecie();
     }
 
+
     public Integer totalDivisorDeProbabilidadDeOcurrencia(){
         Integer res = 0;
         for (ProbabilidadDeOcurrencia p: especiesEnPueblo) 
@@ -35,4 +36,11 @@ public class Pueblo extends Ubicacion {
         return res;
     }
 
+    public List<ProbabilidadDeOcurrencia> getEspeciesEnPueblo() {
+        return especiesEnPueblo;
+    }
+
+    public void setEspeciesEnPueblo(List<ProbabilidadDeOcurrencia> especiesEnPueblo) {
+        this.especiesEnPueblo = especiesEnPueblo;
+    }
 }

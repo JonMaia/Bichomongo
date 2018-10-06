@@ -1,5 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusqueda;
+import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaNormal;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,6 +17,8 @@ public abstract class Ubicacion {
 
 
     protected Double factorPoblacion;
+
+    private ExitoDeBusqueda exitoDeBusqueda = new ExitoDeBusquedaNormal();
 
 
     public String getNombre() {
@@ -40,6 +45,8 @@ public abstract class Ubicacion {
         bichomones = bichomones;
     }
 
+
+
     public void dejarBicho(Bicho unBicho) throws Exception {
         throw new Exception();
     }
@@ -58,11 +65,26 @@ public abstract class Ubicacion {
     public abstract void encontrarBichomon(Entrenador unEntrenador);
 
     public Boolean exitoDeBusqueda(Double factorTiempo, Double factorNivel){
-        return factorTiempo * factorNivel * this.factorPoblacion * Math.random() > 0.5;
-    };
+        return exitoDeBusqueda.ejecutar(factorTiempo,factorNivel,this.factorPoblacion);
+    }
 
     public void combatirCon(Bicho unBicho) throws  Exception {
         throw new Exception();
     }
 
+    public Double getFactorPoblacion() {
+        return factorPoblacion;
+    }
+
+    public void setFactorPoblacion(Double factorPoblacion) {
+        this.factorPoblacion = factorPoblacion;
+    }
+
+    public ExitoDeBusqueda getExitoDeBusqueda() {
+        return exitoDeBusqueda;
+    }
+
+    public void setExitoDeBusqueda(ExitoDeBusqueda exitoDeBusqueda) {
+        this.exitoDeBusqueda = exitoDeBusqueda;
+    }
 }
