@@ -28,12 +28,16 @@ public class Entrenador {
 
     LocalDate fechaUltimoBichoEncontra;
 
-    public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel) {
+    private Acciones accion;
+
+
+    public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Acciones acciones) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.bichomones = new ArrayList<>();
         this.experiencia = 0;
         this.nivel = nivel;
+        this.accion = acciones;
 
     }
 
@@ -91,8 +95,8 @@ public class Entrenador {
     }
 
 
-    public void addExperiencia(Experiencia exp){
-        this.experiencia += exp.getExperiencia();
+    public void addExperiencia(Integer exp){
+        this.experiencia += exp;
         pasaDeNivel();
     }
 
@@ -103,8 +107,10 @@ public class Entrenador {
     }
 
     public void obtenerBicho(Bicho bicho){
+        addExperiencia(accion.getExperienciaPorCapturarBicho());
         setFechaUltimoBichoEncontra(LocalDate.now());
     }
+
 
     public void buscarBicho(){
         if(puedoBuscar())
@@ -117,7 +123,8 @@ public class Entrenador {
 
 
     public void abandonarBicho(Bicho bicho){
-        if(ubicacion.dejarBicho(bicho)){
+        try{
+            ubicacion.dejarBicho(bicho);
             Iterator<Bicho> iterator = getBichomones().iterator();
             while (iterator.hasNext()){
                 Bicho bichomon = iterator.next();
@@ -126,7 +133,24 @@ public class Entrenador {
                     break;
                 }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
+
+    public void ganarExperienciaPorEvolucion(){
+        addExperiencia(accion.getExperienciaPorEvolucion());
+    }
+
+    public void iniciarDuelo(Bicho bicho){
+        try {
+            ubicacion.combatirCon(bicho);
+            addExperiencia(accion.getExperienciaPorCombatir());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        }
+
 
 }

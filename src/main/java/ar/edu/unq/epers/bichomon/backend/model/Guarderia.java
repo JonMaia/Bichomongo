@@ -10,14 +10,13 @@ public class Guarderia extends Ubicacion {
     }
 
     @Override
-    public Boolean dejarBicho(Bicho unBicho) {
+    public void dejarBicho(Bicho unBicho) {
         super.bichomones.add(unBicho);
-        return true;
     }
 
     @Override
-    public Bicho entregarBicho(Bicho unBicho) {
-        return unBicho;
+    public Bicho entregarBicho(Entrenador unEntrenador) {
+        return null;
     }
 
     @Override
