@@ -154,4 +154,7 @@ public class Entrenador {
 
     }
 
+    public void moverA(Ubicacion gimnasioCiudadCarmín) {
+        this.ubicacion = gimnasioCiudadCarmín;
+    }
 }

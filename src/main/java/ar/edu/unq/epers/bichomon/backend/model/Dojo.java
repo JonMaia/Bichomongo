@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Dojo extends Ubicacion {
 
-    Bicho campeon = null;
-    List<ResultadoCombate> resultadoCombates = new ArrayList<>();
+    private Bicho campeon = null;
+    private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
 
     @Override
     public void encontrarBichomon(Entrenador unEntrenador) {
@@ -19,7 +19,23 @@ public class Dojo extends Ubicacion {
     public void combatirCon(Bicho unBicho){
         Duelo duelo = new Duelo();
         ResultadoCombate resultado = duelo.combatir(unBicho, campeon);
-        if(duelo.getTriunfoRetador())
-            campeon = unBicho;
+
+        campeon = resultado.getGanadorCombate();
+    }
+
+    public Bicho getCampeon() {
+        return campeon;
+    }
+
+    public void setCampeon(Bicho campeon) {
+        this.campeon = campeon;
+    }
+
+    public List<ResultadoCombate> getResultadoCombates() {
+        return resultadoCombates;
+    }
+
+    public void setResultadoCombates(List<ResultadoCombate> resultadoCombates) {
+        this.resultadoCombates = resultadoCombates;
     }
 }

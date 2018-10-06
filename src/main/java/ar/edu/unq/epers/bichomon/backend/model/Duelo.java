@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -85,6 +86,9 @@ public class Duelo {
 
 
     public ResultadoCombate combatir(Bicho retador, Bicho campeon){
+        if(campeon == null)
+            return new ResultadoCombate(retador, new ArrayList<>(), new ArrayList<>());
+
         int contadorAtaques = 0;
         boolean atacaRetador = true;
         boolean terminoCombate = false;

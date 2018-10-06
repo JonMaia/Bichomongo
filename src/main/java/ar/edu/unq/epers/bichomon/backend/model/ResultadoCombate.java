@@ -11,7 +11,23 @@ public class ResultadoCombate {
 
     public ResultadoCombate(Bicho bicho, List<Ataque> ataquesRetador, List<Ataque> ataquesCampeon) {
         ganadorCombate = bicho;
-        informacionAtaques.addAll(ataquesCampeon);
-        informacionAtaques.addAll(ataquesRetador);
+        informacionAtaques = ataquesCampeon;
+        informacionAtaques = ataquesRetador;
+    }
+
+    public Bicho getGanadorCombate() {
+        return ganadorCombate;
+    }
+
+    public void setGanadorCombate(Bicho ganadorCombate) {
+        this.ganadorCombate = ganadorCombate;
+    }
+
+    public List<Ataque> getInformacionAtaques() {
+        return informacionAtaques;
+    }
+
+    public void setInformacionAtaques(List<Ataque> informacionAtaques) {
+        this.informacionAtaques = informacionAtaques;
     }
 }

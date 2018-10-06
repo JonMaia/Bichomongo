@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import ar.edu.unq.epers.bichomon.backend.model.exception.AccionEnUbicacionErroneaException;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusqueda;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaNormal;
 
@@ -68,8 +69,8 @@ public abstract class Ubicacion {
         return exitoDeBusqueda.ejecutar(factorTiempo,factorNivel,this.factorPoblacion);
     }
 
-    public void combatirCon(Bicho unBicho) throws  Exception {
-        throw new Exception();
+    public void combatirCon(Bicho unBicho) throws  AccionEnUbicacionErroneaException {
+        throw new AccionEnUbicacionErroneaException("No se puede combatir en la ubicacion");
     }
 
     public Double getFactorPoblacion() {
