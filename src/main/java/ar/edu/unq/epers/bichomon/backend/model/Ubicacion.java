@@ -15,8 +15,7 @@ public abstract class Ubicacion {
     @OneToMany
     protected List<Bicho> bichomones;
 
-    @OneToOne
-    protected Busqueda unaBusqueda;
+    protected Double factorPoblacion;
 
 
     public String getNombre() {
@@ -49,12 +48,14 @@ public abstract class Ubicacion {
         throw new Exception();
     }
 
-    public abstract Bicho entregarBicho(Entrenador unEntrenador);
+    public abstract void entregarBicho(Entrenador unEntrenador, Bicho unBicho);
 
     public abstract void buscar(Entrenador unEntrenador);
 
-    public void combatirCon(Bicho unBicho) throws  Exception {
+    public abstract Boolean exitoDeBusqueda(Double factorTiempo, Double factorNivel);
 
+    public void combatirCon(Bicho unBicho) throws  Exception {
+        throw new Exception();
     }
 
 }
