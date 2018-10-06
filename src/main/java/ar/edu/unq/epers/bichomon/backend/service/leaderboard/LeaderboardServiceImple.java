@@ -1,13 +1,23 @@
 package ar.edu.unq.epers.bichomon.backend.service.leaderboard;
 
+import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionService;
 
 import java.util.List;
 
 public class LeaderboardServiceImple implements LeaderboardService {
+
+    private UbicacionDao ubicacionDao;
+
+    public LeaderboardServiceImple(UbicacionDao ubicacionDao) {
+        this.ubicacionDao = ubicacionDao;
+    }
+
     @Override
     public List<Entrenador> campeones() {
+
         return null;
     }
 

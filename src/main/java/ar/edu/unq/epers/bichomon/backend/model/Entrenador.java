@@ -1,11 +1,10 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.Minutes;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,7 +28,6 @@ public class Entrenador {
     LocalDate fechaUltimoBichoEncontra;
 
     private Acciones accion;
-
 
     public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Acciones acciones) {
         this.nombre = nombre;
@@ -65,10 +63,6 @@ public class Entrenador {
 
     public Integer getExperiencia() {
         return experiencia;
-    }
-
-    public void setExperiencia(Integer experiencia) {
-        this.experiencia = experiencia;
     }
 
     public List<Bicho> getBichomones() {
@@ -139,9 +133,7 @@ public class Entrenador {
 
     }
 
-    public void ganarExperienciaPorEvolucion(){
-        addExperiencia(accion.getExperienciaPorEvolucion());
-    }
+    public void ganarExperienciaPorEvolucion(){addExperiencia(accion.getExperienciaPorEvolucion());}
 
     public void iniciarDuelo(Bicho bicho){
         try {
@@ -150,7 +142,12 @@ public class Entrenador {
         }catch(Exception e){
             e.printStackTrace();
         }
-        }
+    }
 
+    public Double getFactorCaptura(){
+        Integer minutosTranscurridos = (Minutes.minutesBetween(getFechaUltimoBichoEncontra(), LocalDate.now())).getMinutes();
+        return minutosTranscurridos.doubleValue() / 10;
+
+    }
 
 }
