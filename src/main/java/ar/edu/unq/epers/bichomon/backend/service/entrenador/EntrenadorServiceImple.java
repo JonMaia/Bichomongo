@@ -22,10 +22,7 @@ public class EntrenadorServiceImple implements EntrenadorService{
 
     @Override
     public void capturaBicho(Entrenador entrenador, Bicho bicho){
-        if(puedeCapturarOtroBichomon(entrenador)) {
-            bicho.setEntrenador(entrenador);
-            bicho.setFechaCaptura(LocalDate.now());
-        }
+        entrenador.obtenerBicho(bicho);
     }
 
     @Override

@@ -53,10 +53,11 @@ public abstract class Ubicacion {
         throw new UbicacionIncorrectaException("No se puede abandonar un bicho en esta ubicacion");
     }
 
-    public void buscar(Entrenador entrenador) {
+    public Bicho buscar(Entrenador entrenador) {
         if(exitoDeBusqueda(entrenador.getFactorCaptura(), entrenador.getNivel().getFactorDeNivel())){
-            encontrarBichomon(entrenador);
+            return encontrarBichomon(entrenador);
         }
+        return null;
     }
 
 
@@ -64,7 +65,7 @@ public abstract class Ubicacion {
         unEntrenador.obtenerBicho(unBicho);
     };
 
-    public abstract void encontrarBichomon(Entrenador unEntrenador);
+    public abstract Bicho encontrarBichomon(Entrenador unEntrenador);
 
     public Boolean exitoDeBusqueda(Double factorTiempo, Double factorNivel){
         return exitoDeBusqueda.ejecutar(factorTiempo,factorNivel,this.factorPoblacion);

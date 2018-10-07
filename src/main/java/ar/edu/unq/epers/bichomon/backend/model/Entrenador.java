@@ -110,9 +110,11 @@ public class Entrenador {
     }
 
 
-    public void buscarBicho(){
+    public Bicho buscarBicho(){
+
         if(puedoBuscar())
-            ubicacion.buscar(this);
+            return ubicacion.buscar(this);
+        return null;
     }
 
     private boolean puedoBuscar() {
