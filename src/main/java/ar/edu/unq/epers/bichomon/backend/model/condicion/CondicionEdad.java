@@ -15,7 +15,6 @@ public class CondicionEdad extends Condicion {
 
     @Override
     public boolean cumpleCondicion(Bicho bicho) {
-        //return bicho.getFechaCaptura() > edad;
-        return true;
+        return bicho.getEdad() > super.valor;
     }
 }
