@@ -13,6 +13,8 @@ public class Dojo extends Ubicacion {
     private Bicho campeon = null;
     @OneToMany
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
+    @OneToMany
+    private List<Champion> campeones = new ArrayList<Champion>();
 
     @Override
     public Bicho encontrarBichomon(Entrenador unEntrenador) {
@@ -27,6 +29,7 @@ public class Dojo extends Ubicacion {
         Duelo duelo = new Duelo();
         ResultadoCombate resultado = duelo.combatir(unBicho, campeon);
         campeon = resultado.getGanadorCombate();
+        campeones.add(new Champion(unBicho));
         return resultado;
     }
 

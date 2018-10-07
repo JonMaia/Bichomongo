@@ -16,7 +16,6 @@ public abstract class Ubicacion {
     @OneToMany
     protected List<Entrenador> entrenadores;
 
-
     private Double factorPoblacion = 1.0;
 
     @Transient
@@ -47,10 +46,8 @@ public abstract class Ubicacion {
         bichomones = bichomones;
     }
 
-
-
     public void dejarBicho(Bicho unBicho) throws UbicacionIncorrectaException {
-        throw new UbicacionIncorrectaException("No se puede abandonar un bicho en esta ubicacion");
+        throw new UbicacionIncorrectaException("no puede dejar un bicho en esta hubicación");
     }
 
     public Bicho buscar(Entrenador entrenador) {
@@ -60,10 +57,9 @@ public abstract class Ubicacion {
         return null;
     }
 
-
     public void entregarBicho(Entrenador unEntrenador, Bicho unBicho){
         unEntrenador.obtenerBicho(unBicho);
-    };
+    }
 
     public abstract Bicho encontrarBichomon(Entrenador unEntrenador);
 
