@@ -13,8 +13,6 @@ public class Guarderia extends Ubicacion {
         return bichomones;
     }
 
-
-
     @Override
     public void dejarBicho(Bicho unBicho) {
         bichomones.add(unBicho);
