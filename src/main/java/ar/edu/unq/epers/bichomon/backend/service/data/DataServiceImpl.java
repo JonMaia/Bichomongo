@@ -127,7 +127,7 @@ public class DataServiceImpl implements DataService {
     }
 
     private void nuevoEntrenador(String nombre, Ubicacion ubicacion, List<Bicho> bichomones, Integer experiencia,Nivel nivel1){
-        Entrenador entrenador = new Entrenador(nombre,ubicacion,nivel1);
+        Entrenador entrenador = new Entrenador(nombre,ubicacion,nivel1, new Acciones(10,10,5));
         entrenador.setBichomones(bichomones);
 
     }

@@ -1,7 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
 import org.hibernate.annotations.Cascade;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

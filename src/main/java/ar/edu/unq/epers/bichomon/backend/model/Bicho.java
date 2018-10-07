@@ -7,6 +7,10 @@ import javax.persistence.*;
 import org.hibernate.annotations.Cascade;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 
 /**
  * Un {@link Bicho} existente en el sistema, el mismo tiene un nombre
@@ -26,6 +30,9 @@ public class Bicho {
 
 	@OneToOne
 	private Especie especie;
+
+	@ElementCollection(targetClass = Entrenador.class)
+	private List<Entrenador> exEntrenadores = new ArrayList<>();
 
 	private float energia;
 	private float danioRecibidoCombate;
@@ -55,7 +62,7 @@ public class Bicho {
 	}
 
 	public void setDanioRecibidoCombate(float danio){
-		this.setDanioRecibidoCombate(danio);
+		this.danioRecibidoCombate = danioRecibidoCombate + danio;
 	}
 
 	public int getId() { return id; }
@@ -72,7 +79,13 @@ public class Bicho {
 		return this.fechaCaptura;
 	}
 
+	public List<Entrenador> getExEntrenadores(){
+		return this.exEntrenadores;
+	}
 
+	public void setExEntrenadores(List<Entrenador> entrenadores){
+		this.exEntrenadores = entrenadores;
+	}
 
 	public void setEntrenador(Entrenador entrenador) { this.entrenador = entrenador; }
 
@@ -110,12 +123,26 @@ public class Bicho {
 	}
 
 
-	public void atacar(Bicho bicho, float calculadorAtaque) {
-		float danioRecibido = bicho.getDanioRecibidoCombate() + calculadorAtaque;
-		bicho.setDanioRecibidoCombate(danioRecibido);
+	public Float danioAInfligir(Bicho bicho){
+		float leftLimit = 0.5f;
+		float rightLimit = 1f;
+		float danioAtaque = bicho.getEnergia() * (leftLimit + new Random().nextFloat() * (rightLimit - leftLimit));
+		return danioAtaque;
+	}
+
+
+	public Ataque atacar(Bicho bicho) {
+		float danioAtaque = this.danioAInfligir(bicho);
+		float danioInfligido = bicho.getDanioRecibidoCombate() + danioAtaque;
+		bicho.setDanioRecibidoCombate(danioInfligido);
+		return new Ataque(this, bicho , danioAtaque);
 	}
 
 	public void aumentarEnergiaCombate() {
 		//this.energia = this.energia + Math.random();
+	}
+
+	public boolean perdioCombate(){
+		return this.energia < this.danioRecibidoCombate;
 	}
 }

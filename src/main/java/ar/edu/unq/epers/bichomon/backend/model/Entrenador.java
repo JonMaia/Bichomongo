@@ -3,10 +3,10 @@ package ar.edu.unq.epers.bichomon.backend.model;
 import org.hibernate.annotations.Cascade;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.Minutes;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,12 +29,15 @@ public class Entrenador {
 
     LocalDate fechaUltimoBichoEncontra;
 
-    public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel) {
+    private Acciones accion;
+
+    public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Acciones acciones) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.bichomones = new ArrayList<>();
         this.experiencia = 0;
         this.nivel = nivel;
+        this.accion = acciones;
 
     }
 
@@ -64,10 +67,6 @@ public class Entrenador {
         return experiencia;
     }
 
-    public void setExperiencia(Integer experiencia) {
-        this.experiencia = experiencia;
-    }
-
     public List<Bicho> getBichomones() {
         return bichomones;
     }
@@ -92,8 +91,8 @@ public class Entrenador {
     }
 
 
-    public void addExperiencia(Experiencia exp){
-        this.experiencia += exp.getExperiencia();
+    public void addExperiencia(Integer exp){
+        this.experiencia += exp;
         pasaDeNivel();
     }
 
@@ -104,8 +103,11 @@ public class Entrenador {
     }
 
     public void obtenerBicho(Bicho bicho){
+        addExperiencia(accion.getExperienciaPorCapturarBicho());
+        this.bichomones.add(bicho);
         setFechaUltimoBichoEncontra(LocalDate.now());
     }
+
 
     public void buscarBicho(){
         if(puedoBuscar())
@@ -118,7 +120,8 @@ public class Entrenador {
 
 
     public void abandonarBicho(Bicho bicho){
-        if(ubicacion.dejarBicho(bicho)){
+        try{
+            ubicacion.dejarBicho(bicho);
             Iterator<Bicho> iterator = getBichomones().iterator();
             while (iterator.hasNext()){
                 Bicho bichomon = iterator.next();
@@ -127,7 +130,32 @@ public class Entrenador {
                     break;
                 }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
+    public void ganarExperienciaPorEvolucion(){addExperiencia(accion.getExperienciaPorEvolucion());}
+
+    public void iniciarDuelo(Bicho bicho){
+        try {
+            ubicacion.combatirCon(bicho);
+            addExperiencia(accion.getExperienciaPorCombatir());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public Double getFactorCaptura(){
+        //En caso de no tener ningun bichomon le otorgamos una gran posibilidad de obtener uno!!
+        if(getFechaUltimoBichoEncontra() == null)
+            return 20.0;
+        Integer minutosTranscurridos = (Minutes.minutesBetween(getFechaUltimoBichoEncontra(), LocalDate.now())).getMinutes();
+        return minutosTranscurridos.doubleValue() / 10;
+
+    }
+
+    public void moverA(Ubicacion gimnasioCiudadCarmín) {
+        this.ubicacion = gimnasioCiudadCarmín;
+    }
 }

@@ -1,12 +1,13 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 @Entity
-public class Combate {
+public class Duelo {
 
     @Id
     Integer id;
@@ -17,15 +18,17 @@ public class Combate {
     Bicho retador;
     float danioRecibidoRetador;
 
-    @ElementCollection(targetClass = Float.class)
-    List<Float> ataquesRetador;
+    @Transient
+    //@ElementCollection(targetClass = Ataque.class)
+    List<Ataque> ataquesRetador;
 
     @OneToOne
     Bicho campeon;
     float getDanioRecibidoCampeon;
 
-    @ElementCollection(targetClass = Float.class)
-    List<Float> ataquesCampeon;
+    @Transient
+    //@ElementCollection(targetClass = Ataque.class)
+    List<Ataque> ataquesCampeon;
 
     @OneToOne
     Ubicacion dojo;
@@ -81,45 +84,41 @@ public class Combate {
         this.triunfoRetador = triunfoRetador;
     }
 
-    public float ataqueDe(Bicho bicho){
-        float leftLimit = 0.5f;
-        float rightLimit = 1f;
-        float danioAtaque = bicho.getEnergia() * (leftLimit + new Random().nextFloat() * (rightLimit - leftLimit));
-        return danioAtaque;
-    }
 
-    public void combatir(Bicho retador, Bicho campeon){
+    public ResultadoCombate combatir(Bicho retador, Bicho campeon){
+        if(campeon == null)
+            return new ResultadoCombate(retador, new ArrayList<>(), new ArrayList<>());
+
         int contadorAtaques = 0;
         boolean atacaRetador = true;
         boolean terminoCombate = false;
         while(contadorAtaques < 20 && !terminoCombate){
             contadorAtaques++;
             if(atacaRetador){
-                float calculadorAtaque = ataqueDe(retador);
-                retador.atacar(campeon, calculadorAtaque);
-                ataquesRetador.add(calculadorAtaque);
-                terminoCombate = this.chequearContinuidadCombate(campeon);
+                Ataque ataqueRetador = retador.atacar(campeon);
+                ataquesRetador.add(ataqueRetador);
+                terminoCombate = this.chequearContinuidadCombate(retador, campeon);
                 atacaRetador = false;
             }
             else{
-                float calculadorAtaqueC = ataqueDe(campeon);
-                campeon.atacar(retador, calculadorAtaqueC);
-                ataquesCampeon.add(calculadorAtaqueC);
-                terminoCombate = this.chequearContinuidadCombate(retador);
+                Ataque ataqueCampeon = campeon.atacar(retador);
+                ataquesCampeon.add(ataqueCampeon);
+                terminoCombate = this.chequearContinuidadCombate(campeon,retador);
                 atacaRetador = true;
             }
         }
-
-        Entrenador entrenador = retador.getEntrenador();
-        //entrenador.experienciaPorCombate();
         retador.aumentarEnergiaCombate();
         campeon.aumentarEnergiaCombate();
+        return new ResultadoCombate(campeon, ataquesRetador, ataquesCampeon);
     }
 
-    private boolean chequearContinuidadCombate(Bicho atacado) {
-        boolean murioBicho = atacado.getEnergia() <= 0;
+    private boolean chequearContinuidadCombate(Bicho atacante, Bicho atacado) {
         boolean alcanzoMaximoDeAtaques = ataquesRetador.size() >= 10;
-        return murioBicho || alcanzoMaximoDeAtaques;
+        if(atacado.perdioCombate()){
+            this.campeon = atacante;
+        }
+
+        return atacado.perdioCombate() || alcanzoMaximoDeAtaques;
 
     }
 

@@ -27,6 +27,7 @@ public class Especie {
 	private int cantidadBichos;
 	@OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Especie evolucion;
+	private Especie especieInicial;
 	@ManyToMany(fetch=FetchType.EAGER) @Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Condicion> condicionDeEvolucion;
 
@@ -154,4 +155,11 @@ public class Especie {
         this.evolucion = evolucion;
     }
 
+	public Especie getEspecieInicial() {
+		return especieInicial;
+	}
+
+	public void setEspecieInicial(Especie especieInicial) {
+		this.especieInicial = especieInicial;
+	}
 }

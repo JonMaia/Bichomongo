@@ -1,28 +1,42 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Guarderia extends Ubicacion {
 
-    @Override
+    @OneToMany
+    protected List<Bicho> bichomones = new ArrayList<>();
+
     public List<Bicho> getBichomones() {
-        return super.bichomones;
+        return bichomones;
+    }
+
+
+
+    @Override
+    public void dejarBicho(Bicho unBicho) {
+        bichomones.add(unBicho);
     }
 
     @Override
-    public Boolean dejarBicho(Bicho unBicho) {
-        super.bichomones.add(unBicho);
-        return true;
+    public void encontrarBichomon(Entrenador entrenador) {
+        int i = 0;
+        Bicho res;
+
+        if(this.getBichomones().isEmpty())
+            return;
+        while(this.getBichomones().size()>i &&
+                this.getBichomones().get(i).getExEntrenadores().contains(entrenador)){
+            i++;
+        }
+        if(this.getBichomones().size()==i)
+            return;
+        res = this.getBichomones().get(i);
+        entregarBicho(entrenador, res);
+        this.getBichomones().remove(i);
     }
 
-    @Override
-    public Bicho entregarBicho(Bicho unBicho) {
-        return unBicho;
-    }
-
-    @Override
-    public void buscar(Entrenador entrenador) {
-        entrenador.obtenerBicho(super.unaBusqueda.realizarBusqueda(entrenador, this));
-    }
 
 }
