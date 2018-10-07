@@ -11,8 +11,9 @@ public class Pueblo extends Ubicacion {
         if(especiesEnPueblo.isEmpty())
             return null;
         Especie  especie = getEspecieSeleccionada();
-
-        return entregarBicho(unEntrenador, new Bicho(especie));
+        Bicho bicho = new Bicho(especie);
+        entregarBicho(unEntrenador,bicho);
+        return bicho;
     }
 
     private Especie getEspecieSeleccionada() {
