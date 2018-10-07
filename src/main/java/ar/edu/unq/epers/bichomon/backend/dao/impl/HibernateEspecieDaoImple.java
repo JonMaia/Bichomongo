@@ -4,6 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -41,8 +42,8 @@ public class HibernateEspecieDaoImple extends BaseHibernateDAO<Especie,Integer> 
 
     @Override
     public void eliminarEspecies() {
-        // TODO: Implementar
-        throw new RuntimeException("Pendiente implementacion");
+        Session session = Runner.getCurrentSession();
+        session.delete("%"); //utiliza el nombre para identificar la especie, por lo que un % coincide con cualquier nombre
     }
 
     @Override

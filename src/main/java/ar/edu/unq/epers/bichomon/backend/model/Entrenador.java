@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import org.hibernate.annotations.Cascade;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -23,7 +24,7 @@ public class Entrenador {
     @OneToMany
     private List<Bicho> bichomones;
 
-    @OneToOne
+    @OneToOne  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Nivel nivel;
 
     LocalDate fechaUltimoBichoEncontra;

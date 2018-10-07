@@ -48,10 +48,13 @@ public class BichoServiceImpl implements BichoService{
 
     @Override
     public Bicho evolucionar(int bicho) {
-        Bicho bichomon = this.bichoDAO.getById(bicho);
-        if(bichomon.puedeEvolucionar()){
-            bichomon = bichomon.evolucionar();
-        }
-        return bichomon;
+        return Runner.runInSession(() -> {
+            Bicho bichomon = this.bichoDAO.getById(bicho);
+            if(bichomon.puedeEvolucionar()){
+                bichomon = bichomon.evolucionar();
+                bichoDAO.guardar(bichomon);
+            }
+            return bichomon;
+        });
     }
 }

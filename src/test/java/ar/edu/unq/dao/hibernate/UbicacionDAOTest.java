@@ -25,7 +25,7 @@ public class UbicacionDAOTest {
 
 		Ubicacion ubicacion = new Guarderia();
 
-		Nivel nivel = new Nivel("I", 100, 50, null,1.0);
+		Nivel nivel = new Nivel(1, 100, 50, null,1.0);
 
 		Entrenador brock = new Entrenador("Brock", ubicacion, nivel );
 

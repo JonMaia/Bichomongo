@@ -1,34 +1,39 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Nivel {
 
-    @Id
+    @Id @GeneratedValue
     Integer id;
 
-    String nombre;
+    Integer numero;
 
     Integer expMaxima;
 
     Integer maximoDeBichos;
 
-    @OneToOne
+    @OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Nivel nextNivel;
 
     Double factorDeNivel;
 
 
-    public Nivel(String nombre,Integer expMaxima, Integer maximoDeBichos,Nivel nextLevel,Double factorDeBusqueda) {
-        this.setNombre(nombre);
+    public Nivel(Integer numero,Integer expMaxima, Integer maximoDeBichos,Nivel nextLevel,Double factorDeBusqueda) {
+        this.setNumero(numero);
         this.setExpMaxima(expMaxima);
         this.setMaximoDeBichos(maximoDeBichos);
         this.setNextNivel(nextLevel);
         this.setFactorDeNivel(factorDeBusqueda);
     }
+
+    public Nivel() { }
 
     public Integer getId() {
         return id;
@@ -62,12 +67,10 @@ public class Nivel {
         this.nextNivel = nextNivel;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public Integer getNumero() { return numero; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     public Nivel getNextNivel() {
