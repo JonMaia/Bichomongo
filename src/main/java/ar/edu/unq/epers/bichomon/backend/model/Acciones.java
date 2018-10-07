@@ -22,6 +22,8 @@ public class Acciones {
         this.experienciaPorEvolucion = experienciaPorEvolucion;
     }
 
+    public Acciones() {  }
+
     public Integer getExperienciaPorCapturarBicho() {
         return experienciaPorCapturarBicho;
     }

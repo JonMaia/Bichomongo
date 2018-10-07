@@ -68,4 +68,14 @@ public class EspecieServiceREST implements EspecieService {
 
 	}
 
+	@Override
+	public List<Especie> populares() {
+		return null;
+	}
+
+	@Override
+	public List<Especie> impopulares() {
+		return null;
+	}
+
 }

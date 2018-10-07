@@ -4,6 +4,8 @@ import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 
+import java.util.List;
+
 /**
  * Este servicio solo será utilizado para pruebas.
  * 
@@ -51,5 +53,6 @@ public interface DataService {
 
 	Bicho crearBichoConNivel10ConEntrenadorYEspecieConEvolucionConCondicionDeNivel0();
 
+	List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2Especies();
 
 }

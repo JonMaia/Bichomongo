@@ -4,10 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.BaseHibernateDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -33,6 +30,7 @@ public class DataServiceImpl implements DataService {
         this.especieDao = new HibernateEspecieDaoImple();
         this.nivelDao = new HibernateNivelDaoImple();
         this.bichoDao = new HibernateBichoDaoImple();
+        this.entrenadorDao = new HibernateEntrenadorDaoImple();
     }
 
     public DataServiceImpl(EspecieDao especieDao, EntrenadorDao entrenadorDao, BichoDao bichoDao, NivelDao nivelDao) {
@@ -86,17 +84,8 @@ public class DataServiceImpl implements DataService {
     public void crearSetDatosIniciales() {
 
         crearSetEspeciesIniciales();
-        /*
-        Nivel nivel5 = new Nivel("V" ,2999, 6, null);
-        Nivel nivel4 = new Nivel("IV",1999,5, nivel5);
-        Nivel nivel3 = new Nivel("III",999,4,nivel4);
-        Nivel nivel2 = new Nivel("II",399,3, nivel3);
-        Nivel nivel1 = new Nivel("I",99,2, nivel2);
-        */
-
-       // Ubicacion ciudadLuz = nuevaUbicacion("ciudadLuz");
-
     }
+
     @Override
     public void crearSetEspeciesIniciales() {
 
@@ -122,26 +111,6 @@ public class DataServiceImpl implements DataService {
         Especie dientemon = nuevaEspecie("Dientemon", TipoBicho.AGUA,60, 3 , 80, "/image/dientmon.png");
     }
 
-    private void nuevoEntrenador(String nombre, Ubicacion ubicacion, List<Bicho> bichomones, Integer experiencia,Nivel nivel1){
-        Entrenador entrenador = new Entrenador(nombre,ubicacion,nivel1, new Acciones(10,10,5));
-        entrenador.setBichomones(bichomones);
-
-    }
-
-    private Bicho nuevoBicho(Especie especie,Integer edad,Integer energia){
-        Bicho bicho = new Bicho(especie);
-        bicho.setEdad(edad);
-        bicho.setEnergia(energia);
-        return bicho;
-
-    }
-/*
-    private Ubicacion nuevaUbicacion(String nombre){
-        Ubicacion ubicacion = new Ubicacion();
-        ubicacion.setNumero(nombre);
-        return ubicacion;
-    }
-*/
 
 
     private Especie nuevaEspecie(String nombre, TipoBicho tipo, Integer altura, Integer peso, Integer energia, String foto) {
@@ -233,7 +202,7 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoConEntrenadorYEspecieConEvolucionSinCondicionDeEvolucion(){
         return Runner.runInSession(() -> {
             Especie especieBase = this.crearEspecieBaseConEvolucion();
-            Bicho bichoBase = new Bicho(especieBase);
+            Bicho bichoBase = especieBase.crearBicho();
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
             Entrenador entrenador = crearEntrenedor();
@@ -248,7 +217,7 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoConEntrenadorYEspecieSinEvolucion(){
         return Runner.runInSession(() -> {
             Especie especieBase = this.crearEspecieBase();
-            Bicho bichoBase = new Bicho(especieBase);
+            Bicho bichoBase = especieBase.crearBicho();
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
             Entrenador entrenador = crearEntrenedor();
@@ -263,7 +232,7 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoConEnergia10ConEntrenadorYEspecieConEvolucionConCondicionDeEnergia0(){
         return Runner.runInSession(() -> {
             Especie especieBase = this.crearEspecieConEvolucionConCondicionDeEnergia0();
-            Bicho bichoBase = new Bicho(especieBase);
+            Bicho bichoBase = especieBase.crearBicho();
             bichoBase.setEnergia(10);
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
@@ -280,7 +249,7 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoConVictorias10ConEntrenadorYEspecieConEvolucionConCondicionDeVictorias0(){
         return Runner.runInSession(() -> {
             Especie especieBase = this.crearEspecieConEvolucionConCondicionDeVictorias0();
-            Bicho bichoBase = new Bicho(especieBase);
+            Bicho bichoBase = especieBase.crearBicho();
             bichoBase.setVictorias(10);
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
@@ -296,7 +265,7 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoConEdad10ConEntrenadorYEspecieConEvolucionConCondicionDeEdad0(){
         return Runner.runInSession(() -> {
             Especie especieBase = this.crearEspecieConEvolucionConCondicionDeEdad0();
-            Bicho bichoBase = new Bicho(especieBase);
+            Bicho bichoBase = especieBase.crearBicho();
             bichoBase.setEdad(10);
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
@@ -312,7 +281,7 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoConNivel10ConEntrenadorYEspecieConEvolucionConCondicionDeNivel0(){
         return Runner.runInSession(() -> {
             Especie especieBase = this.crearEspecieConEvolucionConCondicionDeNivel0();
-            Bicho bichoBase = new Bicho(especieBase);
+            Bicho bichoBase = especieBase.crearBicho();
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
             Nivel nivel = new Nivel();
@@ -328,5 +297,68 @@ public class DataServiceImpl implements DataService {
         });
     }
 
+    public List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2Especies(){
+        return Runner.runInSession(() -> {
+            List<Bicho> bichos = new ArrayList<Bicho>();
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon1","Entrenador1"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon1","Entrenador2"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon2","Entrenador3"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon2","Entrenador4"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon3","Entrenador5"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon3","Entrenador6"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon4","Entrenador7"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon4","Entrenador8"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon5","Entrenador9"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon5","Entrenador10"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon6","Entrenador11"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon6","Entrenador12"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon7","Entrenador13"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon7","Entrenador14"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon8","Entrenador15"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon8","Entrenador16"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon9","Entrenador17"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon9","Entrenador18"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon10","Entrenador19"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon10","Entrenador20"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon11","Entrenador21"));
+            bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon12","Entrenador22"));
+
+            return bichos;
+        });
+    }
+
+    private Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {
+
+        Especie especie = this.especieDao.recuperar(nombreEspecie);
+        if(especie == null)
+            especie = this.crearEspecie(nombreEspecie);
+
+        Bicho bicho = especie.crearBicho();
+        List<Bicho> bichos = new ArrayList<Bicho>();
+        bichos.add(bicho);
+        Entrenador entrenador = crearEntrenador(nombreEntrenador);
+        bicho.setEntrenador(entrenador);
+        entrenador.setBichomones(bichos);
+
+        this.bichoDao.guardar(bicho);
+        return bicho;
+    }
+
+    private Especie crearEspecie(String nombreEspecie) {
+        return Runner.runInSession(() -> {
+            Especie base =  new Especie(nombreEspecie, TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
+            this.especieDao.guardar(base);
+            return base;
+        });
+    }
+
+    private Entrenador crearEntrenador(String nombreEntrenador) {
+        return Runner.runInSession(() -> {
+            Entrenador entrenador = new Entrenador();
+            entrenador.setNombre(nombreEntrenador);
+            this.entrenadorDao.guardar(entrenador);
+            return entrenador;
+        });
+    }
 
 }

@@ -50,4 +50,8 @@ public interface EspecieService {
     Bicho crearBicho(String nombreEspecie, String nombreBicho);
 
     void evolucionar();
+
+    List<Especie> populares();
+
+    List<Especie> impopulares();
 }
