@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
-import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
+import ar.edu.unq.epers.bichomon.backend.model.exception.AccionEnUbicacionErroneaException;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusqueda;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaNormal;
 
@@ -15,7 +15,6 @@ public abstract class Ubicacion {
 
     @OneToMany
     protected List<Entrenador> entrenadores;
-
 
     private Double factorPoblacion = 1.0;
 
@@ -47,10 +46,8 @@ public abstract class Ubicacion {
         bichomones = bichomones;
     }
 
-
-
-    public void dejarBicho(Bicho unBicho) throws UbicacionIncorrectaException {
-        throw new UbicacionIncorrectaException("No se puede abandonar un bicho en esta ubicacion");
+    public void dejarBicho(Bicho unBicho) throws Exception {
+        throw new Exception();
     }
 
     public Bicho buscar(Entrenador entrenador) {
@@ -60,10 +57,9 @@ public abstract class Ubicacion {
         return null;
     }
 
-
     public void entregarBicho(Entrenador unEntrenador, Bicho unBicho){
         unEntrenador.obtenerBicho(unBicho);
-    };
+    }
 
     public abstract Bicho encontrarBichomon(Entrenador unEntrenador);
 
@@ -71,8 +67,8 @@ public abstract class Ubicacion {
         return exitoDeBusqueda.ejecutar(factorTiempo,factorNivel,this.factorPoblacion);
     }
 
-    public void combatirCon(Bicho unBicho) throws UbicacionIncorrectaException {
-        throw new UbicacionIncorrectaException("No se puede combatir en la ubicacion");
+    public void combatirCon(Bicho unBicho) throws  AccionEnUbicacionErroneaException {
+        throw new AccionEnUbicacionErroneaException("No se puede combatir en la ubicacion");
     }
 
     public Double getFactorPoblacion() {
