@@ -18,16 +18,16 @@ public class Duelo {
     Bicho retador;
     float danioRecibidoRetador;
 
-    @Transient
-    //@ElementCollection(targetClass = Ataque.class)
+    @OneToMany
+    @ElementCollection(targetClass = Ataque.class)
     List<Ataque> ataquesRetador;
 
     @OneToOne
     Bicho campeon;
     float getDanioRecibidoCampeon;
 
-    @Transient
-    //@ElementCollection(targetClass = Ataque.class)
+    @OneToMany
+    @ElementCollection(targetClass = Ataque.class)
     List<Ataque> ataquesCampeon;
 
     @OneToOne
