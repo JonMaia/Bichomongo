@@ -2,20 +2,14 @@ package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Duelo;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 public class BichoServiceImpl implements BichoService{
 
     private HibernateBichoDaoImple bichoDAO;
     private HibernateEntrenadorDaoImple entrenadorDAO;
-
-    public BichoServiceImpl (HibernateBichoDaoImple bichoDAO, HibernateEntrenadorDaoImple entrenadorDAO){
-        this.bichoDAO = bichoDAO;
-        this.entrenadorDAO = entrenadorDAO;
-    }
 
     public BichoServiceImpl() {
         this.bichoDAO = new HibernateBichoDaoImple();
@@ -24,9 +18,12 @@ public class BichoServiceImpl implements BichoService{
 
     @Override
     public Bicho buscar(String entrenador) {
-        Entrenador trainer = this.entrenadorDAO.getById(entrenador);
-        //return trainer.buscarBicho();
-        return null;
+        return Runner.runInSession(() -> {
+            Entrenador trainer = this.entrenadorDAO.getById(entrenador);
+            entrenadorDAO.actualizar(trainer);
+            return trainer.buscarBicho();
+
+        });
     }
 
     @Override
@@ -34,11 +31,23 @@ public class BichoServiceImpl implements BichoService{
         Entrenador trainer = this.entrenadorDAO.getById(entrenador);
         Bicho bichomon = this.bichoDAO.getById(bicho);
         trainer.abandonarBicho(bichomon);
+        entrenadorDAO.actualizar(trainer);
     }
 
     @Override
-    public Duelo duelo(String entrenador, int bicho) {
-        return null;
+    public ResultadoCombate duelo(String entrenador, int bicho)  {
+        return Runner.runInSession(()  -> {
+            Entrenador trainer = this.entrenadorDAO.getById(entrenador);
+            Bicho bichomon = this.bichoDAO.getById(bicho);
+            ResultadoCombate resultadoCombate = null;
+            try {
+                resultadoCombate = trainer.iniciarDuelo(bichomon);
+            } catch (UbicacionIncorrectaException e) {
+                e.printStackTrace();
+            }
+            entrenadorDAO.actualizar(trainer);
+            return resultadoCombate;
+        });
     }
 
     @Override
@@ -54,6 +63,7 @@ public class BichoServiceImpl implements BichoService{
                 bichomon = bichomon.evolucionar();
                 bichoDAO.guardar(bichomon);
             }
+            bichoDAO.actualizar(bichomon);
             return bichomon;
         });
     }

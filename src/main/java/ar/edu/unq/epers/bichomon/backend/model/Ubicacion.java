@@ -71,7 +71,7 @@ public abstract class Ubicacion {
         return exitoDeBusqueda.ejecutar(factorTiempo,factorNivel,this.factorPoblacion);
     }
 
-    public void combatirCon(Bicho unBicho) throws UbicacionIncorrectaException {
+    public ResultadoCombate combatirCon(Bicho unBicho) throws UbicacionIncorrectaException {
         throw new UbicacionIncorrectaException("No se puede combatir en la ubicacion");
     }
 

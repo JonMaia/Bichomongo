@@ -1,11 +1,17 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Dojo extends Ubicacion {
 
+    @OneToOne
     private Bicho campeon = null;
+    @OneToMany
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
 
     @Override
@@ -17,11 +23,11 @@ public class Dojo extends Ubicacion {
     }
 
     @Override
-    public void combatirCon(Bicho unBicho){
+    public ResultadoCombate combatirCon(Bicho unBicho){
         Duelo duelo = new Duelo();
         ResultadoCombate resultado = duelo.combatir(unBicho, campeon);
-
         campeon = resultado.getGanadorCombate();
+        return resultado;
     }
 
     public Bicho getCampeon() {
