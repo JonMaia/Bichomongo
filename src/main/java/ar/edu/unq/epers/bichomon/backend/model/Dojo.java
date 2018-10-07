@@ -1,6 +1,5 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ public class Dojo extends Ubicacion {
 
     private Bicho campeon = null;
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
-    private List<Champions> campeones = new ArrayList<Champions>();
+    private List<Champion> campeones = new ArrayList<Champion>();
 
     @Override
     public Bicho encontrarBichomon(Entrenador unEntrenador) {
@@ -24,7 +23,7 @@ public class Dojo extends Ubicacion {
         ResultadoCombate resultado = duelo.combatir(unBicho, campeon);
 
         campeon = resultado.getGanadorCombate();
-        campeones.add(new Champions(unBicho));
+        campeones.add(new Champion(unBicho));
     }
 
     public Bicho getCampeon() {
