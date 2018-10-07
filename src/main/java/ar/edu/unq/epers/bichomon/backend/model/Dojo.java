@@ -9,10 +9,11 @@ public class Dojo extends Ubicacion {
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
 
     @Override
-    public void encontrarBichomon(Entrenador unEntrenador) {
+    public Bicho encontrarBichomon(Entrenador unEntrenador) {
         if(campeon == null)
-            return;
+            return null;
         entregarBicho(unEntrenador , new Bicho(campeon.getEspecie().getEspecieInicial()));
+        return null;
     }
 
     @Override

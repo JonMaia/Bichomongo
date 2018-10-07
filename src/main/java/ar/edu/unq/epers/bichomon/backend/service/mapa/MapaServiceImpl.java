@@ -11,7 +11,7 @@ public class MapaServiceImpl implements MapaService {
 
     @Override
     public void mover(String entrenador, String ubicacion) {
-        this.entrenador = 
+
     }
 
     @Override
