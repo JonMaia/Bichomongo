@@ -1,11 +1,9 @@
 package ar.edu.unq.funcionalidades;
 
 import ar.edu.unq.epers.bichomon.backend.model.*;
-import ar.edu.unq.epers.bichomon.backend.model.exception.AccionEnUbicacionErroneaException;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaSiempreFalse;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaSiempreTrue;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;

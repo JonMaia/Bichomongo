@@ -38,4 +38,8 @@ public class Dojo extends Ubicacion {
     public void setResultadoCombates(List<ResultadoCombate> resultadoCombates) {
         this.resultadoCombates = resultadoCombates;
     }
+
+    public void agregarResultadooCombate(ResultadoCombate resultadoCombate){
+        this.resultadoCombates.add(resultadoCombate);
+    }
 }
