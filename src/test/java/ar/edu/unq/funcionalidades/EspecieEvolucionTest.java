@@ -35,10 +35,10 @@ public class EspecieEvolucionTest {
     private DataService dataService = new DataServiceImpl(especieDao, entrenadorDao, bichoDao,nivelDao);
     private BichoService bichoService = new BichoServiceImpl();
 
-    @After
-    public void limpiarBase() {
-        dataService.eliminarDatos();
-    }
+    //@After
+    //public void limpiarBase() {
+    //    dataService.eliminarDatos();
+    //}
 
 
     //TEST

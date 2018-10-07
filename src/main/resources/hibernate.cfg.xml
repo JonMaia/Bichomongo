@@ -38,6 +38,7 @@
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Guarderia" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Pueblo" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.ProbabilidadDeOcurrencia" />
+        <mapping class="ar.edu.unq.epers.bichomon.backend.model.Ataque" />
         <!--
         <mapping class="ar.edu.unq.unidad3.wop.modelo.bicho" />
         -->

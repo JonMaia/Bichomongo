@@ -2,16 +2,16 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 
 public class MapaServiceImpl implements MapaService {
 
-    private EntrenadorService entrenadorService;
+    private Entrenador entrenador;
     private HibernateUbicacionDaoImple hibernateUbicacionDaoImple;
 
     @Override
     public void mover(String entrenador, String ubicacion) {
-        entrenadorService.setUbicacionEntrenador(entrenador, ubicacion);
+        this.entrenador = 
     }
 
     @Override

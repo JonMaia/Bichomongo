@@ -50,17 +50,18 @@ public abstract class Ubicacion {
         throw new Exception();
     }
 
-    public void buscar(Entrenador entrenador) {
+    public Bicho buscar(Entrenador entrenador) {
         if(exitoDeBusqueda(entrenador.getFactorCaptura(), entrenador.getNivel().getFactorDeNivel())){
-            encontrarBichomon(entrenador);
+            return encontrarBichomon(entrenador);
         }
+        return null;
     }
 
     public void entregarBicho(Entrenador unEntrenador, Bicho unBicho){
         unEntrenador.obtenerBicho(unBicho);
     };
 
-    public abstract void encontrarBichomon(Entrenador unEntrenador);
+    public abstract Bicho encontrarBichomon(Entrenador unEntrenador);
 
     public Boolean exitoDeBusqueda(Double factorTiempo, Double factorNivel){
         return exitoDeBusqueda.ejecutar(factorTiempo,factorNivel,this.factorPoblacion);
