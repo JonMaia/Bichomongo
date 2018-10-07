@@ -46,32 +46,29 @@ public class DataServiceImpl implements DataService {
     public void eliminarDatos() {
 
         Runner.runInSession(() -> {
-            Runner.getCurrentSession().createSQLQuery("alter table Bicho drop foreign key FK3w2054f6jgsk7l2s0dxskcmlj;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Bicho drop foreign key FK8fh9r2jp4j2gfphs47b6lp6fs;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Combate drop foreign key FKjful76fpto5l45mcr9y93d5dp;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Combate drop foreign key FKbe5tpf71j41k7ab803ka2fj4i;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Combate drop foreign key FKtpvr9spmp6vt4r20q7oqgwjue;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Combate_ataquesCampeon drop foreign key FK14nr2r47svcqian8u54xtbbgs;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Combate_ataquesRetador drop foreign key FKqjbowbcah5ew0r1y0v2be07gj;").executeUpdate();
+
+            Runner.getCurrentSession().createSQLQuery("alter table Bicho_Entrenador drop foreign key FKgji1tl66yo1xky894w3340rxw;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("alter table Bicho_Entrenador drop foreign key FKe22rotbfauxbkesglopw42sq4;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("alter table Duelo drop foreign key FKo5npoqqkw3htaltc4g196w3ku;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("alter table Duelo drop foreign key FKa1y3swmuqx93sn6w1winwqgfs;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("alter table Duelo drop foreign key FKmjvra0x1h78ss03ef6dwe8310;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("alter table Entrenador drop foreign key FKhfvp9ak73946il8m4vs9liy5;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Entrenador drop foreign key FK7n671vubnce8r6qipy7iu0qdv;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Entrenador drop foreign key FKg4ns64n3ylb1nk2g8ik9xg72v;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Entrenador_Bicho drop foreign key FKj8v53hkifx709fe3dr04j7um9;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Entrenador_Bicho drop foreign key FK5omf7yeuggrx4y50slh2c5iul;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("alter table Especie drop foreign key FK6rl3836meaxint1gs8obxrsb5;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Especie drop foreign key FKqcwkj83fk834hifybaat7qxve;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Especie_Condicion drop foreign key FKiwh03nawbboyd81uq18fstc4x;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Especie_Condicion drop foreign key FKl8g64xhx5mmpyeyrbqel00j9u;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Nivel drop foreign key FKergyr9mwnuaopox25iugc0w21;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Ubicacion drop foreign key FK9rc8es5lw8mg4c2lcmjynwcb9;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Ubicacion_Bicho drop foreign key FK4fgru7e0ngvibdank7vha13mp;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("alter table Ubicacion_Bicho drop foreign key FKmpg3xx372ocb3oxjpx76gh2w9;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Ubicacion_Entrenador drop foreign key FKt0kgpp5871f1jh099k9sb023e;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("alter table Ubicacion_Entrenador drop foreign key FKlq0jcejkgh34owvblikl7ahxn;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("drop table if exists Acciones;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Bicho;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("drop table if exists Busqueda;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("drop table if exists Combate;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("drop table if exists Combate_ataquesCampeon;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("drop table if exists Combate_ataquesRetador;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("drop table if exists Bicho_Entrenador;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Condicion;").executeUpdate();
+            Runner.getCurrentSession().createSQLQuery("drop table if exists Duelo;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Entrenador;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Entrenador_Bicho;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Especie;").executeUpdate();
@@ -80,7 +77,6 @@ public class DataServiceImpl implements DataService {
             Runner.getCurrentSession().createSQLQuery("drop table if exists hibernate_sequence;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Nivel;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Ubicacion;").executeUpdate();
-            Runner.getCurrentSession().createSQLQuery("drop table if exists Ubicacion_Bicho;").executeUpdate();
             Runner.getCurrentSession().createSQLQuery("drop table if exists Ubicacion_Entrenador;").executeUpdate();
             return null;
         });

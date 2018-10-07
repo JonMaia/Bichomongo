@@ -19,6 +19,7 @@ public abstract class Ubicacion {
 
     private Double factorPoblacion = 1.0;
 
+    @Transient
     private ExitoDeBusqueda exitoDeBusqueda = new ExitoDeBusquedaNormal();
 
 

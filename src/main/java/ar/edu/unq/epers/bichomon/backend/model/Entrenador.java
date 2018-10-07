@@ -29,6 +29,7 @@ public class Entrenador {
 
     LocalDate fechaUltimoBichoEncontra;
 
+    @OneToOne
     private Acciones accion;
 
     public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Acciones acciones) {
