@@ -297,7 +297,7 @@ public class DataServiceImpl implements DataService {
         });
     }
 
-    public List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2Especies(){
+    public List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2EspeciesConEntrenador(){
         return Runner.runInSession(() -> {
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(this.crearBichoDeEspecieYDeEntrenador("Fafamon1","Entrenador1"));
@@ -327,6 +327,47 @@ public class DataServiceImpl implements DataService {
         });
     }
 
+    @Override
+    public Bicho crearBchoConEsspecieSinEntrenador() {
+        return Runner.runInSession(() -> {
+            Especie especie = crearEspecie("Especie");
+            Bicho bicho = especie.crearBicho();
+            bichoDao.guardar(bicho);
+            return bicho;
+        });
+    }
+
+    @Override
+    public List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2EspeciesSinEntrenador() {
+        return Runner.runInSession(() -> {
+            List<Bicho> bichos = new ArrayList<Bicho>();
+            bichos.add(this.crearBichoDeEspecie("Fafamon1"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon1"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon2"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon2"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon3"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon3"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon4"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon4"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon5"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon5"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon6"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon6"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon7"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon7"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon8"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon8"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon9"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon9"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon10"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon10"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon11"));
+            bichos.add(this.crearBichoDeEspecie("Fafamon12"));
+
+            return bichos;
+        });
+    }
+
     private Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {
 
         Especie especie = this.especieDao.recuperar(nombreEspecie);
@@ -340,6 +381,17 @@ public class DataServiceImpl implements DataService {
         bicho.setEntrenador(entrenador);
         entrenador.setBichomones(bichos);
 
+        this.bichoDao.guardar(bicho);
+        return bicho;
+    }
+
+    private Bicho crearBichoDeEspecie(String nombreEspecie) {
+
+        Especie especie = this.especieDao.recuperar(nombreEspecie);
+        if(especie == null)
+            especie = this.crearEspecie(nombreEspecie);
+
+        Bicho bicho = especie.crearBicho();
         this.bichoDao.guardar(bicho);
         return bicho;
     }

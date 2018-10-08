@@ -8,4 +8,6 @@ public interface BichoDao extends GenericDao<Bicho, Integer> {
 
     List<Bicho> recuperarTodosConEntrenador();
 
+    List<Bicho> recuperarTodosSinEntrenador();
+
 }

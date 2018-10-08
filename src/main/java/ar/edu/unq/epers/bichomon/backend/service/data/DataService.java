@@ -53,6 +53,9 @@ public interface DataService {
 
 	Bicho crearBichoConNivel10ConEntrenadorYEspecieConEvolucionConCondicionDeNivel0();
 
-	List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2Especies();
+	List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2EspeciesConEntrenador();
 
+    Bicho crearBchoConEsspecieSinEntrenador();
+
+	List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2EspeciesSinEntrenador();
 }

@@ -28,7 +28,7 @@ public class EspecieServiceTest {
 
     @Test
     public void si_existen_mas_de_10_especies_con_bichos_en_manos_de_entrenadores_entonces_devuelve_las_10_con_mas_bichos(){
-        List<Bicho> bichos = this.dataService.crear2BichosPara10EspeciesYUnBichoPara2Especies();
+        List<Bicho> bichos = this.dataService.crear2BichosPara10EspeciesYUnBichoPara2EspeciesConEntrenador();
 
         List<String> nombresEspecie = new ArrayList<String>();
         for (Bicho bicho : bichos) {
@@ -47,16 +47,40 @@ public class EspecieServiceTest {
 
     @Test
     public void si_existen_bichos_sin_entrenador_no_se_consideran_para_la_cantidad_de_bichos_de_las_especies_populares(){
+        Bicho bicho = this.dataService.crearBchoConEsspecieSinEntrenador();
 
+        List<Especie> especiesPopulares = this.especieService.populares();
+
+        assertTrue(especiesPopulares.isEmpty());
     }
 
 
     @Test
     public void si_existe_una_sola_especie_con_bichos_en_la_guarderia_entonces_es_impopular(){
+        Bicho bicho = this.dataService.crearBchoConEsspecieSinEntrenador();
 
-        List<Especie> especiesPopulares = this.especieService.impopulares();
-        assertTrue(false);
+        List<Especie> especiesImpopulares = this.especieService.impopulares();
+
+        assertEquals(1, especiesImpopulares.size());
+        assertEquals(bicho.getEspecie().getNombre(),especiesImpopulares.get(0).getNombre());
     }
 
+    @Test
+    public void si_existen_mas_de_10_especies_con_bichos_sin_entrenadores_entonces_devuelve_las_10_con_mas_bichos(){
+        List<Bicho> bichos = this.dataService.crear2BichosPara10EspeciesYUnBichoPara2EspeciesSinEntrenador();
 
+        List<String> nombresEspecie = new ArrayList<String>();
+        for (Bicho bicho : bichos) {
+            if(bicho.getEspecie().getCantidadBichos() == 2 && !nombresEspecie.contains(bicho.getEspecie().getNombre()))
+                nombresEspecie.add(bicho.getEspecie().getNombre());
+        }
+
+        List<Especie> especiesImpopulares = this.especieService.impopulares();
+
+        assertEquals(10,especiesImpopulares.size());
+
+        for (Especie especie: especiesImpopulares) {
+            assertTrue(nombresEspecie.contains(especie.getNombre()));
+        }
+    }
 }

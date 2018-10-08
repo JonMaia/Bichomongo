@@ -93,8 +93,31 @@ public class EspecieServiceImpl implements EspecieService {
 
 	@Override
 	public List<Especie> impopulares() {
-		//TODO: IMPLEMENTAR
-		throw new RuntimeException("PENDIENTE IMPLEMENTACION");
+		return Runner.runInSession(() -> {
+			List<Bicho> bichosSinEntrenador = this.bichoDAO.recuperarTodosSinEntrenador();
+
+			Map<Especie,Integer> especiesConCantDeBichos = new HashMap<>();
+
+			for (Bicho bicho: bichosSinEntrenador) {
+				if(!especiesConCantDeBichos.containsKey(bicho.getEspecie()))
+					especiesConCantDeBichos.put(bicho.getEspecie(),0);
+
+				especiesConCantDeBichos.put(bicho.getEspecie(),especiesConCantDeBichos.get(bicho.getEspecie())+1);
+			}
+
+			List<Map.Entry<Especie, Integer>> especiesConCantDeBichosDesordenadas = new ArrayList<>(especiesConCantDeBichos.entrySet());
+
+			especiesConCantDeBichosDesordenadas.sort(new Comparator<Map.Entry<Especie, Integer>>() {
+				@Override
+				public int compare(Map.Entry<Especie, Integer> o1, Map.Entry<Especie, Integer> o2) {
+					return o2.getValue().compareTo(o1.getValue());
+				}
+			});
+
+			List<Especie> especiesOrdenadas = especiesConCantDeBichosDesordenadas.stream().limit(10).map(Map.Entry::getKey).collect(Collectors.toList());
+
+			return especiesOrdenadas;
+		});
 	}
 
 }
