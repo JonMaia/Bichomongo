@@ -1,21 +1,32 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
-import org.joda.time.Days;
-import org.joda.time.LocalDate;
+import javax.persistence.*;
+import java.time.LocalDate;
 
+@Entity
 public class Champion {
 
-    private Bicho bicho;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    private LocalDate fechaDescoronado;
+    @OneToOne
+    private Bicho campeon;
     private LocalDate fechaCoronado;
-    private int plazo;
 
     public Champion(Bicho unBicho) {
-        bicho = unBicho;
+        campeon = unBicho;
         fechaCoronado = LocalDate.now();
+        fechaDescoronado = LocalDate.now();
     }
 
-    public Champion() {
+    public LocalDate getFechaDescoronado() {
+        return fechaDescoronado;
+    }
 
+    public void setFechaDescoronado(LocalDate fechaDescoronado) {
+        this.fechaDescoronado = fechaDescoronado;
     }
 
     public LocalDate getFechaCoronado() {
@@ -24,21 +35,5 @@ public class Champion {
 
     public void setFechaCoronado(LocalDate fechaCoronado) {
         this.fechaCoronado = fechaCoronado;
-    }
-
-    public Bicho getBicho() {
-        return bicho;
-    }
-
-    public void setCampeon(Bicho campeon) {
-        this.bicho = campeon;
-    }
-
-    public void descoronar() {
-        plazo = Days.daysBetween(fechaCoronado, LocalDate.now()).getDays();
-    }
-
-    public int getPlazo(){
-        return plazo;
     }
 }

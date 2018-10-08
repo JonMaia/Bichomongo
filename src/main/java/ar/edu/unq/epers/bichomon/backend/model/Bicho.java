@@ -25,13 +25,13 @@ public class Bicho {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private int id;
 
-	@OneToOne
+	@OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Entrenador entrenador;
 
-	@OneToOne
+	@OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Especie especie;
 
-	@ElementCollection(targetClass = Entrenador.class)
+	@ElementCollection(targetClass = Entrenador.class) @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private List<Entrenador> exEntrenadores = new ArrayList<>();
 
 	private float energia;
@@ -118,10 +118,10 @@ public class Bicho {
 		if(this.puedeEvolucionar()){
 			Especie evolucion = this.getEspecie().getEvolucion();
 			this.setEspecie(evolucion);
+			this.getEntrenador().ganarExperienciaPorEvolucion();
 		}
 		return this;
 	}
-
 
 	public Float danioAInfligir(Bicho bicho){
 		float leftLimit = 0.5f;
