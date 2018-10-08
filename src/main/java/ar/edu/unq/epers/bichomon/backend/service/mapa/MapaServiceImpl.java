@@ -3,10 +3,9 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 import ar.edu.unq.epers.bichomon.backend.dao.DojoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
-import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
+import ar.edu.unq.epers.bichomon.backend.model.*;
+
+import java.util.Comparator;
 
 public class MapaServiceImpl implements MapaService {
 
@@ -35,13 +34,13 @@ public class MapaServiceImpl implements MapaService {
     public Bicho campeon(String dojo) {
         /*retorna el actual campeon del Dojo especificado.*/
         Dojo d = dojoDao.getById(dojo);
-        return d.getCampeon();
+        return d.getCampeon().getBicho();
     }
 
     @Override
     public Bicho campeonHistorico(String dojo) {
         /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
-
+        Dojo d = dojoDao.getById(dojo);
 
         return null;
 
