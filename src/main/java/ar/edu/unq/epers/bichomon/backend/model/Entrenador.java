@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import org.hibernate.annotations.Cascade;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -16,12 +17,12 @@ public class Entrenador {
     @Id
     private String nombre;
 
-    @ManyToOne()
+    @ManyToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Ubicacion ubicacion;
 
     private Integer experiencia;
 
-    @OneToMany
+    @OneToMany @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Bicho> bichomones;
 
     @OneToOne  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
@@ -29,7 +30,7 @@ public class Entrenador {
 
     LocalDate fechaUltimoBichoEncontra;
 
-    @OneToOne
+    @OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Acciones accion;
 
     public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Acciones acciones) {
@@ -110,9 +111,11 @@ public class Entrenador {
     }
 
 
-    public void buscarBicho(){
+    public Bicho buscarBicho(){
+
         if(puedoBuscar())
-            ubicacion.buscar(this);
+            return ubicacion.buscar(this);
+        return null;
     }
 
     private boolean puedoBuscar() {
@@ -138,13 +141,10 @@ public class Entrenador {
 
     public void ganarExperienciaPorEvolucion(){addExperiencia(accion.getExperienciaPorEvolucion());}
 
-    public void iniciarDuelo(Bicho bicho){
-        try {
-            ubicacion.combatirCon(bicho);
-            addExperiencia(accion.getExperienciaPorCombatir());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+    public ResultadoCombate iniciarDuelo(Bicho bicho) throws UbicacionIncorrectaException {
+        ResultadoCombate resultado = ubicacion.combatirCon(bicho);
+        addExperiencia(accion.getExperienciaPorCombatir());
+        return resultado;
     }
 
     public Double getFactorCaptura(){

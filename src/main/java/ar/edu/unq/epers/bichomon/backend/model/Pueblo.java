@@ -7,12 +7,13 @@ public class Pueblo extends Ubicacion {
     private List<ProbabilidadDeOcurrencia> especiesEnPueblo;
 
     @Override
-    public void encontrarBichomon(Entrenador unEntrenador) {
+    public Bicho encontrarBichomon(Entrenador unEntrenador) {
         if(especiesEnPueblo.isEmpty())
-            return;
+            return null;
         Especie  especie = getEspecieSeleccionada();
-
-        entregarBicho(unEntrenador, new Bicho(especie));
+        Bicho bicho = new Bicho(especie);
+        entregarBicho(unEntrenador,bicho);
+        return bicho;
     }
 
     private Especie getEspecieSeleccionada() {

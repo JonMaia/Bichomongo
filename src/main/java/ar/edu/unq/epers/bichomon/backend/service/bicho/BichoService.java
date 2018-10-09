@@ -3,6 +3,8 @@ package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Duelo;
+import ar.edu.unq.epers.bichomon.backend.model.ResultadoCombate;
+import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 
 public interface BichoService {
 
@@ -24,7 +26,7 @@ public interface BichoService {
      El objeto resultante ResultadoCombate informará no solo quién fue el ganador del
      combate sino el resultado de cada uno de los ataques realizados. */
 
-    Duelo duelo(String entrenador, int bicho);
+    ResultadoCombate duelo(String entrenador, int bicho) throws UbicacionIncorrectaException;
 
     //deberá devolver true si el bicho especificado está en condiciones de evolucionar.
 

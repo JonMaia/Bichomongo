@@ -1,18 +1,27 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Entity
 public class ResultadoCombate {
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @OneToOne
     private Bicho ganadorCombate;
+    @OneToMany
     private List<Ataque> informacionAtaques;
+    private LocalDate fechaCombate;
 
     public ResultadoCombate(Bicho bicho, List<Ataque> ataquesRetador, List<Ataque> ataquesCampeon) {
         ganadorCombate = bicho;
         informacionAtaques = ataquesCampeon;
         informacionAtaques = ataquesRetador;
+        fechaCombate = LocalDate.now();
     }
 
     public Bicho getGanadorCombate() {

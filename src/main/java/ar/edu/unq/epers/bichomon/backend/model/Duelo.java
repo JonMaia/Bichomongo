@@ -18,20 +18,20 @@ public class Duelo {
     Bicho retador;
     float danioRecibidoRetador;
 
-    @Transient
-    //@ElementCollection(targetClass = Ataque.class)
+    @OneToMany
+    @ElementCollection(targetClass = Ataque.class)
     List<Ataque> ataquesRetador;
 
     @OneToOne
     Bicho campeon;
     float getDanioRecibidoCampeon;
 
-    @Transient
-    //@ElementCollection(targetClass = Ataque.class)
+    @OneToMany
+    @ElementCollection(targetClass = Ataque.class)
     List<Ataque> ataquesCampeon;
 
     @OneToOne
-    Ubicacion dojo;
+    Dojo dojo;
 
     Boolean triunfoRetador;
 
@@ -72,7 +72,7 @@ public class Duelo {
         return dojo;
     }
 
-    public void setDojo(Ubicacion dojo) {
+    public void setDojo(Dojo dojo) {
         this.dojo = dojo;
     }
 
@@ -109,7 +109,8 @@ public class Duelo {
         }
         retador.aumentarEnergiaCombate();
         campeon.aumentarEnergiaCombate();
-        return new ResultadoCombate(campeon, ataquesRetador, ataquesCampeon);
+        ResultadoCombate resultadoCombate= new ResultadoCombate(campeon, ataquesRetador, ataquesCampeon);
+        return resultadoCombate;
     }
 
     private boolean chequearContinuidadCombate(Bicho atacante, Bicho atacado) {
