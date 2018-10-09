@@ -34,7 +34,7 @@ public class MapaServiceImpl implements MapaService {
     public Bicho campeon(String dojo) {
         /*retorna el actual campeon del Dojo especificado.*/
         Dojo d = dojoDao.getById(dojo);
-        return d.getCampeon().getBicho();
+        return d.getCampeon();
     }
 
     @Override
