@@ -17,20 +17,20 @@ public class Entrenador {
     @Id
     private String nombre;
 
-    @ManyToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Ubicacion ubicacion;
 
     private Integer experiencia;
 
-    @OneToMany @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToMany (cascade = CascadeType.ALL)
     private List<Bicho> bichomones;
 
-    @OneToOne  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToOne  (cascade = CascadeType.ALL)
     private Nivel nivel;
 
     LocalDate fechaUltimoBichoEncontra;
 
-    @OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToOne (cascade = CascadeType.ALL)
     private Acciones accion;
 
     public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Acciones acciones) {
