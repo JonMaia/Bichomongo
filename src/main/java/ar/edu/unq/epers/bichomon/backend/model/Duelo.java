@@ -20,7 +20,7 @@ public class Duelo {
 
     @OneToMany
     @ElementCollection(targetClass = Ataque.class)
-    List<Ataque> ataquesRetador;
+    List<Ataque> ataquesRetador = new ArrayList<>();
 
     @OneToOne
     Bicho campeon;
@@ -28,12 +28,16 @@ public class Duelo {
 
     @OneToMany
     @ElementCollection(targetClass = Ataque.class)
-    List<Ataque> ataquesCampeon;
+    List<Ataque> ataquesCampeon = new ArrayList<>();
 
     @OneToOne
     Dojo dojo;
 
     Boolean triunfoRetador;
+
+    public Duelo(Bicho campeon){
+        this. campeon = campeon;
+    }
 
 
     public Integer getId() {
@@ -85,10 +89,11 @@ public class Duelo {
     }
 
 
-    public ResultadoCombate combatir(Bicho retador, Bicho campeon){
-        if(campeon == null)
+    public ResultadoCombate combatir(Bicho retador){
+        Bicho campeonActual = this.campeon;
+        if(campeonActual == null) {
             return new ResultadoCombate(retador, new ArrayList<>(), new ArrayList<>());
-
+        }
         int contadorAtaques = 0;
         boolean atacaRetador = true;
         boolean terminoCombate = false;
@@ -97,18 +102,18 @@ public class Duelo {
             if(atacaRetador){
                 Ataque ataqueRetador = retador.atacar(campeon);
                 ataquesRetador.add(ataqueRetador);
-                terminoCombate = this.chequearContinuidadCombate(retador, campeon);
+                terminoCombate = this.chequearContinuidadCombate(retador, campeonActual);
                 atacaRetador = false;
             }
             else{
                 Ataque ataqueCampeon = campeon.atacar(retador);
                 ataquesCampeon.add(ataqueCampeon);
-                terminoCombate = this.chequearContinuidadCombate(campeon,retador);
+                terminoCombate = this.chequearContinuidadCombate(campeonActual,retador);
                 atacaRetador = true;
             }
         }
         retador.aumentarEnergiaCombate();
-        campeon.aumentarEnergiaCombate();
+        campeonActual.aumentarEnergiaCombate();
         ResultadoCombate resultadoCombate= new ResultadoCombate(campeon, ataquesRetador, ataquesCampeon);
         return resultadoCombate;
     }

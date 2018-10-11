@@ -26,8 +26,8 @@ public class Dojo extends Ubicacion {
 
     @Override
     public ResultadoCombate combatirCon(Bicho unBicho){
-        Duelo duelo = new Duelo();
-        ResultadoCombate resultado = duelo.combatir(unBicho, campeon);
+        Duelo duelo = new Duelo(campeon);
+        ResultadoCombate resultado = duelo.combatir(unBicho);
         campeon = resultado.getGanadorCombate();
         campeones.add(new Champion(unBicho));
         return resultado;

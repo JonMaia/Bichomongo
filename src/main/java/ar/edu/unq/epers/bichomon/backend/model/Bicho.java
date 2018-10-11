@@ -47,6 +47,7 @@ public class Bicho {
 	    this.especie = especie;
 	    this.victorias = 0;
 	    this.fechaNacimiento = LocalDate.now();
+	    this.energia = especie.getEnergiaInicial();
 
     }
 
@@ -123,26 +124,29 @@ public class Bicho {
 		return this;
 	}
 
-	public Float danioAInfligir(Bicho bicho){
+	public Float danioAInfligir(){
 		float leftLimit = 0.5f;
 		float rightLimit = 1f;
-		float danioAtaque = bicho.getEnergia() * (leftLimit + new Random().nextFloat() * (rightLimit - leftLimit));
+		float danioAtaque = this.getEnergia() * (leftLimit + new Random().nextFloat() * (rightLimit - leftLimit));
 		return danioAtaque;
 	}
 
 
 	public Ataque atacar(Bicho bicho) {
-		float danioAtaque = this.danioAInfligir(bicho);
+		float danioAtaque = this.danioAInfligir();
 		float danioInfligido = bicho.getDanioRecibidoCombate() + danioAtaque;
 		bicho.setDanioRecibidoCombate(danioInfligido);
 		return new Ataque(this, bicho , danioAtaque);
 	}
 
 	public void aumentarEnergiaCombate() {
-		//this.energia = this.energia + Math.random();
+		Random rand = new Random();
+		int randomNum = rand.nextInt((5-1)+1) + 1;
+		this.energia = this.energia + randomNum;
 	}
 
 	public boolean perdioCombate(){
 		return this.energia < this.danioRecibidoCombate;
 	}
+
 }
