@@ -1,9 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.service.data;
 
-import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.*;
 
 import java.util.List;
 
@@ -63,4 +60,10 @@ public interface DataService {
 	Dojo crearDojo();
 
 	Bicho crearBichoDeEspecieYDeEntrenador(String otraEspecie, String otroEntrenador);
+
+	Pueblo crearPuebloConProbabilidadExito100();
+
+	Pueblo crearPuebloConProbabilidadExito0();
+
+	Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo();
 }

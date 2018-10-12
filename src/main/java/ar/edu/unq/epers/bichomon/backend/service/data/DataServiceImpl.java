@@ -326,6 +326,28 @@ public class DataServiceImpl implements DataService {
             return bicho;
         });
     }
+    @Override
+    public Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo(){
+        return Runner.runInSession(() -> {
+            Dojo dojo = new Dojo();
+
+            Entrenador entrenador = crearEntrenador("Pepito");
+            Especie especie = crearEspecie("Especie");
+            Especie especieCampeon = crearEspecie("Especie");
+            especie.setEnergiaIncial(200);
+            especieCampeon.setEnergiaIncial(20);
+            Bicho retador = especie.crearBicho();
+            Bicho campeon = especieCampeon.crearBicho();
+            retador.setEntrenador(entrenador);
+            dojo.setCampeon(campeon);
+            entrenador.moverA(dojo);
+            bichoDao.guardar(retador);
+            bichoDao.guardar(campeon);
+            entrenadorDao.guardar(entrenador);
+            dojoDao.guardar(dojo);
+            return retador;
+        });
+    }
 
     @Override
     public List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2EspeciesSinEntrenador() {
@@ -364,6 +386,31 @@ public class DataServiceImpl implements DataService {
         dojo.setNombre("DOJO");
         this.dojoDao.guardar(dojo);
         return dojo;
+    }
+
+    @Override
+    public Pueblo crearPuebloConProbabilidadExito100(){
+        Pueblo puebloPaleta = new Pueblo();
+
+        Especie weedle = new Especie();
+        List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
+        ProbabilidadDeOcurrencia probabilidadWeedle = new ProbabilidadDeOcurrencia(weedle,100);
+        probabilidades.add(probabilidadWeedle);
+        puebloPaleta.setEspeciesEnPueblo(probabilidades);
+
+        return puebloPaleta;
+    }
+    @Override
+    public Pueblo crearPuebloConProbabilidadExito0(){
+        Pueblo puebloPaleta = new Pueblo();
+
+        Especie weedle = new Especie();
+        List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
+        ProbabilidadDeOcurrencia probabilidadWeedle = new ProbabilidadDeOcurrencia(weedle,0);
+        probabilidades.add(probabilidadWeedle);
+        puebloPaleta.setEspeciesEnPueblo(probabilidades);
+
+        return puebloPaleta;
     }
 
     public Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {

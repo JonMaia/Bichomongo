@@ -47,7 +47,7 @@ public abstract class Ubicacion {
     }
 
     public void dejarBicho(Bicho unBicho) throws UbicacionIncorrectaException {
-        throw new UbicacionIncorrectaException("no puede dejar un bicho en esta hubicación");
+        throw new UbicacionIncorrectaException("No puede dejar un bicho en esta ubicación");
     }
 
     public Bicho buscar(Entrenador entrenador) {
