@@ -10,7 +10,6 @@ import ar.edu.unq.epers.bichomon.backend.service.leaderboard.LeaderboardServiceI
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.Test;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,6 +22,7 @@ public class LeaderboardServiceTest {
 
     @Test
     public void si_hay_un_solo_entrenador_con_un_bicho_campeon_este_es_campeon() {
+        Runner.runInSession(() -> {
         Dojo dojo = this.dataService.crearDojo();
         Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
 
@@ -32,6 +32,8 @@ public class LeaderboardServiceTest {
 
         assertEquals(1, campeones.size());
         assertTrue(campeones.contains(bicho.getEntrenador()));
+        return null;
+        });
     }
 
     @Test
@@ -56,8 +58,7 @@ public class LeaderboardServiceTest {
             List<Entrenador> campeones = this.leaderboardService.campeones();
 
             assertTrue(campeones.size() == 1);
-            assertEquals(campeones.indexOf(0), bicho2);
-            assertEquals(campeones.indexOf(1), bicho);
+            assertEquals(campeones.get(0), bicho.getEntrenador());
             return null;
         });
     }

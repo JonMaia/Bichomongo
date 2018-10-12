@@ -17,7 +17,7 @@ public class DataServiceImpl implements DataService {
     private NivelDao nivelDao;
     private BichoDao bichoDao;
     private EntrenadorDao entrenadorDao;
-    private UbicacionDao dojoDao = new HibernateUbicacionDaoImple();
+    private DojoDao dojoDao = new HibernateDojoDaoImple();
 
     public DataServiceImpl(EspecieDao especieDao,NivelDao nivelDao){
         this.especieDao = especieDao;
@@ -174,7 +174,7 @@ public class DataServiceImpl implements DataService {
     }
 
     public Entrenador crearEntrenedor(){
-        Entrenador entrenador = entrenadorDao.recuperar("Ash");
+        Entrenador entrenador = entrenadorDao.getById("Ash");
         if(entrenador == null){
             entrenador =  new Entrenador();
             entrenador.setNombre("Ash");
@@ -382,8 +382,11 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Dojo crearDojo() {
-        Dojo dojo = new Dojo();
-        dojo.setNombre("DOJO");
+        Dojo dojo =  this.dojoDao.getById("DOJO");
+        if(dojo == null) {
+            dojo = new Dojo();
+            dojo.setNombre("DOJO");
+        }
         this.dojoDao.guardar(dojo);
         return dojo;
     }
