@@ -13,12 +13,12 @@ public class HibernateChampionDaoImple extends BaseHibernateDAO<Champion,Integer
 
 
     @Override
-    public List<Champion> findByActualChampion() {
+    public List<Entrenador> findByActualChampion() {
         StringBuffer squery = new StringBuffer();
 
         squery.append("SELECT c ");
         squery.append(" FROM " + Champion.class.getSimpleName() + " c ");
-        squery.append(" WHERE c.perdiodo IS NULL");
+        squery.append(" WHERE c.periodo IS NULL");
 
         Session session = Runner.getCurrentSession();
         Query query = session.createQuery(squery.toString());
@@ -36,27 +36,21 @@ public class HibernateChampionDaoImple extends BaseHibernateDAO<Champion,Integer
         Query query = session.createQuery(squery.toString());
         return query.list();
     }
-}
 
-/*
     @Override
     public Especie getEspecieLider() {
-        StringBuffer squery = new StringBuffer();
-        squery.append(" SELECT e.espe")
-        squery.append(" (SELECT (distinct c.campeon).especie as espe,  ");
-        squery.append(" count(distinct c.campeon)  as n");
-        squery.append(" FROM " + Champion.class.getSimpleName() + " c ");
-        squery.append(" WHERE 1=1 ) e");
 
+
+        StringBuffer squery = new StringBuffer();
+        squery.append(" SELECT c.campeon.especie");
+        squery.append(" FROM " + Champion.class.getSimpleName() + " c ");
+        squery.append(" GROUP BY c.campeon.especie");
+        squery.append(" ORDER BY count(distinct c.campeon) DESC");
+
+        System.out.println(squery.toString());
         Session session = Runner.getCurrentSession();
-        Query query = session.createQuery(squery.toString());
+        Query<Especie> query = session.createQuery(squery.toString(), Especie.class);
+        query.setMaxResults(1);
+        return query.getSingleResult();
     }
 }
-*/
-/*
-    select b.especie_id, count(b.id) as cant
-        from Champion c
-        inner join Bicho b on b.id = c.campeon_id
-        GROUP by b.especie_id
-        order By cant desc;
-        */

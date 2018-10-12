@@ -2,10 +2,7 @@ package ar.edu.unq.service;
 
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
-import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.leaderboard.LeaderboardService;
@@ -42,22 +39,23 @@ public class LeaderboardServiceTest {
          Runner.runInSession(() -> {
             Dojo dojo = this.dataService.crearDojo();
             Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
-            dojo.setCampeon(bicho);
+            Champion champion1 = dojo.setCampeon(bicho);
+
             ubicacionDao.guardar(dojo);
+
+
+
 
             Bicho bicho2 = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
             dojo.setCampeon(bicho2);
 
-            try {
-                TimeUnit.SECONDS.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            champion1.setPeriodo(500000000);
+
 
             ubicacionDao.guardar(dojo);
             List<Entrenador> campeones = this.leaderboardService.campeones();
 
-            assertTrue(campeones.size() == 2);
+            assertTrue(campeones.size() == 1);
             assertEquals(campeones.indexOf(0), bicho2);
             assertEquals(campeones.indexOf(1), bicho);
             return null;

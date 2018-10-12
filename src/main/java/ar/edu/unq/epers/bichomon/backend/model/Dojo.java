@@ -17,9 +17,18 @@ import java.util.concurrent.TimeUnit;
 public class Dojo extends Ubicacion {
 
     @OneToOne
-    private Bicho campeon = null;
+    private Champion campeon = null;
     @OneToMany  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
+
+    public List<Champion> getCampeones() {
+        return campeones;
+    }
+
+    public void setCampeones(List<Champion> campeones) {
+        this.campeones = campeones;
+    }
+
     @OneToMany  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Champion> campeones = new ArrayList<Champion>();
 
@@ -27,34 +36,37 @@ public class Dojo extends Ubicacion {
     public Bicho encontrarBichomon(Entrenador unEntrenador) {
         if(campeon == null)
             return null;
-        entregarBicho(unEntrenador , new Bicho(campeon.getEspecie().getEspecieInicial()));
+        entregarBicho(unEntrenador , new Bicho(campeon.getBicho().getEspecie().getEspecieInicial()));
         return null;
     }
 
     @Override
     public ResultadoCombate combatirCon(Bicho unBicho){
-        Duelo duelo = new Duelo(campeon);
+        Duelo duelo = new Duelo(campeon.getBicho());
         ResultadoCombate resultado = duelo.combatir(unBicho);
         Bicho ganador = resultado.getGanadorCombate();
-        if(ganador != campeon)
+        if(ganador != campeon.getBicho())
             setCampeon(ganador);
 
         return resultado;
     }
 
-    public Bicho getCampeon() {
+    public Champion getCampeon() {
         return campeon;
     }
 
-    public void setCampeon(Bicho campeon) {
+    public Champion setCampeon(Bicho campeon) {
 
         if(campeones.size() > 0){
             long diffInMillies = new Date().getTime() - campeones.get(campeones.size()-1).getFechaCoronado().getTime();
             campeones.get(campeones.size()-1).setPeriodo(diffInMillies);
         }
+        Champion champion = new Champion(campeon);
+        campeones.add(champion);
+        this.campeon = champion;
+        return champion;
 
-        campeones.add(new Champion(campeon));
-        this.campeon = campeon;
+
     }
 
     public List<ResultadoCombate> getResultadoCombates() {
