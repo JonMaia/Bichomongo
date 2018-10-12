@@ -37,7 +37,7 @@ public interface DataService {
 
 	Especie crearEspecieConEvolucionConCondicionDeNivel0();
 
-	Entrenador crearEntrenedor();
+	Entrenador crearEntrenador();
 
 	Bicho crearBichoConEntrenadorYEspecieConEvolucionSinCondicionDeEvolucion();
 

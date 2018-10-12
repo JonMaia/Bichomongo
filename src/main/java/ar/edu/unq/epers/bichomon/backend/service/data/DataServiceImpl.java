@@ -6,7 +6,6 @@ import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
-import org.hibernate.query.NativeQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -173,7 +172,8 @@ public class DataServiceImpl implements DataService {
         });
     }
 
-    public Entrenador crearEntrenedor(){
+    @Override
+    public Entrenador crearEntrenador() {
         Entrenador entrenador = entrenadorDao.getById("Ash");
         if(entrenador == null){
             entrenador =  new Entrenador();
@@ -197,7 +197,7 @@ public class DataServiceImpl implements DataService {
             Bicho bichoBase = especieBase.crearBicho();
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
-            Entrenador entrenador = crearEntrenedor();
+            Entrenador entrenador = crearEntrenador();
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
 
@@ -212,7 +212,7 @@ public class DataServiceImpl implements DataService {
             Bicho bichoBase = especieBase.crearBicho();
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
-            Entrenador entrenador = crearEntrenedor();
+            Entrenador entrenador = crearEntrenador();
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
 
@@ -228,7 +228,7 @@ public class DataServiceImpl implements DataService {
             bichoBase.setEnergia(10);
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
-            Entrenador entrenador = crearEntrenedor();
+            Entrenador entrenador = crearEntrenador();
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
 
@@ -245,7 +245,7 @@ public class DataServiceImpl implements DataService {
             bichoBase.setVictorias(10);
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
-            Entrenador entrenador = crearEntrenedor();
+            Entrenador entrenador = crearEntrenador();
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
 
@@ -261,7 +261,7 @@ public class DataServiceImpl implements DataService {
             bichoBase.setEdad(10);
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
-            Entrenador entrenador = crearEntrenedor();
+            Entrenador entrenador = crearEntrenador();
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
 
@@ -277,7 +277,7 @@ public class DataServiceImpl implements DataService {
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
             Nivel nivel = crearNivel(10);
-            Entrenador entrenador = crearEntrenedor();
+            Entrenador entrenador = crearEntrenador();
             entrenador.setNivel(nivel);
             bichoBase.setEntrenador(entrenador);
 

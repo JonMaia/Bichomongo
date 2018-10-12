@@ -2,6 +2,8 @@ package ar.edu.unq.epers.bichomon.backend.model;
 
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Minutes;
@@ -17,12 +19,12 @@ public class Entrenador {
     @Id
     private String nombre;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Ubicacion ubicacion;
 
     private Integer experiencia;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany @LazyCollection(LazyCollectionOption.FALSE) @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Bicho> bichomones;
 
     @OneToOne  (cascade = CascadeType.ALL)
@@ -126,19 +128,8 @@ public class Entrenador {
 
 
     public void abandonarBicho(Bicho bicho){
-        try{
-            ubicacion.dejarBicho(bicho);
-            Iterator<Bicho> iterator = getBichomones().iterator();
-            while (iterator.hasNext()){
-                Bicho bichomon = iterator.next();
-                if(bichomon.equals(bicho)){
-                    getBichomones().remove(bichomon);
-                    break;
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        ubicacion.dejarBicho(bicho);
+        getBichomones().remove(bicho);
     }
 
     public void ganarExperienciaPorEvolucion(){addExperiencia(accion.getExperienciaPorEvolucion());}
@@ -158,7 +149,7 @@ public class Entrenador {
 
     }
 
-    public void moverA(Ubicacion gimnasioCiudadCarmín) {
-        this.ubicacion = gimnasioCiudadCarmín;
+    public void moverA(Ubicacion nuevaUbicacion) {
+        this.ubicacion = nuevaUbicacion;
     }
 }
