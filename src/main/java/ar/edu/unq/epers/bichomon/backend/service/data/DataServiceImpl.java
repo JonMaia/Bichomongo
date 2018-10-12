@@ -1,9 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.service.data;
 
-import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
-import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
-import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
+import ar.edu.unq.epers.bichomon.backend.dao.*;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
@@ -20,6 +17,7 @@ public class DataServiceImpl implements DataService {
     private NivelDao nivelDao;
     private BichoDao bichoDao;
     private EntrenadorDao entrenadorDao;
+    private UbicacionDao dojoDao = new HibernateUbicacionDaoImple();
 
     public DataServiceImpl(EspecieDao especieDao,NivelDao nivelDao){
         this.especieDao = especieDao;
@@ -360,7 +358,15 @@ public class DataServiceImpl implements DataService {
         });
     }
 
-    private Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {
+    @Override
+    public Dojo crearDojo() {
+        Dojo dojo = new Dojo();
+        dojo.setNombre("DOJO");
+        this.dojoDao.guardar(dojo);
+        return dojo;
+    }
+
+    public Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {
 
         Especie especie = this.especieDao.recuperar(nombreEspecie);
         if(especie == null)

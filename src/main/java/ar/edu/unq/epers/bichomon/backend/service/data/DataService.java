@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.data;
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 
@@ -58,4 +59,8 @@ public interface DataService {
     Bicho crearBchoConEsspecieSinEntrenador();
 
 	List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2EspeciesSinEntrenador();
+
+	Dojo crearDojo();
+
+	Bicho crearBichoDeEspecieYDeEntrenador(String otraEspecie, String otroEntrenador);
 }

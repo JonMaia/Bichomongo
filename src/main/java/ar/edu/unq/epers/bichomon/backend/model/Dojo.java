@@ -1,5 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -12,9 +14,9 @@ public class Dojo extends Ubicacion {
 
     @OneToOne
     private Bicho campeon = null;
-    @OneToMany
+    @OneToMany  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
-    @OneToMany
+    @OneToMany  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Champion> campeones = new ArrayList<Champion>();
 
     @Override
@@ -41,7 +43,7 @@ public class Dojo extends Ubicacion {
     }
 
     public void setCampeon(Bicho campeon) {
-        
+
         if(campeones.size() > 0)
             campeones.get(campeones.size()-1).setFechaDescoronado(LocalDate.now());
 
