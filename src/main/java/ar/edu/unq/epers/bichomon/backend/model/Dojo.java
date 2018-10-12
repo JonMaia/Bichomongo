@@ -20,6 +20,15 @@ public class Dojo extends Ubicacion {
     private Bicho campeon = null;
     @OneToMany  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
+
+    public List<Champion> getCampeones() {
+        return campeones;
+    }
+
+    public void setCampeones(List<Champion> campeones) {
+        this.campeones = campeones;
+    }
+
     @OneToMany  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Champion> campeones = new ArrayList<Champion>();
 

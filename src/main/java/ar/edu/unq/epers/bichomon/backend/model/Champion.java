@@ -22,6 +22,8 @@ public class Champion {
         periodo = 0;
     }
 
+    public Champion() {
+    }
 
 
     public Date getFechaCoronado() {
@@ -33,6 +35,9 @@ public class Champion {
     }
 
     public long getPeriodo() {
+        if (this.getPeriodo() == 0){
+            long periodo = new Date().getTime() - this.getFechaCoronado().getTime();
+        }
         return periodo;
     }
 
