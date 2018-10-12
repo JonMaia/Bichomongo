@@ -7,6 +7,10 @@ import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 
 public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, String> implements EntrenadorDao{
 
@@ -23,5 +27,15 @@ public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, St
         Query query = session.createQuery(squery.toString());
         query.setParameter("experiencia", entrenador.getExperiencia());
         return (Nivel) query.uniqueResult();
+    }
+
+    @Override
+    public Entrenador recuperar(String nombreEntrenador) {
+        Session session = Runner.getCurrentSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Entrenador> criteriaQuery = cb.createQuery(Entrenador.class);
+        Root<Entrenador> root = criteriaQuery.from(Entrenador.class);
+        criteriaQuery.select(root).where(cb.equal(root.get("nombre"), nombreEntrenador));
+        return session.createQuery(criteriaQuery).uniqueResult();
     }
 }

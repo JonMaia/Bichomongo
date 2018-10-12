@@ -98,6 +98,7 @@ public class EspecieEvolucionTest {
         Bicho bicho = dataService.crearBichoConEntrenadorYEspecieConEvolucionSinCondicionDeEvolucion();
         Especie especieBase = bicho.getEspecie();
 
+
         bicho = bichoService.evolucionar(bicho.getId());
 
         assertNotEquals(bicho.getEspecie().getNombre(), especieBase.getNombre());
