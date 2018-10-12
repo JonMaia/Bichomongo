@@ -25,13 +25,13 @@ public class Bicho {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private int id;
 
-	@OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Entrenador entrenador;
 
-	@OneToOne @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Especie especie;
 
-	@ElementCollection(targetClass = Entrenador.class) @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Entrenador> exEntrenadores = new ArrayList<>();
 
 	private float energia;
