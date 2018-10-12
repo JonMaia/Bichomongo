@@ -6,8 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 public class Dojo extends Ubicacion {
@@ -44,8 +48,10 @@ public class Dojo extends Ubicacion {
 
     public void setCampeon(Bicho campeon) {
 
-        if(campeones.size() > 0)
-            campeones.get(campeones.size()-1).setFechaDescoronado(LocalDate.now());
+        if(campeones.size() > 0){
+            long diffInMillies = new Date().getTime() - campeones.get(campeones.size()-1).getFechaCoronado().getTime();
+            campeones.get(campeones.size()-1).setPeriodo(diffInMillies);
+        }
 
         campeones.add(new Champion(campeon));
         this.campeon = campeon;

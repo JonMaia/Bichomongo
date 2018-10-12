@@ -82,7 +82,7 @@ public class LeaderboardServiceTest {
 
             Especie especieLider = leaderboardService.especieLider();
 
-            assertEquals(especieLider.getNombre(), bicho.getEspecie().getNombre());
+            assertEquals(bicho.getEspecie().getNombre(), especieLider.getNombre());
             return null;
         });
     }

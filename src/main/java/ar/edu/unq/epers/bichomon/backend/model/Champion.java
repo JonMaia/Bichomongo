@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Champion {
@@ -10,30 +11,36 @@ public class Champion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private LocalDate fechaDescoronado;
+    private long periodo;
     @OneToOne
     private Bicho campeon;
-    private LocalDate fechaCoronado;
+    private Date fechaCoronado;
 
     public Champion(Bicho unBicho) {
         campeon = unBicho;
-        fechaCoronado = LocalDate.now();
-        fechaDescoronado = null;
+        fechaCoronado = new Date();
+        periodo = 0;
     }
 
-    public LocalDate getFechaDescoronado() {
-        return fechaDescoronado;
-    }
 
-    public void setFechaDescoronado(LocalDate fechaDescoronado) {
-        this.fechaDescoronado = fechaDescoronado;
-    }
 
-    public LocalDate getFechaCoronado() {
+    public Date getFechaCoronado() {
         return fechaCoronado;
     }
 
-    public void setFechaCoronado(LocalDate fechaCoronado) {
+    public void setFechaCoronado(Date fechaCoronado) {
         this.fechaCoronado = fechaCoronado;
+    }
+
+    public long getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(long periodo) {
+        this.periodo = periodo;
+    }
+
+    public Bicho getBicho() {
+        return campeon;
     }
 }
