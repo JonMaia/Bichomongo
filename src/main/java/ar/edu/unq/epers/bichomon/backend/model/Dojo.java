@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.model;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,10 @@ public class Dojo extends Ubicacion {
     public ResultadoCombate combatirCon(Bicho unBicho){
         Duelo duelo = new Duelo(campeon);
         ResultadoCombate resultado = duelo.combatir(unBicho);
-        campeon = resultado.getGanadorCombate();
-        campeones.add(new Champion(unBicho));
+        Bicho ganador = resultado.getGanadorCombate();
+        if(ganador != campeon)
+            setCampeon(ganador);
+
         return resultado;
     }
 
@@ -38,6 +41,11 @@ public class Dojo extends Ubicacion {
     }
 
     public void setCampeon(Bicho campeon) {
+        
+        if(campeones.size() > 0)
+            campeones.get(campeones.size()-1).setFechaDescoronado(LocalDate.now());
+
+        campeones.add(new Champion(campeon));
         this.campeon = campeon;
     }
 

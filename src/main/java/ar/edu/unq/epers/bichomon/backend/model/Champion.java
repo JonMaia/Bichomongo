@@ -18,7 +18,7 @@ public class Champion {
     public Champion(Bicho unBicho) {
         campeon = unBicho;
         fechaCoronado = LocalDate.now();
-        fechaDescoronado = LocalDate.now();
+        fechaDescoronado = null;
     }
 
     public LocalDate getFechaDescoronado() {
