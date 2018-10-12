@@ -30,27 +30,13 @@ public class LeaderboardServiceImple implements LeaderboardService {
 
     @Override
     public List<Entrenador> campeones() {
-        List<Champion> campeones = championDao.findByActualChampion();
-        List<Entrenador> entrenadoresCampeones = new ArrayList<>();
-        campeones.sort(Comparator.comparing(Champion::getPeriodo));
-        for(Champion campeon : campeones){
-            entrenadoresCampeones.add(campeon.getBicho().getEntrenador());
-        }
-        return entrenadoresCampeones;
+        return championDao.findByActualChampion();
     }
 
     @Override
     public Especie especieLider() {
-        Map<Especie,Integer> res = new HashMap<Especie,Integer>();
-        for(Bicho bicho : championDao.getBichoChamion()){
-            if(!res.containsKey(bicho.getEspecie()))
-                res.put(bicho.getEspecie(),0);
-            res.put(bicho.getEspecie(),res.get(bicho.getEspecie())+1);
-        }
-        ArrayList<Map.Entry<Especie, Integer>> listSet = new ArrayList<>(res.entrySet());
-        listSet.sort(Comparator.comparing(Map.Entry::getValue));
+        return championDao.getEspecieLider();
 
-        return listSet.get(0).getKey();
     }
 
     @Override
