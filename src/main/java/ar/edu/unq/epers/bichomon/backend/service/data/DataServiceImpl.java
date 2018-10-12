@@ -90,16 +90,32 @@ public class DataServiceImpl implements DataService {
 
     public Especie crearEspecieBase(){
         return Runner.runInSession(() -> {
-            Especie base =  new Especie("Base", TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
-            this.especieDao.guardar(base);
-            return base;
+            Especie base = especieDao.recuperar("Base");
+            if(base != null)
+                base.setEvolucion(null);
+            else{
+                base = new Especie("Base", TipoBicho.FUEGO, 180, 75, 100, "/image/rojomon.jpg");
+                this.especieDao.guardar(base);
+            }
+                return base;
         });
     }
 
     public Especie crearEspecieBaseConEvolucion(){
         return Runner.runInSession(() -> {
-            Especie base = crearEspecieBase();
-            Especie evolucion = new Especie("Evolucion", TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
+
+            Especie base = especieDao.recuperar("Base");
+            if(base == null)
+                base = crearEspecieBase();
+
+            List<Condicion> condiciones = new ArrayList<Condicion>();
+            base.setCondicionDeEvolucion(condiciones);
+
+
+            Especie evolucion = especieDao.recuperar("Evolucion");
+            if(evolucion == null)
+                evolucion = new Especie("Evolucion", TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
+
             base.setEvolucion(evolucion);
             this.especieDao.guardar(evolucion);
             this.especieDao.guardar(base);
@@ -160,10 +176,21 @@ public class DataServiceImpl implements DataService {
     }
 
     public Entrenador crearEntrenedor(){
-        Entrenador entrenador = new Entrenador();
-        entrenador.setNombre("Ash");
-        this.entrenadorDao.guardar(entrenador);
+        Entrenador entrenador = entrenadorDao.recuperar("Ash");
+        if(entrenador == null){
+            entrenador =  new Entrenador();
+            entrenador.setNombre("Ash");
+            entrenador.setAccion(new Acciones(0,0,0));
+            entrenador.setNivel(crearNivel(1));
+            this.entrenadorDao.guardar(entrenador);
+        }
         return entrenador;
+    }
+
+    private Nivel crearNivel(Integer numero) {
+        Nivel nivel2 = new Nivel(numero+1,10, 1,null,0.5);
+        Nivel nivel1 = new Nivel(numero,10, 1,nivel2,0.5);
+        return nivel1;
     }
 
     public Bicho crearBichoConEntrenadorYEspecieConEvolucionSinCondicionDeEvolucion(){
@@ -251,10 +278,8 @@ public class DataServiceImpl implements DataService {
             Bicho bichoBase = especieBase.crearBicho();
             List<Bicho> bichos = new ArrayList<Bicho>();
             bichos.add(bichoBase);
-            Nivel nivel = new Nivel();
-            nivel.setNumero(10);
+            Nivel nivel = crearNivel(10);
             Entrenador entrenador = crearEntrenedor();
-            this.entrenadorDao.guardar(entrenador);
             entrenador.setNivel(nivel);
             bichoBase.setEntrenador(entrenador);
 

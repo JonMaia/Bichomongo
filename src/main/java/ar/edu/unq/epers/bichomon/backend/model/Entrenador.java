@@ -44,7 +44,7 @@ public class Entrenador {
     }
 
     public Entrenador() {
-
+        experiencia = 0;
     }
 
     //GETTERS AND SETTERS
@@ -85,6 +85,8 @@ public class Entrenador {
         this.nivel = nivel;
     }
 
+    public void setAccion(Acciones accion){this.accion = accion;}
+
     public void setFechaUltimoBichoEncontra(LocalDate date){
         this.fechaUltimoBichoEncontra = date;
     }
@@ -99,7 +101,7 @@ public class Entrenador {
     }
 
     private void pasaDeNivel() {
-        if(experiencia <getNivel().getExpMaxima())
+        if(this.experiencia <getNivel().getExpMaxima())
             return;
         this.setNivel(this.getNivel().next());
     }

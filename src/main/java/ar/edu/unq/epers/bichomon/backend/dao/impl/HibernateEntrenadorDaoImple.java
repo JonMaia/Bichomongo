@@ -10,6 +10,10 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 
 public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, String> implements EntrenadorDao{
     @Override
@@ -42,4 +46,14 @@ public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, St
 
      */
 
+
+    @Override
+    public Entrenador recuperar(String nombreEntrenador) {
+        Session session = Runner.getCurrentSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Entrenador> criteriaQuery = cb.createQuery(Entrenador.class);
+        Root<Entrenador> root = criteriaQuery.from(Entrenador.class);
+        criteriaQuery.select(root).where(cb.equal(root.get("nombre"), nombreEntrenador));
+        return session.createQuery(criteriaQuery).uniqueResult();
+    }
 }
