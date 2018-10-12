@@ -35,17 +35,6 @@ public class EspecieEvolucionTest {
     private DataService dataService = new DataServiceImpl(especieDao, entrenadorDao, bichoDao,nivelDao);
     private BichoService bichoService = new BichoServiceImpl();
 
-    @After
-    public void limpiarBase() {
-        dataService.eliminarDatos();
-    }
-
-    @Test
-    public void test_vacio(){
-
-    }
-    //TEST
-
     @Test
     public void una_especie_puede_no_tener_evolucion_ni_condiciones_de_evolucion(){
         Especie especie = dataService.crearEspecieBase();
