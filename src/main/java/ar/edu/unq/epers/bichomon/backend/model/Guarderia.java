@@ -1,9 +1,11 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Guarderia extends Ubicacion {
 
     @OneToMany

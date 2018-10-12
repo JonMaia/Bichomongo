@@ -1,9 +1,21 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class ProbabilidadDeOcurrencia {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @OneToOne
     Especie especie;
     Integer probabilidad;
 
+    public ProbabilidadDeOcurrencia() {}
 
     public ProbabilidadDeOcurrencia(Especie especie, Integer probabilidad) {
         this.especie = especie;

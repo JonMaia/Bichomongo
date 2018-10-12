@@ -20,18 +20,21 @@ public class BichoServiceImpl implements BichoService{
     public Bicho buscar(String entrenador) {
         return Runner.runInSession(() -> {
             Entrenador trainer = this.entrenadorDAO.getById(entrenador);
+            Bicho bicho = trainer.buscarBicho();
             entrenadorDAO.actualizar(trainer);
-            return trainer.buscarBicho();
-
+            return bicho;
         });
     }
 
     @Override
     public void abandonar(String entrenador, int bicho) {
-        Entrenador trainer = this.entrenadorDAO.getById(entrenador);
-        Bicho bichomon = this.bichoDAO.getById(bicho);
-        trainer.abandonarBicho(bichomon);
-        entrenadorDAO.actualizar(trainer);
+        Runner.runInSession(() -> {
+            Entrenador trainer = this.entrenadorDAO.getById(entrenador);
+            Bicho bichomon = this.bichoDAO.getById(bicho);
+            trainer.abandonarBicho(bichomon);
+            entrenadorDAO.actualizar(trainer);
+            return null;
+        });
     }
 
     @Override
@@ -40,11 +43,7 @@ public class BichoServiceImpl implements BichoService{
             Entrenador trainer = this.entrenadorDAO.getById(entrenador);
             Bicho bichomon = this.bichoDAO.getById(bicho);
             ResultadoCombate resultadoCombate = null;
-            try {
-                resultadoCombate = trainer.iniciarDuelo(bichomon);
-            } catch (UbicacionIncorrectaException e) {
-                e.printStackTrace();
-            }
+            resultadoCombate = trainer.iniciarDuelo(bichomon);
             entrenadorDAO.actualizar(trainer);
             return resultadoCombate;
         });

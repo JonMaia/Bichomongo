@@ -22,7 +22,7 @@ public class Champion {
         periodo = 0;
     }
 
-
+    public Champion() {}
 
     public Date getFechaCoronado() {
         return fechaCoronado;
