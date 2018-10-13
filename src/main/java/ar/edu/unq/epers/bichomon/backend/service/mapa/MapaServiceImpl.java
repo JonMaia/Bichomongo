@@ -41,34 +41,38 @@ public class MapaServiceImpl implements MapaService {
     @Override
     public int cantidadEntrenadores(String ubicacion) {
         /*se deberá devolver la cantidad de entrenadores que se encuentren actualmente en dicha localización.*/
-        Ubicacion u = ubicacionDao.getById(ubicacion);
-        return u.getEntrenadores().size();
+        return Runner.runInSession(() -> {
+            Ubicacion u = ubicacionDao.getById(ubicacion);
+            return u.getEntrenadores().size();
+        });
     }
 
     @Override
     public Bicho campeon(String dojo) {
         /*retorna el actual campeon del Dojo especificado.*/
-        Dojo d = dojoDao.getById(dojo);
-        return d.getCampeon().getBicho();
+        return Runner.runInSession(() -> {
+            Dojo d = dojoDao.getById(dojo);
+            return (d.getCampeon() != null ? d.getCampeon().getBicho(): null);
+        });
     }
 
     @Override
     public Bicho campeonHistorico(String dojo) {
         /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
-        Dojo d = dojoDao.getById(dojo);
-        Champion campeonHist = d.getCampeones().get(0);
-        if (d.getCampeon() == null && d.getCampeones().size() == 0) {
-            return null;
-        }
-
-        for (Champion campeon : d.getCampeones()){
-            if (campeon.getPeriodo()>campeonHist.getPeriodo()){
-                campeonHist = campeon;
+        return Runner.runInSession(() -> {
+            Dojo d = dojoDao.getById(dojo);
+            Champion campeonHist = d.getCampeones().get(0);
+            if (d.getCampeon() == null && d.getCampeones().size() == 0) {
+                return null;
             }
 
-        }
+            for (Champion campeon : d.getCampeones()){
+                if (campeon.getPeriodo()>campeonHist.getPeriodo()){
+                    campeonHist = campeon;
+                }
+            }
 
-        return campeonHist.getBicho();
-
+            return campeonHist.getBicho();
+        });
     }
 }
