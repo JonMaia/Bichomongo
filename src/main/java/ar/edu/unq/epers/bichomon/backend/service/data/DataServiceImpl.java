@@ -6,6 +6,7 @@ import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,16 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public void eliminarDatos() {
-        SessionFactoryProvider.destroy();
-
+        Runner.runInSession(() -> {
+            Session session = Runner.getCurrentSession();
+            List<String> nombreDeTablas = session.createNativeQuery("show tables").getResultList();
+            session.createNativeQuery("SET FOREIGN_KEY_CHECKS=0;").executeUpdate();
+            nombreDeTablas.forEach(tabla -> {
+                session.createNativeQuery("truncate table " + tabla).executeUpdate();
+            });
+            session.createNativeQuery("SET FOREIGN_KEY_CHECKS=1;").executeUpdate();
+        return null;
+        });
     }
 
     @Override

@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 
 public class JDBCEspecieDAOTest {
-
+/*
 	private EspecieDao dao = new JDBCEspecieDAO();
     private NivelDao nivelDao = new HibernateNivelDaoImple();
     private DataService dataService = new DataServiceImpl(dao, nivelDao);
@@ -110,5 +110,5 @@ public class JDBCEspecieDAOTest {
 		assertEquals(fidelmon.getAltura(), especie.getAltura());
 		assertTrue( especie != fidelmon);
 	}
-
+*/
 }

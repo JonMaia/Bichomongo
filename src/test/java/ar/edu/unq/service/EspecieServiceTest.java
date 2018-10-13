@@ -6,6 +6,7 @@ import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -16,6 +17,11 @@ public class EspecieServiceTest {
 
     private EspecieService especieService = new EspecieServiceImpl();
     private DataService dataService = new DataServiceImpl();
+
+    @Before
+    public void clear(){
+        dataService.eliminarDatos();
+    }
 
     @Test
     public void si_existe_una_sola_especie_con_bichos_en_manos_de_entrenadores_entonces_es_popular(){
