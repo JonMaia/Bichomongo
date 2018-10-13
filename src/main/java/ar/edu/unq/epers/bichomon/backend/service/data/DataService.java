@@ -59,7 +59,9 @@ public interface DataService {
 
 	Dojo crearDojo();
 
-	Bicho crearBichoDeEspecieYDeEntrenador(String otraEspecie, String otroEntrenador);
+    Pueblo crearPuebloConProbabilidadExitoYEspecie(String nombrePueblo, Integer probabilidadExito, String nombreEspecie);
+
+    Bicho crearBichoDeEspecieYDeEntrenador(String otraEspecie, String otroEntrenador);
 
 	Pueblo crearPuebloConProbabilidadExito100();
 

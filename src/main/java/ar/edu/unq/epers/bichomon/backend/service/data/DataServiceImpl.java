@@ -394,27 +394,26 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Pueblo crearPuebloConProbabilidadExito100(){
-        Pueblo puebloPaleta = new Pueblo();
-
-        Especie weedle = new Especie();
-        List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
-        ProbabilidadDeOcurrencia probabilidadWeedle = new ProbabilidadDeOcurrencia(weedle,100);
-        probabilidades.add(probabilidadWeedle);
-        puebloPaleta.setEspeciesEnPueblo(probabilidades);
-
-        return puebloPaleta;
+        return crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta100", 100, "Weedle");
     }
     @Override
     public Pueblo crearPuebloConProbabilidadExito0(){
-        Pueblo puebloPaleta = new Pueblo();
+        return crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta0", 0, "Weedle");
+    }
 
-        Especie weedle = new Especie();
+    @Override
+    public Pueblo crearPuebloConProbabilidadExitoYEspecie(String nombrePueblo, Integer probabilidadExito, String nombreEspecie){
+        Pueblo pueblo = new Pueblo();
+        pueblo.setNombre(nombrePueblo);
+
+        Especie especie = crearEspecie(nombreEspecie);
         List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
-        ProbabilidadDeOcurrencia probabilidadWeedle = new ProbabilidadDeOcurrencia(weedle,0);
-        probabilidades.add(probabilidadWeedle);
-        puebloPaleta.setEspeciesEnPueblo(probabilidades);
 
-        return puebloPaleta;
+        ProbabilidadDeOcurrencia probabilidad = new ProbabilidadDeOcurrencia(especie,probabilidadExito);
+        probabilidades.add(probabilidad);
+        pueblo.setEspeciesEnPueblo(probabilidades);
+
+        return pueblo;
     }
 
     public Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {

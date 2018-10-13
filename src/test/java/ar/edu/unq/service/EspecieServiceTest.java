@@ -6,6 +6,7 @@ import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class EspecieServiceTest {
     private EspecieService especieService = new EspecieServiceImpl();
     private DataService dataService = new DataServiceImpl();
 
-    @Before
+    @After
     public void clear(){
         dataService.eliminarDatos();
     }
