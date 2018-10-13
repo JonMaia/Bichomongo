@@ -16,12 +16,14 @@ public class HibernateChampionDaoImple extends BaseHibernateDAO<Champion,Integer
     public List<Entrenador> findByActualChampion() {
         StringBuffer squery = new StringBuffer();
 
-        squery.append("SELECT c ");
-        squery.append(" FROM " + Champion.class.getSimpleName() + " c ");
-        squery.append(" WHERE c.periodo IS NULL");
+        squery.append("SELECT d.campeon.campeon.entrenador ");
+        squery.append(" FROM " + Dojo.class.getSimpleName() + " d ");
+        squery.append(" WHERE d.campeon IS NOT NULL");
+        squery.append(" ORDER BY d.campeon.fechaCoronado ");
+
 
         Session session = Runner.getCurrentSession();
-        Query query = session.createQuery(squery.toString());
+        Query<Entrenador> query = session.createQuery(squery.toString(), Entrenador.class);
         return query.list();
     }
 

@@ -37,27 +37,4 @@ public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, St
         return query.list();
     }
 
-    @Override
-    public Entrenador recuperar(String nombreEntrenador) {
-        Session session = Runner.getCurrentSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Entrenador> criteriaQuery = cb.createQuery(Entrenador.class);
-        Root<Entrenador> root = criteriaQuery.from(Entrenador.class);
-        criteriaQuery.select(root).where(cb.equal(root.get("nombre"), nombreEntrenador));
-        return session.createQuery(criteriaQuery).uniqueResult();
-    }
-
-
-
-
-    /*
-    select eb.Entrenador_nombre from Entrenador_Bicho eb
-    inner join Bicho b on b.id = eb.bichomones_id
-    GROUP by eb.Entrenador_nombre
-    order by sum(b.energia) desc
-    limit 10
-
-
-     */
-
 }

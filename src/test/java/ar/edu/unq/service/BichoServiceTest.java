@@ -38,7 +38,7 @@ public class BichoServiceTest {
 
         //TODO: Extraer a un metodo en dataservice
         Entrenador trainer = Runner.runInSession(()  -> {
-            return entrenadorDao.recuperar(entrenador.getNombre());
+            return entrenadorDao.getById(entrenador.getNombre());
         });
 
 

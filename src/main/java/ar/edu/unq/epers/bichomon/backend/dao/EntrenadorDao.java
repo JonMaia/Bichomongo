@@ -8,8 +8,4 @@ import java.util.List;
 public interface EntrenadorDao extends GenericDao<Entrenador, String> {
 
     List<Entrenador> conMejoresBichos();
-
-
-
-    Entrenador recuperar(String evolucion);
 }
