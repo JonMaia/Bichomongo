@@ -28,12 +28,10 @@ public class BichoServiceTest {
 
     @Test
     public void se_busca_bicho_exitoso_en_ubicacion(){
-        Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
-        Pueblo puebloPaleta = dataService.crearPuebloConProbabilidadExito100();
+        Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100();
         Entrenador entrenador = bicho.getEntrenador();
 
 
-        mapaService.mover(entrenador.getNombre(),puebloPaleta.getNombre());
         bichoService.buscar(entrenador.getNombre());
 
         //TODO: Extraer a un metodo en dataservice

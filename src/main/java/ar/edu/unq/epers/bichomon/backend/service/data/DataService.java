@@ -68,4 +68,6 @@ public interface DataService {
 	Pueblo crearPuebloConProbabilidadExito0();
 
 	Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo();
+
+	Bicho crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100();
 }

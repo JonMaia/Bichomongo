@@ -3,7 +3,12 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 import ar.edu.unq.epers.bichomon.backend.dao.DojoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
+import ar.edu.unq.epers.bichomon.backend.service.data.HibernateDojoDaoImple;
+import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 import java.util.Comparator;
 
@@ -13,14 +18,24 @@ public class MapaServiceImpl implements MapaService {
     private UbicacionDao ubicacionDao;
     private DojoDao dojoDao;
 
+    public MapaServiceImpl(){
+        this.entrenadorDao = new HibernateEntrenadorDaoImple();
+        this.ubicacionDao = new HibernateUbicacionDaoImple();
+        this.dojoDao = new HibernateDojoDaoImple();
+    }
+
     @Override
     public void mover(String entrenador, String ubicacion) {
-        Entrenador e = entrenadorDao.getById(entrenador);
-        Ubicacion u = ubicacionDao.getById(ubicacion);
+        Runner.runInSession(() -> {
+            Entrenador e = entrenadorDao.getById(entrenador);
+            Ubicacion u = ubicacionDao.getById(ubicacion);
 
-        e.moverA(u);
+            e.moverA(u);
 
-        entrenadorDao.actualizar(e);
+            entrenadorDao.actualizar(e);
+            ubicacionDao.actualizar(u);
+            return null;
+            });
     }
 
     @Override
