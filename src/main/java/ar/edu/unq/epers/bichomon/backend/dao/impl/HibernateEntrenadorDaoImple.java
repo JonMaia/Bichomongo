@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
+import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Champion;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
@@ -24,15 +25,15 @@ public class HibernateEntrenadorDaoImple extends BaseHibernateDAO<Entrenador, St
     public List<Entrenador> conMejoresBichos() {
         StringBuffer squery = new StringBuffer();
 
-        squery.append("SELECT e ");
-        squery.append(" FROM " + Entrenador.class.getSimpleName() + " e ");
-        squery.append(" GROUP BY e.nombre");
-        squery.append(" ORDER BY sum(e.bichomones.energia) DESC");
+        squery.append(" SELECT b.entrenador ");
+        squery.append(" FROM " + Bicho.class.getSimpleName() + " b ");
+        squery.append(" GROUP BY b.entrenador");
+        squery.append(" ORDER BY sum(b.energia) DESC");
 
 
         Session session = Runner.getCurrentSession();
 
-        Query query = session.createQuery(squery.toString());
+        Query<Entrenador> query = session.createQuery(squery.toString(), Entrenador.class);
         query.setMaxResults(10);
         return query.list();
     }

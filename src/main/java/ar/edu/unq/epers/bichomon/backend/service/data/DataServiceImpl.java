@@ -41,16 +41,8 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public void eliminarDatos() {
-        Runner.runInSession(() -> {
-            Session session = Runner.getCurrentSession();
-            List<String> nombreDeTablas = session.createNativeQuery("show tables").getResultList();
-            session.createNativeQuery("SET FOREIGN_KEY_CHECKS=0;").executeUpdate();
-            nombreDeTablas.forEach(tabla -> {
-                session.createNativeQuery("truncate table " + tabla).executeUpdate();
-            });
-            session.createNativeQuery("SET FOREIGN_KEY_CHECKS=1;").executeUpdate();
-        return null;
-        });
+        SessionFactoryProvider.destroy();
+
     }
 
     @Override

@@ -86,4 +86,21 @@ public class LeaderboardServiceTest {
         });
     }
 
+
+    @Test
+    public void alg0(){
+
+        Runner.runInSession(() -> {
+            Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
+            List<Entrenador> lideres = leaderboardService.lideres();
+
+            assertEquals(0, 0);
+            return null;
+        });
+    }
+
+
+
+
+
 }
