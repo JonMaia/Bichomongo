@@ -70,4 +70,8 @@ public interface DataService {
 	Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo();
 
 	Bicho crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100();
+
+    Entrenador crearEntrenador(String nombreEntrenador);
+
+	Entrenador crearEntrenadorConUbicacion(String nombreEntrenador, Ubicacion ubicacion);
 }

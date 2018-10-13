@@ -6,6 +6,8 @@ import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.service.data.HibernateDojoDaoImple;
+import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.data.HibernateDojoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -18,24 +20,22 @@ public class MapaServiceImpl implements MapaService {
     private UbicacionDao ubicacionDao;
     private DojoDao dojoDao;
 
-    public MapaServiceImpl(){
+    public MapaServiceImpl() {
         this.entrenadorDao = new HibernateEntrenadorDaoImple();
         this.ubicacionDao = new HibernateUbicacionDaoImple();
         this.dojoDao = new HibernateDojoDaoImple();
     }
 
     @Override
-    public void mover(String entrenador, String ubicacion) {
+    public void mover(String nombreEntrenador, String nombreUbicacion) {
+
         Runner.runInSession(() -> {
-            Entrenador e = entrenadorDao.getById(entrenador);
-            Ubicacion u = ubicacionDao.getById(ubicacion);
-
-            e.moverA(u);
-
-            entrenadorDao.actualizar(e);
-            ubicacionDao.actualizar(u);
+            Entrenador entrenador = entrenadorDao.getById(nombreEntrenador);
+            Ubicacion ubicacion = ubicacionDao.getById(nombreUbicacion);
+            entrenador.moverA(ubicacion);
+            entrenadorDao.actualizar(entrenador);
             return null;
-            });
+        });
     }
 
     @Override

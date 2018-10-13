@@ -25,20 +25,14 @@ public abstract class BaseHibernateDAO<T, ID extends Serializable> implements Ge
 
     @Override
     public T getById(ID id) {
-
             Session session = Runner.getCurrentSession();
             return session.get(this.entityClass, id);
-
     }
 
     @Override
     public void guardar(T object) {
-        try {
             Session session = Runner.getCurrentSession();
             session.save(object);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Override

@@ -4,7 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Condicion {
 
     @Id @GeneratedValue
