@@ -3,16 +3,11 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 import ar.edu.unq.epers.bichomon.backend.dao.DojoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateDojoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
-import ar.edu.unq.epers.bichomon.backend.service.data.HibernateDojoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
-import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
-import ar.edu.unq.epers.bichomon.backend.service.data.HibernateDojoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
-
-import java.util.Comparator;
 
 public class MapaServiceImpl implements MapaService {
 

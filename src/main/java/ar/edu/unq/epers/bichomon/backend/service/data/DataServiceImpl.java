@@ -195,7 +195,7 @@ public class DataServiceImpl implements DataService {
             entrenador.setNombre("Ash");
             entrenador.setAccion(new Acciones(0,0,0));
             entrenador.setNivel(crearNivel(1));
-            this.entrenadorDao.guardar(entrenador);
+            this.entrenadorDao.actualizar(entrenador);
         }
         return entrenador;
     }
