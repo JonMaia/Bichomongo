@@ -3,7 +3,6 @@ package ar.edu.unq.epers.bichomon.backend.model;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -13,6 +12,8 @@ public class Pueblo extends Ubicacion {
 
     @OneToMany @Fetch(value = FetchMode.SUBSELECT) @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<ProbabilidadDeOcurrencia> especiesEnPueblo;
+
+    public Pueblo() {}
 
     @Override
     public Bicho encontrarBichomon(Entrenador unEntrenador) {

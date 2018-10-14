@@ -6,7 +6,7 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/bichomongo</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/bichomongo?serverTimezone=UTC</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
 
@@ -22,7 +22,6 @@
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Especie" />
-        <mapping class="ar.edu.unq.epers.bichomon.backend.model.Ubicacion" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Acciones" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Bicho" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Entrenador" />
@@ -34,6 +33,7 @@
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionVictorias" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Experiencia" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Nivel" />
+        <mapping class="ar.edu.unq.epers.bichomon.backend.model.Ubicacion" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Dojo" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Guarderia" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Pueblo" />
@@ -41,8 +41,5 @@
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Ataque" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.ResultadoCombate" />
         <mapping class="ar.edu.unq.epers.bichomon.backend.model.Champion" />
-        <!--
-        <mapping class="ar.edu.unq.unidad3.wop.modelo.bicho" />
-        -->
     </session-factory>
 </hibernate-configuration>

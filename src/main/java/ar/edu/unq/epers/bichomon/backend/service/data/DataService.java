@@ -68,4 +68,10 @@ public interface DataService {
 	Pueblo crearPuebloConProbabilidadExito0();
 
 	Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo();
+
+	Bicho crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100();
+
+    Entrenador crearEntrenador(String nombreEntrenador);
+
+	Entrenador crearEntrenadorConUbicacion(String nombreEntrenador, Ubicacion ubicacion);
 }

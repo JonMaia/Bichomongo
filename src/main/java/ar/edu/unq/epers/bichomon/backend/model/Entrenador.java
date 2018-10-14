@@ -65,6 +65,7 @@ public class Entrenador {
 
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
+        ubicacion.agregarEntrenador(this);
     }
 
     public Integer getExperiencia() {

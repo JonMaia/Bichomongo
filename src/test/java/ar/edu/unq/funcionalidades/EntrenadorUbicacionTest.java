@@ -4,6 +4,8 @@ import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaSiempreFalse;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaSiempreTrue;
+import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
+import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +21,7 @@ public class EntrenadorUbicacionTest {
     Pueblo ciudadCarmín = null;
     Dojo gimnasioCiudadCarmín = null;
     Guarderia guarderiaCIudadCarmin = null;
+    private DataService dataService = new DataServiceImpl();
 
 
     @Before
@@ -102,16 +105,13 @@ public class EntrenadorUbicacionTest {
 
     @Test
     public void unEntrenadorSeMueveAUnDojoYLuchaPeroEstaVacioEntoncesGanaElLugarDelDojo(){
-        ciudadCarmín.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
-        entrenador.buscarBicho();
+        Bicho bichoElegido = this.dataService.crearBichoConEntrenadorYEspecieYEnergia200EnDojo();
+
+        entrenador = bichoElegido.getEntrenador();
 
         entrenador.moverA(gimnasioCiudadCarmín);
-        Bicho bichoElegido = entrenador.getBichomones().get(0);
-        try {
-            entrenador.iniciarDuelo(entrenador.getBichomones().get(0));
-        } catch (UbicacionIncorrectaException e) {
-            e.printStackTrace();
-        }
+
+        entrenador.iniciarDuelo(bichoElegido);
 
         assertEquals(gimnasioCiudadCarmín, entrenador.getUbicacion());
         assertEquals(bichoElegido, gimnasioCiudadCarmín.getCampeon());

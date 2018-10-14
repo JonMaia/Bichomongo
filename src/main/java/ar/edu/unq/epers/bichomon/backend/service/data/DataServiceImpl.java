@@ -18,6 +18,7 @@ public class DataServiceImpl implements DataService {
     private BichoDao bichoDao;
     private EntrenadorDao entrenadorDao;
     private DojoDao dojoDao = new HibernateDojoDaoImple();
+    private PuebloDao puebloDao = new HibernatePuebloDaoImple();
 
     public DataServiceImpl(EspecieDao especieDao,NivelDao nivelDao){
         this.especieDao = especieDao;
@@ -194,14 +195,14 @@ public class DataServiceImpl implements DataService {
             entrenador.setNombre("Ash");
             entrenador.setAccion(new Acciones(0,0,0));
             entrenador.setNivel(crearNivel(1));
-            this.entrenadorDao.guardar(entrenador);
+            this.entrenadorDao.actualizar(entrenador);
         }
         return entrenador;
     }
 
     private Nivel crearNivel(Integer numero) {
-        Nivel nivel2 = new Nivel(numero+1,10, 1,null,0.5);
-        Nivel nivel1 = new Nivel(numero,10, 1,nivel2,0.5);
+        Nivel nivel2 = new Nivel(numero+1,10, 4,null,0.5);
+        Nivel nivel1 = new Nivel(numero,10, 2,nivel2,0.5);
         return nivel1;
     }
 
@@ -229,6 +230,23 @@ public class DataServiceImpl implements DataService {
             Entrenador entrenador = crearEntrenador();
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
+
+            this.bichoDao.guardar(bichoBase);
+            return bichoBase;
+        });
+    }
+
+    public Bicho crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100(){
+        return Runner.runInSession(() -> {
+            Especie especieBase = this.crearEspecieBase();
+            Bicho bichoBase = especieBase.crearBicho();
+            List<Bicho> bichos = new ArrayList<Bicho>();
+            Pueblo pueblo = crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta100", 100, "Pidgey");
+            bichos.add(bichoBase);
+            Entrenador entrenador = crearEntrenador("Farafa");
+            bichoBase.setEntrenador(entrenador);
+            entrenador.setBichomones(bichos);
+            entrenador.setUbicacion(pueblo);
 
             this.bichoDao.guardar(bichoBase);
             return bichoBase;
@@ -344,17 +362,22 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo(){
         return Runner.runInSession(() -> {
             Dojo dojo = new Dojo();
-
+            Acciones acciones = new Acciones(10,10,10);
             Entrenador entrenador = crearEntrenador("Pepito");
             Especie especie = crearEspecie("Especie");
-            Especie especieCampeon = crearEspecie("Especie");
+            Especie especieCampeon = crearEspecie("Especie2");
+            Nivel nivelEntrenador = new Nivel(1, 100, 2, null, 0.5);
             especie.setEnergiaIncial(200);
             especieCampeon.setEnergiaIncial(20);
             Bicho retador = especie.crearBicho();
             Bicho campeon = especieCampeon.crearBicho();
             retador.setEntrenador(entrenador);
             dojo.setCampeon(campeon);
+            dojo.setNombre("Dojo");
+            entrenador.setAccion(acciones);
+            entrenador.setNivel(nivelEntrenador);
             entrenador.moverA(dojo);
+            nivelDao.guardar(nivelEntrenador);
             bichoDao.guardar(retador);
             bichoDao.guardar(campeon);
             entrenadorDao.guardar(entrenador);
@@ -407,26 +430,37 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Pueblo crearPuebloConProbabilidadExito100(){
-        return crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta100", 100, "Weedle");
+        return Runner.runInSession(() -> {
+            Pueblo pueblo = crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta100", 100, "Pidgey");
+            this.puebloDao.guardar(pueblo);
+            return pueblo;
+        });
     }
+
     @Override
     public Pueblo crearPuebloConProbabilidadExito0(){
-        return crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta0", 0, "Weedle");
+        return Runner.runInSession(() -> {
+            Pueblo pueblo =  crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta0", 0, "Weedle");
+            this.puebloDao.guardar(pueblo);
+            return pueblo;
+        });
     }
 
     @Override
     public Pueblo crearPuebloConProbabilidadExitoYEspecie(String nombrePueblo, Integer probabilidadExito, String nombreEspecie){
-        Pueblo pueblo = new Pueblo();
-        pueblo.setNombre(nombrePueblo);
+        return Runner.runInSession(() -> {
+            Pueblo pueblo = new Pueblo();
+            pueblo.setNombre(nombrePueblo);
 
-        Especie especie = crearEspecie(nombreEspecie);
-        List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
+            Especie especie = crearEspecie(nombreEspecie);
+            List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
 
-        ProbabilidadDeOcurrencia probabilidad = new ProbabilidadDeOcurrencia(especie,probabilidadExito);
-        probabilidades.add(probabilidad);
-        pueblo.setEspeciesEnPueblo(probabilidades);
-
-        return pueblo;
+            ProbabilidadDeOcurrencia probabilidad = new ProbabilidadDeOcurrencia(especie,probabilidadExito);
+            probabilidades.add(probabilidad);
+            pueblo.setEspeciesEnPueblo(probabilidades);
+            this.puebloDao.guardar(pueblo);
+            return pueblo;
+        });
     }
 
     public Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {
@@ -459,16 +493,32 @@ public class DataServiceImpl implements DataService {
 
     private Especie crearEspecie(String nombreEspecie) {
         return Runner.runInSession(() -> {
-            Especie base =  new Especie(nombreEspecie, TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
-            this.especieDao.guardar(base);
-            return base;
+            Especie especie = this.especieDao.recuperar(nombreEspecie);
+            if(especie == null)
+                especie =  new Especie(nombreEspecie, TipoBicho.FUEGO,180, 75, 100, "/image/rojomon.jpg");
+            this.especieDao.guardar(especie);
+            return especie;
         });
     }
 
-    private Entrenador crearEntrenador(String nombreEntrenador) {
+    @Override
+    public Entrenador crearEntrenador(String nombreEntrenador) {
         return Runner.runInSession(() -> {
             Entrenador entrenador = new Entrenador();
             entrenador.setNombre(nombreEntrenador);
+            entrenador.setAccion(new Acciones(0,0,0));
+            entrenador.setNivel(crearNivel(1));
+            this.entrenadorDao.guardar(entrenador);
+            return entrenador;
+        });
+    }
+
+    @Override
+    public Entrenador crearEntrenadorConUbicacion(String nombreEntrenador, Ubicacion ubicacion) {
+        return Runner.runInSession(() -> {
+            Entrenador entrenador = new Entrenador();
+            entrenador.setNombre(nombreEntrenador);
+            entrenador.setUbicacion(ubicacion);
             this.entrenadorDao.guardar(entrenador);
             return entrenador;
         });

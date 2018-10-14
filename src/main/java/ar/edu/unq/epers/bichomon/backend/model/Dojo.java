@@ -21,6 +21,8 @@ public class Dojo extends Ubicacion {
     @OneToMany  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<ResultadoCombate> resultadoCombates = new ArrayList<>();
 
+    public Dojo() {}
+
     public List<Champion> getCampeones() {
         return campeones;
     }
@@ -42,7 +44,7 @@ public class Dojo extends Ubicacion {
 
     @Override
     public ResultadoCombate combatirCon(Bicho unBicho){
-        Duelo duelo = new Duelo(campeon.getBicho());
+        Duelo duelo = new Duelo((campeon != null ? campeon.getBicho() : null));
         ResultadoCombate resultado = duelo.combatir(unBicho);
         Bicho ganador = resultado.getGanadorCombate();
         if(ganador != campeon.getBicho())

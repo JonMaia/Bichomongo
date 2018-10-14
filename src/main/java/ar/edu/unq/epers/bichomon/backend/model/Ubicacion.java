@@ -5,17 +5,18 @@ import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusqueda;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaNormal;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Ubicacion {
 
     @Id
     private String nombre;
 
     @OneToMany
-    protected List<Entrenador> entrenadores;
+    protected List<Entrenador> entrenadores = new ArrayList<Entrenador>();
 
     private Double factorPoblacion = 1.0;
 
@@ -86,5 +87,9 @@ public abstract class Ubicacion {
 
     public void setExitoDeBusqueda(ExitoDeBusqueda exitoDeBusqueda) {
         this.exitoDeBusqueda = exitoDeBusqueda;
+    }
+
+    public void agregarEntrenador(Entrenador entrenador){
+        this.entrenadores.add(entrenador);
     }
 }

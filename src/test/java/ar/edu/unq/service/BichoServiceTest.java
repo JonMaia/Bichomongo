@@ -28,12 +28,9 @@ public class BichoServiceTest {
 
     @Test
     public void se_busca_bicho_exitoso_en_ubicacion(){
-        Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
-        Pueblo puebloPaleta = dataService.crearPuebloConProbabilidadExito100();
+        Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100();
         Entrenador entrenador = bicho.getEntrenador();
 
-
-        mapaService.mover(entrenador.getNombre(),puebloPaleta.getNombre());
         bichoService.buscar(entrenador.getNombre());
 
         //TODO: Extraer a un metodo en dataservice
@@ -41,10 +38,7 @@ public class BichoServiceTest {
             return entrenadorDao.getById(entrenador.getNombre());
         });
 
-
         assertEquals(2, trainer.getBichomones().size());
-
-
     }
 
     @Test
@@ -62,7 +56,6 @@ public class BichoServiceTest {
         bichoService.buscar(entrenador.getNombre());
 
         assertEquals(1, entrenador.getBichomones().size());
-
     }
 
     @Test
@@ -99,7 +92,6 @@ public class BichoServiceTest {
         });
 
         bichoService.abandonar(entrenador.getNombre(), bicho.getId());
-
     }
 
     @Test
@@ -125,6 +117,5 @@ public class BichoServiceTest {
         });
 
         bichoService.duelo(entrenador.getNombre(), bicho.getId());
-
     }
 }

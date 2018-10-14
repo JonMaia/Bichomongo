@@ -11,6 +11,8 @@ public class Guarderia extends Ubicacion {
     @OneToMany
     protected List<Bicho> bichomones = new ArrayList<>();
 
+    public Guarderia() {}
+
     public List<Bicho> getBichomones() {
         return bichomones;
     }
