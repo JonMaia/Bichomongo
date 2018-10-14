@@ -19,7 +19,7 @@ public class EspecieServiceTest {
     private EspecieService especieService = new EspecieServiceImpl();
     private DataService dataService = new DataServiceImpl();
 
-    @After
+    @Before
     public void clear(){
         dataService.eliminarDatos();
     }
