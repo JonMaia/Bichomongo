@@ -35,12 +35,12 @@ public class MapaServiceTest {
     @Test
     public void si_se_mueve_a_un_entrenador_a_su_ubicacion_actual_su_ubicacion_no_cambia(){
         Pueblo pueblito1 = this.dataService.crearPuebloConProbabilidadExitoYEspecie("pueblitoA",0,"especie1");
-        Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion("Entrenador1", pueblito1);
+        Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion("EntrenadorZ", pueblito1);
 
         assertEquals(pueblito1.getNombre(), entrenador.getUbicacion().getNombre());
 
         this.mapaService.mover(entrenador.getNombre(), pueblito1.getNombre());
-        entrenador = Runner.runInSession(() -> this.entrenadorDao.getById("Entrenador1"));
+        entrenador = Runner.runInSession(() -> this.entrenadorDao.getById("EntrenadorZ"));
 
         assertEquals(entrenador.getUbicacion().getNombre(),pueblito1.getNombre());
     }
