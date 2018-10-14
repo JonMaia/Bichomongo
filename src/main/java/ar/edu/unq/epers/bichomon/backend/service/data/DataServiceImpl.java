@@ -243,7 +243,7 @@ public class DataServiceImpl implements DataService {
             List<Bicho> bichos = new ArrayList<Bicho>();
             Pueblo pueblo = crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta100", 100, "Pidgey");
             bichos.add(bichoBase);
-            Entrenador entrenador = crearEntrenador();
+            Entrenador entrenador = crearEntrenador("Farafa");
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
             entrenador.setUbicacion(pueblo);
@@ -506,6 +506,8 @@ public class DataServiceImpl implements DataService {
         return Runner.runInSession(() -> {
             Entrenador entrenador = new Entrenador();
             entrenador.setNombre(nombreEntrenador);
+            entrenador.setAccion(new Acciones(0,0,0));
+            entrenador.setNivel(crearNivel(1));
             this.entrenadorDao.guardar(entrenador);
             return entrenador;
         });
