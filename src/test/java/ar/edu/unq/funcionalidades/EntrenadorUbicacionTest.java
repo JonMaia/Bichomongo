@@ -114,7 +114,7 @@ public class EntrenadorUbicacionTest {
         entrenador.iniciarDuelo(bichoElegido);
 
         assertEquals(gimnasioCiudadCarmín, entrenador.getUbicacion());
-        assertEquals(bichoElegido, gimnasioCiudadCarmín.getCampeon());
+        assertEquals(bichoElegido, gimnasioCiudadCarmín.getCampeon().getBicho());
 
     }
 

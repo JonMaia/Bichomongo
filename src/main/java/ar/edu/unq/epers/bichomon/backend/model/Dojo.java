@@ -48,7 +48,7 @@ public class Dojo extends Ubicacion {
         Duelo duelo = new Duelo((campeon != null ? campeon.getBicho() : null));
         ResultadoCombate resultado = duelo.combatir(unBicho);
         Bicho ganador = resultado.getGanadorCombate();
-        if(ganador != campeon.getBicho())
+        if(campeon == null || ganador != campeon.getBicho())
             setCampeon(ganador);
 
         return resultado;
