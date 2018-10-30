@@ -12,8 +12,10 @@ public class Champion {
     private Integer id;
 
     private long periodo;
+
     @OneToOne
     private Bicho campeon;
+
     private Date fechaCoronado;
 
     public Champion(Bicho unBicho) {

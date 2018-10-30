@@ -54,20 +54,6 @@ public class MapaServiceImpl implements MapaService {
     @Override
     public Bicho campeonHistorico(String dojo) {
         /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
-        return Runner.runInSession(() -> {
-            Dojo d = dojoDao.getById(dojo);
-            Champion campeonHist = d.getCampeones().get(0);
-            if (d.getCampeon() == null && d.getCampeones().size() == 0) {
-                return null;
-            }
-
-            for (Champion campeon : d.getCampeones()){
-                if (campeon.getPeriodo()>campeonHist.getPeriodo()){
-                    campeonHist = campeon;
-                }
-            }
-
-            return campeonHist.getBicho();
-        });
+        return Runner.runInSession(() -> this.dojoDao.getCampeonHistorico(dojo));
     }
 }
