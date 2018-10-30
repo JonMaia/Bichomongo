@@ -362,9 +362,15 @@ public class DataServiceImpl implements DataService {
     @Override
     public Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo(){
         return Runner.runInSession(() -> {
-            Dojo dojo = new Dojo();
+            Dojo dojo = dojoDao.getById("Dojo");
+            if(dojo == null) {
+                dojo = new Dojo();
+                dojo.setNombre("Dojo");
+            }
             Acciones acciones = new Acciones(10,10,10);
-            Entrenador entrenador = crearEntrenador("Pepito");
+            Entrenador entrenador = entrenadorDao.getById("Pepito");
+            if(entrenador == null)
+                entrenador = crearEntrenador("Pepito");
             Especie especie = crearEspecie("Especie");
             Especie especieCampeon = crearEspecie("Especie2");
             Nivel nivelEntrenador = new Nivel(1, 100, 2, null, 0.5);
@@ -374,7 +380,7 @@ public class DataServiceImpl implements DataService {
             Bicho campeon = especieCampeon.crearBicho();
             retador.setEntrenador(entrenador);
             dojo.setCampeon(campeon);
-            dojo.setNombre("Dojo");
+
             entrenador.setAccion(acciones);
             entrenador.setNivel(nivelEntrenador);
             entrenador.moverA(dojo);
