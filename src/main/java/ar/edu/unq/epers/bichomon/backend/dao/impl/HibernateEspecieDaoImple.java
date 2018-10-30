@@ -71,6 +71,7 @@ public class HibernateEspecieDaoImple extends BaseHibernateDAO<Especie,Integer> 
         StringBuffer hql = new StringBuffer();
         hql.append("SELECT b.especie FROM " + Bicho.class.getName() + " b ");
         hql.append("JOIN b.entrenador e ");
+        hql.append("WHERE b.entrenador is not null ");
         hql.append("GROUP BY b.especie " );
         hql.append("ORDER BY COUNT(*) DESC " );
         return session.createQuery(hql.toString(), Especie.class).setMaxResults(10).list();
