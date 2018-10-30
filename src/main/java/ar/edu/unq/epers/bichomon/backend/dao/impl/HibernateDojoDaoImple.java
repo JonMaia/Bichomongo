@@ -14,7 +14,7 @@ public class HibernateDojoDaoImple extends BaseHibernateDAO<Dojo, String> implem
         StringBuffer hql = new StringBuffer();
         hql.append("SELECT c.campeon FROM " + Dojo.class.getName() + " d ");
         hql.append("JOIN d.campeones c ");
-        hql.append("WHERE d.nombre == :nombreDojo " );
+        hql.append("WHERE d.nombre = :nombreDojo " );
         hql.append("ORDER BY c.periodo DESC " );
         return session.createQuery(hql.toString(), Bicho.class)
                 .setParameter("nombreDojo", nombreDojo)

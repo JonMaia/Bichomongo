@@ -2,6 +2,8 @@ package ar.edu.unq.service;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Pueblo;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
@@ -55,6 +57,13 @@ public class MapaServiceTest {
         Entrenador entrenador5 = this.dataService.crearEntrenadorConUbicacion("EntrenadorE", pueblito);
 
         assertEquals(5, mapaService.cantidadEntrenadores(pueblito.getNombre()));
+    }
+    @Test
+
+    public void si_hay_un_unico_campeon_en_un_dojo_es_el_historico(){
+        Bicho unBicho = this.dataService.crearBichoCampeonConEntrenadorYEspecieYEnDojo("EspecieCampeona", "EntrenadorCampeon", "DojoDeCampeones");
+        Bicho campeonHistorico = this.mapaService.campeonHistorico(unBicho.getEntrenador().getUbicacion().getNombre());
+        assertEquals(unBicho.getId(), campeonHistorico.getId());
     }
 
 

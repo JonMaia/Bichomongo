@@ -55,6 +55,8 @@ public interface DataService {
 
     Bicho crearBchoConEsspecieSinEntrenador();
 
+	Bicho crearBichoCampeonConEntrenadorYEspecieYEnDojo(String nombreEspecie, String nombreEntrenador, String nombreDojo);
+
 	List<Bicho> crear2BichosPara10EspeciesYUnBichoPara2EspeciesSinEntrenador();
 
 	Dojo crearDojo();

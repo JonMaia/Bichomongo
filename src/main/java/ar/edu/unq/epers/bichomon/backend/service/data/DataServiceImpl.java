@@ -358,6 +358,7 @@ public class DataServiceImpl implements DataService {
             return bicho;
         });
     }
+
     @Override
     public Bicho crearBichoConEntrenadorYEspecieYEnergia200EnDojo(){
         return Runner.runInSession(() -> {
@@ -383,6 +384,31 @@ public class DataServiceImpl implements DataService {
             entrenadorDao.guardar(entrenador);
             dojoDao.guardar(dojo);
             return retador;
+        });
+    }
+
+
+    @Override
+    public Bicho crearBichoCampeonConEntrenadorYEspecieYEnDojo(String nombreEspecie, String nombreEntrenador, String nombreDojo){
+        return Runner.runInSession(() -> {
+            Dojo dojo = new Dojo();
+            Acciones acciones = new Acciones(10,10,10);
+            Entrenador entrenador = crearEntrenador(nombreEntrenador);
+            Especie especieCampeon = crearEspecie(nombreEspecie);
+            Nivel nivelEntrenador = new Nivel(1, 100, 2, null, 0.5);
+            especieCampeon.setEnergiaIncial(20);
+            Bicho campeon = especieCampeon.crearBicho();
+            campeon.setEntrenador(entrenador);
+            dojo.setCampeon(campeon);
+            dojo.setNombre(nombreDojo);
+            entrenador.setAccion(acciones);
+            entrenador.setNivel(nivelEntrenador);
+            entrenador.moverA(dojo);
+            nivelDao.guardar(nivelEntrenador);
+            bichoDao.guardar(campeon);
+            entrenadorDao.guardar(entrenador);
+            dojoDao.guardar(dojo);
+            return campeon;
         });
     }
 
