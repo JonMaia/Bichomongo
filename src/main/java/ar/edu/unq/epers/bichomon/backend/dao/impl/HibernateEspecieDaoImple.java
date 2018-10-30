@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
+import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
@@ -64,4 +65,25 @@ public class HibernateEspecieDaoImple extends BaseHibernateDAO<Especie,Integer> 
 
     }
 
+    @Override
+    public List<Especie> getPopulares() {
+        Session session = Runner.getCurrentSession();
+        StringBuffer hql = new StringBuffer();
+        hql.append("SELECT b.especie FROM " + Bicho.class.getName() + " b ");
+        hql.append("JOIN b.entrenador e ");
+        hql.append("GROUP BY b.especie " );
+        hql.append("ORDER BY COUNT(*) DESC " );
+        return session.createQuery(hql.toString(), Especie.class).setMaxResults(10).list();
+    }
+
+    @Override
+    public List<Especie> getImpopulares() {
+        Session session = Runner.getCurrentSession();
+        StringBuffer hql = new StringBuffer();
+        hql.append("SELECT b.especie FROM " + Bicho.class.getName() + " b ");
+        hql.append("WHERE b.entrenador is null ");
+        hql.append("GROUP BY b.especie " );
+        hql.append("ORDER BY COUNT(*) DESC " );
+        return session.createQuery(hql.toString(), Especie.class).setMaxResults(10).list();
+    }
 }
