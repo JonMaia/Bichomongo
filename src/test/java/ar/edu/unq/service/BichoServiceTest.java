@@ -13,6 +13,7 @@ import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -25,6 +26,10 @@ public class BichoServiceTest {
     private UbicacionDao ubicacionDao = new HibernateUbicacionDaoImple();
     private MapaService mapaService = new MapaServiceImpl();
 
+    @After
+    public void clear(){
+        dataService.eliminarDatos();
+    }
 
     @Test
     public void se_busca_bicho_exitoso_en_ubicacion(){

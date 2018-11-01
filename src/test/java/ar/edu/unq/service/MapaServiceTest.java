@@ -11,6 +11,7 @@ import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -20,6 +21,10 @@ public class MapaServiceTest {
     private MapaService mapaService = new MapaServiceImpl();
     private EntrenadorDao entrenadorDao = new HibernateEntrenadorDaoImple();
 
+    @After
+    public void clear(){
+        dataService.eliminarDatos();
+    }
     @Test
     public void si_se_mueve_a_un_entrenador_a_una_ubicacion_diferente_a_la_actual_su_ubicacion_cambia(){
         Pueblo pueblito1 = this.dataService.crearPuebloConProbabilidadExitoYEspecie("pueblito1",0,"especie1");

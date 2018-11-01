@@ -29,7 +29,7 @@ public class LeaderboardServiceTest {
     private BichoDao bichoDao = new HibernateBichoDaoImple();
 
 
-    @Before
+    @After
     public void clear(){
         dataService.eliminarDatos();
     }
