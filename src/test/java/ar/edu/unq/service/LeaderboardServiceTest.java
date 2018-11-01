@@ -11,6 +11,7 @@ import ar.edu.unq.epers.bichomon.backend.service.leaderboard.LeaderboardService;
 import ar.edu.unq.epers.bichomon.backend.service.leaderboard.LeaderboardServiceImple;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -26,12 +27,12 @@ public class LeaderboardServiceTest {
     private DataService dataService = new DataServiceImpl();
     private LeaderboardService leaderboardService = new LeaderboardServiceImple();
     private BichoDao bichoDao = new HibernateBichoDaoImple();
-/*
-    @After
-    public void dropAll(){
+
+
+    @Before
+    public void clear(){
         dataService.eliminarDatos();
     }
-*/
 
     @Test
     public void si_hay_un_solo_entrenador_con_un_bicho_campeon_este_es_campeon() {
@@ -104,13 +105,14 @@ public class LeaderboardServiceTest {
     public void dosEntrenadoresconUnoYDosBichos(){
 
         Runner.runInSession(() -> {
+
             Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
             Bicho bicho2 = dataService.crearBichoConEntrenadorYEspecieSinEvolucion();
+            Bicho bicho3 = dataService.crearBichoDeEspecieYDeEntrenador("OtraEspecie","OtroEntrenadorMas");
 
 
 
             List<Entrenador> lideres = leaderboardService.lideres();
-            //hay otro lider con un bichomon que viene de otro test
             assertEquals(2, lideres.size());
             assertEquals("Ash", lideres.get(0).getNombre());
             return null;
