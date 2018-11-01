@@ -104,9 +104,8 @@ public class Entrenador {
     }
 
     private void pasaDeNivel() {
-        if(this.experiencia <getNivel().getExpMaxima())
-            return;
-        this.setNivel(this.getNivel().next());
+        if(!(this.experiencia <getNivel().getExpMaxima()))
+           this.setNivel(this.getNivel().next());
     }
 
     public void obtenerBicho(Bicho bicho){
