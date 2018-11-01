@@ -40,10 +40,6 @@ public abstract class Ubicacion {
         entrenadores = entrenadores;
     }
 
-    public void moverEntrenador(Entrenador entrenador) {
-        entrenadores.add(entrenador);
-    }
-
     public void setBichomones(List<Bicho> bichomones){
         bichomones = bichomones;
     }
