@@ -60,6 +60,7 @@ public class BichoServiceImpl implements BichoService{
             Bicho bichomon = this.bichoDAO.getById(bicho);
             if(bichomon.puedeEvolucionar()){
                 bichomon = bichomon.evolucionar();
+                bichomon.getEntrenador().ganarExperienciaPorEvolucion();
             }
             bichoDAO.actualizar(bichomon);
             return bichomon;
