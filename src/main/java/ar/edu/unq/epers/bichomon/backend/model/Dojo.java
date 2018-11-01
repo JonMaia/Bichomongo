@@ -37,10 +37,12 @@ public class Dojo extends Ubicacion {
 
     @Override
     public Bicho encontrarBichomon(Entrenador unEntrenador) {
-        if(campeon == null)
-            return null;
-        entregarBicho(unEntrenador , new Bicho(campeon.getBicho().getEspecie().getEspecieInicial()));
-        return null;
+        Bicho bicho = null;
+        if(campeon != null) {
+            bicho = new Bicho(campeon.getBicho().getEspecie().getEspecieInicial());
+            entregarBicho(unEntrenador, bicho);
+        }
+        return bicho;
     }
 
     @Override
