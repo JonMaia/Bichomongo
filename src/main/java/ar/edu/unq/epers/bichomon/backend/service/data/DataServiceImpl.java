@@ -451,13 +451,15 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Dojo crearDojo() {
-        Dojo dojo =  this.dojoDao.getById("DOJO");
-        if(dojo == null) {
-            dojo = new Dojo();
-            dojo.setNombre("DOJO");
-        }
-        this.dojoDao.guardar(dojo);
-        return dojo;
+        return Runner.runInSession(() -> {
+            Dojo dojo = this.dojoDao.getById("DOJO");
+            if (dojo == null) {
+                dojo = new Dojo();
+                dojo.setNombre("DOJO");
+            }
+            this.dojoDao.guardar(dojo);
+            return dojo;
+        });
     }
 
     @Override
@@ -496,20 +498,21 @@ public class DataServiceImpl implements DataService {
     }
 
     public Bicho crearBichoDeEspecieYDeEntrenador(String nombreEspecie, String nombreEntrenador) {
+        return Runner.runInSession(() -> {
+            Especie especie = this.especieDao.recuperar(nombreEspecie);
+            if (especie == null)
+                especie = this.crearEspecie(nombreEspecie);
 
-        Especie especie = this.especieDao.recuperar(nombreEspecie);
-        if(especie == null)
-            especie = this.crearEspecie(nombreEspecie);
+            Bicho bicho = especie.crearBicho();
+            List<Bicho> bichos = new ArrayList<Bicho>();
+            bichos.add(bicho);
+            Entrenador entrenador = crearEntrenador(nombreEntrenador);
+            bicho.setEntrenador(entrenador);
+            entrenador.setBichomones(bichos);
 
-        Bicho bicho = especie.crearBicho();
-        List<Bicho> bichos = new ArrayList<Bicho>();
-        bichos.add(bicho);
-        Entrenador entrenador = crearEntrenador(nombreEntrenador);
-        bicho.setEntrenador(entrenador);
-        entrenador.setBichomones(bichos);
-
-        this.bichoDao.guardar(bicho);
-        return bicho;
+            this.bichoDao.guardar(bicho);
+            return bicho;
+        });
     }
 
     private Bicho crearBichoDeEspecie(String nombreEspecie) {
