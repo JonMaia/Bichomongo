@@ -1,11 +1,10 @@
 package ar.edu.unq.service;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
+import ar.edu.unq.epers.bichomon.backend.dao.Neo4JUbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.Pueblo;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
@@ -14,10 +13,12 @@ import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MapaServiceTest {
 
     private DataService dataService = new DataServiceImpl();
+    private Neo4JUbicacionDao neo4JUbicacionDao = new Neo4JUbicacionDaoImple();
     private MapaService mapaService = new MapaServiceImpl();
     private EntrenadorDao entrenadorDao = new HibernateEntrenadorDaoImple();
 
@@ -25,6 +26,7 @@ public class MapaServiceTest {
     public void clear(){
         dataService.eliminarDatos();
     }
+
     @Test
     public void si_se_mueve_a_un_entrenador_a_una_ubicacion_diferente_a_la_actual_su_ubicacion_cambia(){
         Pueblo pueblito1 = this.dataService.crearPuebloConProbabilidadExitoYEspecie("pueblito1",0,"especie1");
@@ -63,13 +65,24 @@ public class MapaServiceTest {
 
         assertEquals(5, mapaService.cantidadEntrenadores(pueblito.getNombre()));
     }
-    @Test
 
+    @Test
     public void si_hay_un_unico_campeon_en_un_dojo_es_el_historico(){
         Bicho unBicho = this.dataService.crearBichoCampeonConEntrenadorYEspecieYEnDojo("EspecieCampeona", "EntrenadorCampeon", "DojoDeCampeones");
         Bicho campeonHistorico = this.mapaService.campeonHistorico(unBicho.getEntrenador().getUbicacion().getNombre());
         assertEquals(unBicho.getId(), campeonHistorico.getId());
     }
 
+    @Test
+    public void crea_una_ubicacion_en_sql_y_neo4J(){
+        //TODO: ESTE TEST SOLO SE CREO PARA VERIFICAR QUE SE CREE UN NODO EN NEO4J, DEBERIA MODIFICARSE O BORRARSE
+
+        String nombre ="NodoPueblito";
+        Pueblo pueblo = new Pueblo();
+        pueblo.setNombre(nombre);
+        this.mapaService.crearUbicacion(pueblo);
+
+        assertTrue(this.neo4JUbicacionDao.existe(pueblo));
+    }
 
 }

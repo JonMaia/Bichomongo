@@ -2,10 +2,12 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.dao.DojoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
+import ar.edu.unq.epers.bichomon.backend.dao.Neo4JUbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateDojoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
@@ -13,12 +15,14 @@ public class MapaServiceImpl implements MapaService {
 
     private EntrenadorDao entrenadorDao;
     private UbicacionDao ubicacionDao;
+    private Neo4JUbicacionDao neo4JUbicacionDao;
     private DojoDao dojoDao;
 
     public MapaServiceImpl() {
         this.entrenadorDao = new HibernateEntrenadorDaoImple();
         this.ubicacionDao = new HibernateUbicacionDaoImple();
         this.dojoDao = new HibernateDojoDaoImple();
+        this.neo4JUbicacionDao = new Neo4JUbicacionDaoImple();
     }
 
     @Override
@@ -55,5 +59,18 @@ public class MapaServiceImpl implements MapaService {
     public Bicho campeonHistorico(String dojo) {
         /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
         return Runner.runInSession(() -> this.dojoDao.getCampeonHistorico(dojo));
+    }
+
+    @Override
+    public void crearUbicacion(Ubicacion ubicacion){
+        //TODO: IMPLEMENTAR
+
+        Runner.runInSession(() -> {
+            ubicacionDao.guardar(ubicacion);
+            return null;
+        });
+
+        neo4JUbicacionDao.create(ubicacion);
+
     }
 }

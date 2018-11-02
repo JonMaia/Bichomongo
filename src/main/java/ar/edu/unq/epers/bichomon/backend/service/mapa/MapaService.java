@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 
 public interface MapaService {
 
@@ -17,6 +18,7 @@ public interface MapaService {
 
 
     Bicho campeonHistorico(String dojo);
-    /*retorna el bicho que haya sido campeon por mas tiempo en el Guarderia.*/
+
+    void crearUbicacion(Ubicacion ubicacion);
 
 }
