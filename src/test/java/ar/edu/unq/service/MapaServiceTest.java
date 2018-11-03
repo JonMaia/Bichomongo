@@ -1,18 +1,23 @@
 package ar.edu.unq.service;
 
+import ar.edu.unq.epers.bichomon.backend.dao.DojoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateDojoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.Pueblo;
+import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class MapaServiceTest {
@@ -20,6 +25,7 @@ public class MapaServiceTest {
     private DataService dataService = new DataServiceImpl();
     private MapaService mapaService = new MapaServiceImpl();
     private EntrenadorDao entrenadorDao = new HibernateEntrenadorDaoImple();
+    private DojoDao dojoDao = new HibernateDojoDaoImple();
 
     @After
     public void clear(){
@@ -64,12 +70,35 @@ public class MapaServiceTest {
         assertEquals(5, mapaService.cantidadEntrenadores(pueblito.getNombre()));
     }
     @Test
-
     public void si_hay_un_unico_campeon_en_un_dojo_es_el_historico(){
         Bicho unBicho = this.dataService.crearBichoCampeonConEntrenadorYEspecieYEnDojo("EspecieCampeona", "EntrenadorCampeon", "DojoDeCampeones");
         Bicho campeonHistorico = this.mapaService.campeonHistorico(unBicho.getEntrenador().getUbicacion().getNombre());
         assertEquals(unBicho.getId(), campeonHistorico.getId());
     }
 
+    @Test
+    public void dado_un_dojo_le_pregunto_el_actual_campeon_y_me_lo_retorna(){
+        Bicho campeon = this.dataService.crearBichoCampeonConEntrenadorYEspecieYEnDojo("Pikachu", "Ash", "dojo");
+        assertEquals(campeon.getId(), mapaService.campeon("dojo").getId());
+    }
 
+    @Test
+    public void dado_un_dojo_le_pregunto_los_campeones_historicos_y_retorna_al_campeon_historico_con_mas_tiempo(){
+        Dojo dojo = this.dataService.crearDojo();
+        Champion unCampeon = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Charmander", "Ash"));
+        Champion otroCampeon = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Squirtle", "Misty"));
+        Champion bichoCampeonHistorico = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Bulbasaur", "Brock"));
+        unCampeon.setPeriodo(2); otroCampeon.setPeriodo(3); bichoCampeonHistorico.setPeriodo(4);
+
+
+        ArrayList<Champion> c = new ArrayList<Champion>();
+        c.add(unCampeon); c.add(otroCampeon); c.add(bichoCampeonHistorico);
+        dojo.setCampeones(c);
+        Runner.runInSession(() -> {
+            dojoDao.actualizar(dojo);
+            return dojoDao.getCampeonHistorico("dojo");
+        });
+
+        assertEquals(mapaService.campeonHistorico("dojo").getId(), bichoCampeonHistorico.getBicho().getId());
+    }
 }
