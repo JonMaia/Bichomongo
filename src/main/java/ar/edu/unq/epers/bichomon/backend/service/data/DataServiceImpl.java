@@ -6,7 +6,6 @@ import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
-import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,7 +192,7 @@ public class DataServiceImpl implements DataService {
         if(entrenador == null){
             entrenador =  new Entrenador();
             entrenador.setNombre("Ash");
-            entrenador.setAccion(new Acciones(0,0,0));
+            entrenador.setAccion(new Accion(0,0,0));
             entrenador.setNivel(crearNivel(1));
             this.entrenadorDao.actualizar(entrenador);
         }
@@ -367,7 +366,7 @@ public class DataServiceImpl implements DataService {
                 dojo = new Dojo();
                 dojo.setNombre("Dojo");
             }
-            Acciones acciones = new Acciones(10,10,10);
+            Accion accion = new Accion(10,10,10);
             Entrenador entrenador = entrenadorDao.getById("Pepito");
             if(entrenador == null)
                 entrenador = crearEntrenador("Pepito");
@@ -381,7 +380,7 @@ public class DataServiceImpl implements DataService {
             retador.setEntrenador(entrenador);
             dojo.setCampeon(campeon);
 
-            entrenador.setAccion(acciones);
+            entrenador.setAccion(accion);
             entrenador.setNivel(nivelEntrenador);
             entrenador.moverA(dojo);
             nivelDao.guardar(nivelEntrenador);
@@ -398,7 +397,7 @@ public class DataServiceImpl implements DataService {
     public Bicho crearBichoCampeonConEntrenadorYEspecieYEnDojo(String nombreEspecie, String nombreEntrenador, String nombreDojo){
         return Runner.runInSession(() -> {
             Dojo dojo = new Dojo();
-            Acciones acciones = new Acciones(10,10,10);
+            Accion accion = new Accion(10,10,10);
             Entrenador entrenador = crearEntrenador(nombreEntrenador);
             Especie especieCampeon = crearEspecie(nombreEspecie);
             Nivel nivelEntrenador = new Nivel(1, 100, 2, null, 0.5);
@@ -407,7 +406,7 @@ public class DataServiceImpl implements DataService {
             campeon.setEntrenador(entrenador);
             dojo.setCampeon(campeon);
             dojo.setNombre(nombreDojo);
-            entrenador.setAccion(acciones);
+            entrenador.setAccion(accion);
             entrenador.setNivel(nivelEntrenador);
             entrenador.moverA(dojo);
             nivelDao.guardar(nivelEntrenador);
@@ -538,7 +537,7 @@ public class DataServiceImpl implements DataService {
         return Runner.runInSession(() -> {
             Entrenador entrenador = new Entrenador();
             entrenador.setNombre(nombreEntrenador);
-            entrenador.setAccion(new Acciones(0,0,0));
+            entrenador.setAccion(new Accion(0,0,0));
             entrenador.setNivel(crearNivel(1));
             this.entrenadorDao.guardar(entrenador);
             return entrenador;

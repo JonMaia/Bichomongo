@@ -1,8 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.model;
 
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
-import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusqueda;
-import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaNormal;
+import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.*;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;

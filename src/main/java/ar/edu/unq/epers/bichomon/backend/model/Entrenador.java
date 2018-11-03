@@ -4,13 +4,11 @@ import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaExce
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Minutes;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -33,15 +31,15 @@ public class Entrenador {
     LocalDate fechaUltimoBichoEncontra;
 
     @OneToOne (cascade = CascadeType.ALL)
-    private Acciones accion;
+    private Accion accion;
 
-    public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Acciones acciones) {
+    public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Accion accion) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.bichomones = new ArrayList<>();
         this.experiencia = 0;
         this.nivel = nivel;
-        this.accion = acciones;
+        this.accion = accion;
 
     }
 
@@ -88,7 +86,7 @@ public class Entrenador {
         this.nivel = nivel;
     }
 
-    public void setAccion(Acciones accion){this.accion = accion;}
+    public void setAccion(Accion accion){this.accion = accion;}
 
     public void setFechaUltimoBichoEncontra(LocalDate date){
         this.fechaUltimoBichoEncontra = date;
@@ -130,6 +128,7 @@ public class Entrenador {
     public void abandonarBicho(Bicho bicho){
         ubicacion.dejarBicho(bicho);
         getBichomones().remove(bicho);
+        bicho.getExEntrenadores().add(this);
     }
 
     public void ganarExperienciaPorEvolucion(){addExperiencia(accion.getExperienciaPorEvolucion());}
