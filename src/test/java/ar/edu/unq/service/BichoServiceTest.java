@@ -13,6 +13,7 @@ import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import ar.edu.unq.mocks.ExitoDeBusquedaSiempreTrue;
 import org.junit.After;
 import org.junit.Test;
 
@@ -35,6 +36,9 @@ public class BichoServiceTest {
     public void se_busca_bicho_exitoso_en_ubicacion(){
         Bicho bicho = dataService.crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100();
         Entrenador entrenador = bicho.getEntrenador();
+        Ubicacion pueblo = entrenador.getUbicacion();
+
+        pueblo.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
 
         bichoService.buscar(entrenador.getNombre());
 
