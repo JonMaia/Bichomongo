@@ -21,4 +21,5 @@ public interface MapaService {
 
     void crearUbicacion(Ubicacion ubicacion);
 
+    void conectar(String ubicacion1, String ubicacion2, String tipoCamino);
 }

@@ -17,6 +17,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import ar.edu.unq.epers.bichomon.backend.model.TipoCamino;
 
 public class MapaServiceTest {
 
@@ -85,8 +86,30 @@ public class MapaServiceTest {
         pueblo.setNombre(nombre);
         this.mapaService.crearUbicacion(pueblo);
 
-        assertTrue(this.neo4JUbicacionDao.existe(pueblo));
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(pueblo));
         assertNotNull( Runner.runInSession(() -> this.ubicacionDao.recuperar(nombre)) );
+    }
+
+    @Test
+    public void crea_dos_ubicaciones_y_las_conecta_con_un_tipoCamino(){
+
+        String nombreOrigen ="NodoPueblitoOrigen";
+        Pueblo puebloOrigen = new Pueblo();
+        puebloOrigen.setNombre(nombreOrigen);
+        this.mapaService.crearUbicacion(puebloOrigen);
+
+        String nombreDestino ="NodoPueblitoDestino";
+        Pueblo puebloDestino = new Pueblo();
+        puebloDestino.setNombre(nombreDestino);
+        this.mapaService.crearUbicacion(puebloDestino);
+
+        this.mapaService.conectar(nombreOrigen, nombreDestino,TipoCamino.TERRESTRES.toString());
+
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen));
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino));
+
+        //TODO: VERIFICAR QUE EXISTA LA RELACION USANDO EL METODO CONECTADOS CUANDO SE IMPLEMENTEE
+
     }
 
 }

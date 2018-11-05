@@ -14,6 +14,18 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
+    public void eliminarDatos() {
+        Session session = this.driver.session();
+
+        try {
+            String query = "MATCH (n) DETACH DELETE n";
+            session.run(query);
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
     public void create(Ubicacion ubicacion) {
         Session session = this.driver.session();
 
@@ -26,7 +38,7 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
-    public boolean existe(Ubicacion ubicacion) {
+    public boolean existeUbicacion(Ubicacion ubicacion) {
         Session session = this.driver.session();
 
         try {
@@ -36,6 +48,19 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
             StatementResult result = session.run(query, Values.parameters("elNombre", ubicacion.getNombre()));
 
             return result.hasNext();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public void conectar(String ubicacion1, String ubicacion2, String tipoCamino) {
+        Session session = this.driver.session();
+
+        try {
+            String query = "MATCH (u1:Ubicacion {nombre: {ubicacion1}}), (u2:Ubicacion {nombre: {ubicacion2}}) " +
+                    "CREATE (u1)-[r: "+ tipoCamino +"]->(u2)";
+            session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2));
         } finally {
             session.close();
         }

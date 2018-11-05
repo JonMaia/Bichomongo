@@ -19,6 +19,7 @@ public class DataServiceImpl implements DataService {
     private EntrenadorDao entrenadorDao;
     private DojoDao dojoDao = new HibernateDojoDaoImple();
     private PuebloDao puebloDao = new HibernatePuebloDaoImple();
+    private Neo4JUbicacionDao neo4JUbicacionDao = new Neo4JUbicacionDaoImple();
 
     public DataServiceImpl(EspecieDao especieDao,NivelDao nivelDao){
         this.especieDao = especieDao;
@@ -43,20 +44,7 @@ public class DataServiceImpl implements DataService {
     @Override
     public void eliminarDatos() {
         SessionFactoryProvider.destroy();
-
-        /*
-        Runner.runInSession(() -> {
-            Session session = Runner.getCurrentSession();
-            List<String> nombreDeTablas = session.createNativeQuery("show tables").getResultList();
-            session.createNativeQuery("SET FOREIGN_KEY_CHECKS=0;").executeUpdate();
-            nombreDeTablas.forEach(tabla -> {
-                session.createNativeQuery("truncate table " + tabla).executeUpdate();
-            });
-            session.createNativeQuery("SET FOREIGN_KEY_CHECKS=1;").executeUpdate();
-            return null;
-        });
-         */
-
+        neo4JUbicacionDao.eliminarDatos();
     }
 
     @Override

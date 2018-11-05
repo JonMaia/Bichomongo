@@ -63,14 +63,16 @@ public class MapaServiceImpl implements MapaService {
 
     @Override
     public void crearUbicacion(Ubicacion ubicacion){
-        //TODO: IMPLEMENTAR
-
         Runner.runInSession(() -> {
             ubicacionDao.guardar(ubicacion);
             return null;
         });
 
         neo4JUbicacionDao.create(ubicacion);
+    }
 
+    @Override
+    public void conectar(String ubicacion1, String ubicacion2, String tipoCamino){
+        neo4JUbicacionDao.conectar(ubicacion1, ubicacion2, tipoCamino);
     }
 }
