@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.Neo4JUbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.model.Dojo;
+import ar.edu.unq.epers.bichomon.backend.model.TipoCamino;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 import org.neo4j.driver.v1.*;
 
@@ -46,6 +47,22 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
             String query = "MATCH (u:Ubicacion {nombre: {elNombre}}) " +
                     "RETURN u";
             StatementResult result = session.run(query, Values.parameters("elNombre", ubicacion.getNombre()));
+
+            return result.hasNext();
+        } finally {
+            session.close();
+        }
+    }
+
+
+    @Override
+    public boolean existeRelacion(TipoCamino tipoCamino) {
+        Session session = this.driver.session();
+
+        try {
+            //    MATCH (u)-[r:TERRESTRES]->(c) RETURN r
+            String query = "MATCH (u)-[r:" + tipoCamino.toString() + "]->(c) RETURN r";
+            StatementResult result = session.run(query);
 
             return result.hasNext();
         } finally {

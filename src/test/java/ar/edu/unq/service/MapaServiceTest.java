@@ -107,8 +107,7 @@ public class MapaServiceTest {
 
         assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen));
         assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino));
-
-        //TODO: VERIFICAR QUE EXISTA LA RELACION USANDO EL METODO CONECTADOS CUANDO SE IMPLEMENTEE
+        assertTrue(this.neo4JUbicacionDao.existeRelacion(TipoCamino.TERRESTRE));
 
     }
 
