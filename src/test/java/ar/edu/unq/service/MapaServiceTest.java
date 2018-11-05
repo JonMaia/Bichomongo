@@ -103,7 +103,7 @@ public class MapaServiceTest {
         puebloDestino.setNombre(nombreDestino);
         this.mapaService.crearUbicacion(puebloDestino);
 
-        this.mapaService.conectar(nombreOrigen, nombreDestino,TipoCamino.TERRESTRES.toString());
+        this.mapaService.conectar(nombreOrigen, nombreDestino,TipoCamino.TERRESTRE.toString());
 
         assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen));
         assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino));
