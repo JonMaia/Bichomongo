@@ -13,7 +13,7 @@ Se identificaron una serie de cambios necesarios a hacerse sobre la prueba de co
 ### Entrenadores y niveles
 Existen entrenadores (cada jugador dentro del sistema es representado por un `Entrenador`).  Un entrenador tiene un nombre (el cual debe ser único), una cierta cantidad de puntos de experiencia y un nivel.
 
-Distintas acciones en el juego harán que la cantidad de puntos de experiencia del entrenador se incrementen (ver sección "puntos de experiencia"). Cuando los mismos superen un cierto limite el entrenador subirá de nivel.
+Distintas accion en el juego harán que la cantidad de puntos de experiencia del entrenador se incrementen (ver sección "puntos de experiencia"). Cuando los mismos superen un cierto limite el entrenador subirá de nivel.
 
 - *Nivel 1*: de 1 a 99 puntos de experiencia
 - *Nivel 2*: de 100 a 400 puntos de experiencia
@@ -112,7 +112,7 @@ _Ejemplo: El Starmon de DanielSan retó al Dragonmon del Dojo CobraKai a duelo. 
 - _Starmon ataca nuevamente a Dragonmon. Obtiene 1 en su valor aleatorio. Su ataque hace 100 puntos de daño, que combinados a los 80 ya realizados suman un total de 180. Como 180 es mayor que la energia de Dragonmon entonces Starmon es coronado nuevo campeon_
 
 ### Experiencia
-Un entrenador obtendrá puntos de experiencia por las siguientes acciones:
+Un entrenador obtendrá puntos de experiencia por las siguientes accion:
 
 - *COMBATIR*: 10 puntos de experiencia
 - *CAPTURAR*: 10 puntos de experiencia

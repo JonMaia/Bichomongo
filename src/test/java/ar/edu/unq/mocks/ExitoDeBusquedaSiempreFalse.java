@@ -1,4 +1,6 @@
-package ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda;
+package ar.edu.unq.mocks;
+
+import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusqueda;
 
 public class ExitoDeBusquedaSiempreFalse implements ExitoDeBusqueda {
     @Override

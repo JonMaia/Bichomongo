@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Acciones {
+public class Accion {
 
     @Id @GeneratedValue
     private Integer id;
@@ -17,13 +17,13 @@ public class Acciones {
     private Integer experienciaPorEvolucion;
 
 
-    public Acciones(Integer experienciaPorCapturarBicho, Integer experienciaPorCombatir, Integer experienciaPorEvolucion) {
+    public Accion(Integer experienciaPorCapturarBicho, Integer experienciaPorCombatir, Integer experienciaPorEvolucion) {
         this.experienciaPorCapturarBicho = experienciaPorCapturarBicho;
         this.experienciaPorCombatir = experienciaPorCombatir;
         this.experienciaPorEvolucion = experienciaPorEvolucion;
     }
 
-    public Acciones() {  }
+    public Accion() {  }
 
     public Integer getExperienciaPorCapturarBicho() {
         return experienciaPorCapturarBicho;
