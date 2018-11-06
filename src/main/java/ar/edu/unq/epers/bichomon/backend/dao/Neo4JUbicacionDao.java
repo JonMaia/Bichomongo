@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.dao;
 
-import ar.edu.unq.epers.bichomon.backend.model.TipoCamino;
+import ar.edu.unq.epers.bichomon.backend.model.TipoDeCamino;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 
 public interface Neo4JUbicacionDao {
@@ -12,8 +12,8 @@ public interface Neo4JUbicacionDao {
 
     boolean existeUbicacion(Ubicacion ubicacion);
 
-    boolean existeRelacion(TipoCamino tipoCamino);
+    boolean existeRelacion(TipoDeCamino tipoCamino);
 
-    void conectar(String ubicacion1, String ubicacion2, String tipoCamino);
+    void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino);
 
 }

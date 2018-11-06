@@ -15,17 +15,13 @@ import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import ar.edu.unq.epers.bichomon.backend.model.TipoCamino;
 
 public class MapaServiceTest {
 
@@ -112,11 +108,11 @@ public class MapaServiceTest {
         puebloDestino.setNombre(nombreDestino);
         this.mapaService.crearUbicacion(puebloDestino);
 
-        this.mapaService.conectar(nombreOrigen, nombreDestino,TipoCamino.TERRESTRE.toString());
+        this.mapaService.conectar(nombreOrigen, nombreDestino,new Terrestre());
 
         assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen));
         assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino));
-        assertTrue(this.neo4JUbicacionDao.existeRelacion(TipoCamino.TERRESTRE));
+        assertTrue(this.neo4JUbicacionDao.existeRelacion(new Terrestre()));
 
     }
 

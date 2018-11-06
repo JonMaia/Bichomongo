@@ -1,8 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.Neo4JUbicacionDao;
-import ar.edu.unq.epers.bichomon.backend.model.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.TipoCamino;
+import ar.edu.unq.epers.bichomon.backend.model.TipoDeCamino;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 import org.neo4j.driver.v1.*;
 
@@ -11,7 +10,7 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     private Driver driver;
 
     public Neo4JUbicacionDaoImple() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "password" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "very_strong_pasword" ) );
     }
 
     @Override
@@ -56,12 +55,12 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
 
 
     @Override
-    public boolean existeRelacion(TipoCamino tipoCamino) {
+    public boolean existeRelacion(TipoDeCamino tipoCamino) {
         Session session = this.driver.session();
 
         try {
             //    MATCH (u)-[r:TERRESTRES]->(c) RETURN r
-            String query = "MATCH (u)-[r:" + tipoCamino.toString() + "]->(c) RETURN r";
+            String query = "MATCH (u)-[r:" + tipoCamino.getTipo() + "]->(c) RETURN r";
             StatementResult result = session.run(query);
 
             return result.hasNext();
@@ -71,15 +70,22 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
-    public void conectar(String ubicacion1, String ubicacion2, String tipoCamino) {
+    public void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino) {
         Session session = this.driver.session();
 
         try {
             String query = "MATCH (u1:Ubicacion {nombre: {ubicacion1}}), (u2:Ubicacion {nombre: {ubicacion2}}) " +
-                    "CREATE (u1)-[r: "+ tipoCamino +"]->(u2)";
+                    "CREATE (u1)-[r: "+ tipoCamino.getTipo() +"]->(u2)";
             session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2));
         } finally {
             session.close();
         }
     }
+/*
+esto sirve para buscar el camino de dos nodos
+    MATCH p = shortestPath((martin:Person)-[*..15]-(oliver:Person))
+    WHERE martin.name = 'Martin Sheen' AND oliver.name = 'Oliver Stone'
+    RETURN p
+
+    */
 }

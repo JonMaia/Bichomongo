@@ -33,6 +33,8 @@ public class Entrenador {
     @OneToOne (cascade = CascadeType.ALL)
     private Accion accion;
 
+    private Integer billetera;
+
     public Entrenador(String nombre, Ubicacion ubicacion, Nivel nivel, Accion accion) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;

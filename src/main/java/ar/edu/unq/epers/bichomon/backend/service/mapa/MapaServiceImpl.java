@@ -72,7 +72,7 @@ public class MapaServiceImpl implements MapaService {
     }
 
     @Override
-    public void conectar(String ubicacion1, String ubicacion2, String tipoCamino){
+    public void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino){
         neo4JUbicacionDao.conectar(ubicacion1, ubicacion2, tipoCamino);
     }
 }

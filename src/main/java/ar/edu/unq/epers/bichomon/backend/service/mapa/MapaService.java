@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.TipoDeCamino;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 
 public interface MapaService {
@@ -21,5 +22,5 @@ public interface MapaService {
 
     void crearUbicacion(Ubicacion ubicacion);
 
-    void conectar(String ubicacion1, String ubicacion2, String tipoCamino);
+    void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino);
 }
