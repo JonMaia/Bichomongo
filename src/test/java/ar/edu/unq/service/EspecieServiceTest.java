@@ -19,6 +19,17 @@ public class EspecieServiceTest {
     private EspecieService especieService = new EspecieServiceImpl();
     private DataService dataService = new DataServiceImpl();
 
+    public List<String> getNombresEspecies(List<Bicho> bichos){
+
+        List<String> nombresEspecie = new ArrayList<>();
+        for (Bicho bicho : bichos) {
+            if(bicho.getEspecie().getCantidadBichos() == 2 && !nombresEspecie.contains(bicho.getEspecie().getNombre()))
+                nombresEspecie.add(bicho.getEspecie().getNombre());
+        }
+
+        return nombresEspecie;
+    }
+
     @After
     public void clear(){
         dataService.eliminarDatos();
@@ -36,13 +47,7 @@ public class EspecieServiceTest {
     @Test
     public void si_existen_mas_de_10_especies_con_bichos_en_manos_de_entrenadores_entonces_devuelve_las_10_con_mas_bichos(){
         List<Bicho> bichos = this.dataService.crear2BichosPara10EspeciesYUnBichoPara2EspeciesConEntrenador();
-
-        List<String> nombresEspecie = new ArrayList<String>();
-        for (Bicho bicho : bichos) {
-            if(bicho.getEspecie().getCantidadBichos() == 2 && !nombresEspecie.contains(bicho.getEspecie().getNombre()))
-                nombresEspecie.add(bicho.getEspecie().getNombre());
-        }
-        
+        List<String> nombresEspecie = getNombresEspecies(bichos);
         List<Especie> especiesPopulares = this.especieService.populares();
 
         assertEquals(10,especiesPopulares.size());
@@ -75,13 +80,7 @@ public class EspecieServiceTest {
     @Test
     public void si_existen_mas_de_10_especies_con_bichos_sin_entrenadores_entonces_devuelve_las_10_con_mas_bichos(){
         List<Bicho> bichos = this.dataService.crear2BichosPara10EspeciesYUnBichoPara2EspeciesSinEntrenador();
-
-        List<String> nombresEspecie = new ArrayList<String>();
-        for (Bicho bicho : bichos) {
-            if(bicho.getEspecie().getCantidadBichos() == 2 && !nombresEspecie.contains(bicho.getEspecie().getNombre()))
-                nombresEspecie.add(bicho.getEspecie().getNombre());
-        }
-
+        List<String> nombresEspecie = getNombresEspecies(bichos);
         List<Especie> especiesImpopulares = this.especieService.impopulares();
 
         assertEquals(10,especiesImpopulares.size());
