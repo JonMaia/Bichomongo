@@ -10,6 +10,10 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.neo4j.driver.v1.Record;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapaServiceImpl implements MapaService {
 
@@ -74,5 +78,20 @@ public class MapaServiceImpl implements MapaService {
     @Override
     public void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino){
         neo4JUbicacionDao.conectar(ubicacion1, ubicacion2, tipoCamino);
+    }
+
+    @Override
+    public List<Ubicacion> conectados(String ubicacion, String tipoCamino){
+        List<Ubicacion> ubicaciones = new ArrayList<Ubicacion>();
+
+        List<Record> nombresDeUbicaciones = neo4JUbicacionDao.conectados(ubicacion, tipoCamino);
+
+        for (Record r:nombresDeUbicaciones) {
+            ubicaciones.add(
+                    Runner.runInSession(() ->this.ubicacionDao.recuperar( r.values().get(0).asString()))
+                    );
+        }
+
+        return ubicaciones;
     }
 }

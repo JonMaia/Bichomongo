@@ -2,6 +2,9 @@ package ar.edu.unq.epers.bichomon.backend.dao;
 
 import ar.edu.unq.epers.bichomon.backend.model.TipoDeCamino;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
+import org.neo4j.driver.v1.Record;
+
+import java.util.List;
 
 public interface Neo4JUbicacionDao {
     // TODO: VERIFICAR SI TODOAS LAS FIRMAS DE LOS METODOS COINCIDEN CON LAS DE UbicacionDao Y SI ES ASI DEJAR UNA SOLA INTERFAZ, SINO BUSCAR UN NOMBRE QUE NO HAGA REFERENCIA A LA IMPLEMENTACION
@@ -16,4 +19,5 @@ public interface Neo4JUbicacionDao {
 
     void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino);
 
+    List<Record> conectados(String ubicacion, String tipoCamino);
 }

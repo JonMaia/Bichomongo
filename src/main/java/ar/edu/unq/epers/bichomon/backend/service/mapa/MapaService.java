@@ -4,6 +4,8 @@ import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.TipoDeCamino;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 
+import java.util.List;
+
 public interface MapaService {
 
     void mover(String entrenador, String ubicacion) ;
@@ -23,4 +25,6 @@ public interface MapaService {
     void crearUbicacion(Ubicacion ubicacion);
 
     void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino);
+
+    List<Ubicacion> conectados(String ubicacion, String tipoCamino);
 }

@@ -18,6 +18,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -84,6 +85,32 @@ public class MapaServiceTest {
     }
 
     @Test
+    public void dado_un_dojo_le_pregunto_el_actual_campeon_y_me_lo_retorna(){
+        Bicho campeon = this.dataService.crearBichoCampeonConEntrenadorYEspecieYEnDojo("Pikachu", "Ash", "dojo");
+        assertEquals(campeon.getId(), mapaService.campeon("dojo").getId());
+    }
+
+    @Test
+    public void dado_un_dojo_le_pregunto_los_campeones_historicos_y_retorna_al_campeon_historico_con_mas_tiempo(){
+        Dojo dojo = this.dataService.crearDojo();
+        Champion unCampeon = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Charmander", "Ash"));
+        Champion otroCampeon = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Squirtle", "Misty"));
+        Champion bichoCampeonHistorico = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Bulbasaur", "Brock"));
+        unCampeon.setPeriodo(2); otroCampeon.setPeriodo(3); bichoCampeonHistorico.setPeriodo(4);
+
+
+        ArrayList<Champion> c = new ArrayList<Champion>();
+        c.add(unCampeon); c.add(otroCampeon); c.add(bichoCampeonHistorico);
+        dojo.setCampeones(c);
+        Runner.runInSession(() -> {
+            dojoDao.actualizar(dojo);
+            return dojoDao.getCampeonHistorico("dojo");
+        });
+
+        assertEquals(mapaService.campeonHistorico("dojo").getId(), bichoCampeonHistorico.getBicho().getId());
+    }
+
+    @Test
     public void crea_una_ubicacion_en_sql_y_neo4J(){
 
         String nombre ="NodoPueblito";
@@ -117,28 +144,28 @@ public class MapaServiceTest {
     }
 
     @Test
-    public void dado_un_dojo_le_pregunto_el_actual_campeon_y_me_lo_retorna(){
-        Bicho campeon = this.dataService.crearBichoCampeonConEntrenadorYEspecieYEnDojo("Pikachu", "Ash", "dojo");
-        assertEquals(campeon.getId(), mapaService.campeon("dojo").getId());
-    }
+    public void si_hay_una_ubicacion_conectada_por_un_camino_terrestre_la_retorna(){
 
-    @Test
-    public void dado_un_dojo_le_pregunto_los_campeones_historicos_y_retorna_al_campeon_historico_con_mas_tiempo(){
-        Dojo dojo = this.dataService.crearDojo();
-        Champion unCampeon = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Charmander", "Ash"));
-        Champion otroCampeon = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Squirtle", "Misty"));
-        Champion bichoCampeonHistorico = new Champion(this.dataService.crearBichoDeEspecieYDeEntrenador("Bulbasaur", "Brock"));
-        unCampeon.setPeriodo(2); otroCampeon.setPeriodo(3); bichoCampeonHistorico.setPeriodo(4);
+        String nombreOrigen ="NodoPueblitoOrigen";
+        Pueblo puebloOrigen = new Pueblo();
+        puebloOrigen.setNombre(nombreOrigen);
+        this.mapaService.crearUbicacion(puebloOrigen);
 
+        String nombreDestino ="NodoPueblitoDestino";
+        Pueblo puebloDestino = new Pueblo();
+        puebloDestino.setNombre(nombreDestino);
+        this.mapaService.crearUbicacion(puebloDestino);
 
-        ArrayList<Champion> c = new ArrayList<Champion>();
-        c.add(unCampeon); c.add(otroCampeon); c.add(bichoCampeonHistorico);
-        dojo.setCampeones(c);
-        Runner.runInSession(() -> {
-            dojoDao.actualizar(dojo);
-            return dojoDao.getCampeonHistorico("dojo");
-        });
+        Terrestre camino = new Terrestre();
 
-        assertEquals(mapaService.campeonHistorico("dojo").getId(), bichoCampeonHistorico.getBicho().getId());
+        this.mapaService.conectar(nombreOrigen, nombreDestino,camino);
+
+        List<Ubicacion> ubicaciones = this.mapaService.conectados(nombreOrigen,camino.getTipo());
+
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen));
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino));
+        assertTrue(this.neo4JUbicacionDao.existeRelacion(camino));
+        assertEquals(ubicaciones.get(0).getNombre(), nombreDestino);
+
     }
 }
