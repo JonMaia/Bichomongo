@@ -73,22 +73,22 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
-    public Integer getPrecioCaminoCorto(String origen, String destino) {
+    public Integer getPrecioCaminoCorto(String nombre1, String nombre2) {
         Session session = this.driver.session();
         Integer costo = null;
-        try{
-            String query = "MATCH (:Ubicacion {nombre: {origen}})-[camino *1..]->(:Ubicacion{nombre: {destino}}) " +
-                    "RETURN min(reduce(total=0,r IN camino|total + r.costo)) as costoFinal";
-            Record result =  session.run(query,Values.parameters("origen",origen,
-                    "destino",destino)).single();
+        try {
+            //    MATCH (u)-[r:TERRESTRES]->(c) RETURN r
+            String query = "MATCH (u:Ubicacion {nombre: {elNombre1}})-[r *1..]->(u2:Ubicacion {nombre: {elNombre2}}) RETURN min(r.costo)) as costoFinal";
+            Record result =  session.run(query,Values.parameters("idLugarOrigen",nombre1,
+                    "idLugarDestino",nombre2)).single();
             if( result != null && !result.get("costoFinal").isNull()) {
                 costo = new Integer(result.get("costoFinal").asInt());
             }
 
+            return costo;
         } finally {
             session.close();
         }
-        return costo;
     }
 
     @Override

@@ -36,20 +36,20 @@ public class MapaServiceImpl implements MapaService {
 
         Runner.runInSession(() -> {
 
-
-
             Entrenador entrenador = entrenadorDao.getById(nombreEntrenador);
             Ubicacion ubicacion = ubicacionDao.getById(nombreUbicacion);
-            Integer costo = neo4JUbicacionDao.getPrecioCaminoCorto(entrenador.getUbicacion().getNombre(),nombreUbicacion);
-            if(costo == null){
-                throw new UbicacionMuyLejanaException("");
+            if(!entrenador.getUbicacion().getNombre().equals(ubicacion.getNombre())) {
+                Integer costo = neo4JUbicacionDao.getPrecioCaminoCorto(entrenador.getUbicacion().getNombre(), nombreUbicacion);
+                if (costo == null) {
+                    throw new UbicacionMuyLejanaException("");
+                }
+                if (costo > entrenador.getBilletera()) {
+                    throw new CaminoMuyCostosoException("");
+                }
+                entrenador.setBilletera(entrenador.getBilletera() - costo);
+                entrenador.moverA(ubicacion);
+                entrenadorDao.actualizar(entrenador);
             }
-            if(costo > entrenador.getBilletera()){
-                throw new CaminoMuyCostosoException("");
-            }
-            entrenador.setBilletera(entrenador.getBilletera()-costo);
-            entrenador.moverA(ubicacion);
-            entrenadorDao.actualizar(entrenador);
             return null;
         });
     }
