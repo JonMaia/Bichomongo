@@ -15,7 +15,9 @@ import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +35,12 @@ public class MapaServiceTest {
     private DojoDao dojoDao = new HibernateDojoDaoImple();
     private UbicacionDao ubicacionDao = new HibernateUbicacionDaoImple();
 
+
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+
     @After
-    public void clear(){
+    public void eliminar(){
         dataService.eliminarDatos();
     }
 
@@ -118,8 +124,8 @@ public class MapaServiceTest {
         pueblo.setNombre(nombre);
         this.mapaService.crearUbicacion(pueblo);
 
-        assertTrue(this.neo4JUbicacionDao.existeUbicacion(pueblo));
-        assertNotNull( Runner.runInSession(() -> this.ubicacionDao.recuperar(nombre)) );
+        assertTrue(this.mapaService.existeUbicacion(pueblo.getNombre()));
+        assertNotNull( Runner.runInSession(() ->  this.ubicacionDao.recuperar(nombre)));
     }
 
     @Test
@@ -137,9 +143,9 @@ public class MapaServiceTest {
 
         this.mapaService.conectar(nombreOrigen, nombreDestino,new Terrestre());
 
-        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen));
-        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino));
-        assertTrue(this.neo4JUbicacionDao.existeRelacion(new Terrestre()));
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen.getNombre()));
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino.getNombre()));
+        assertTrue(this.neo4JUbicacionDao.existeRelacion(puebloOrigen.getNombre(),puebloDestino.getNombre()));
 
     }
 
@@ -162,10 +168,155 @@ public class MapaServiceTest {
 
         List<Ubicacion> ubicaciones = this.mapaService.conectados(nombreOrigen,camino.getTipo());
 
-        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen));
-        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino));
-        assertTrue(this.neo4JUbicacionDao.existeRelacion(camino));
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloOrigen.getNombre()));
+        assertTrue(this.neo4JUbicacionDao.existeUbicacion(puebloDestino.getNombre()));
+        assertTrue(this.neo4JUbicacionDao.existeRelacion(puebloOrigen.getNombre(),puebloDestino.getNombre()));
         assertEquals(ubicaciones.get(0).getNombre(), nombreDestino);
 
     }
+
+    @Test
+    public void meMovereALaUbicacionMasCorta(){
+
+        crearMapa();
+
+
+        String TRACEY = "Tracey Sketchit";
+        Entrenador elMismo = Runner.runInSession(() -> {
+            Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
+            Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion(TRACEY , yantra);
+            entrenador.setBilletera(4);
+            entrenadorDao.actualizar(entrenador);
+            this.mapaService.moverMasCorto(TRACEY, "Pueblo Fresco");
+            return entrenadorDao.getById(entrenador.getNombre());
+        });
+        assertTrue("Pueblo Fresco".equalsIgnoreCase(elMismo.getUbicacion().getNombre()));
+        //el entrenador se queda pobre y gasta todas sus monedas... pero le alcanza para llegar
+        assertTrue(elMismo.getBilletera() == 0);
+
+    }
+
+    @Test
+    public void seQuiereMoverAUnaUbicacionAledaniaYLoConsigue(){
+
+        crearMapa();
+
+        String TRACEY = "Tracey Sketchit";
+        Entrenador elMismo = Runner.runInSession(() -> {
+            Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
+            Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion(TRACEY , yantra);
+            entrenador.setBilletera(4);
+            entrenadorDao.actualizar(entrenador);
+            this.mapaService.mover(TRACEY, "Ciudad Tempera");
+            return entrenadorDao.getById(entrenador.getNombre());
+        });
+        assertTrue(elMismo.getBilletera() == 3);
+        assertTrue("Ciudad Tempera".equalsIgnoreCase(elMismo.getUbicacion().getNombre()));
+    }
+
+
+
+    private void crearMapa() {
+        Pueblo yantra = crearPuebloConNombre("Ciudad Yantra");
+        Pueblo cromlech = crearPuebloConNombre("Pueblo Cromlech");
+        Pueblo relieve = crearPuebloConNombre("Ciudad Relieve");
+        Pueblo petroglifo = crearPuebloConNombre("Pueblo Petroglifo");
+        Pueblo tempera = crearPuebloConNombre("Ciudad Tempera");
+        Pueblo romantis = crearPuebloConNombre("Ciudad Romantis");
+        Pueblo luminalia = crearPuebloConNombre("Ciudad Luminalia");
+        Pueblo fresco = crearPuebloConNombre("Pueblo Fresco");
+        Pueblo acuarela = crearPuebloConNombre("Pueblo Acuarela");
+        Pueblo vanitas = crearPuebloConNombre("Pueblo Vanitas");
+        Pueblo novarte = crearPuebloConNombre("Ciudad Novarte");
+        Pueblo mosaico = crearPuebloConNombre("Pueblo Mosaico");
+        Pueblo fluxus = crearPuebloConNombre("Ciudad Fluxus");
+        Pueblo fractal = crearPuebloConNombre("Ciudad Fractal");
+        Pueblo batik = crearPuebloConNombre("Ciudad Batik");
+        Pueblo boceto = crearPuebloConNombre("Pueblo Boceto");
+        Pueblo cenit = crearPuebloConNombre("Palacio Cenit(4)");
+
+
+
+        this.mapaService.conectar(yantra.getNombre(), cromlech.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(yantra.getNombre(), tempera.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(cromlech.getNombre(), relieve.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(relieve.getNombre(), petroglifo.getNombre(),SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(relieve.getNombre(), cenit.getNombre(),SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(petroglifo.getNombre(), cromlech.getNombre(),SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(petroglifo.getNombre(), relieve.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(petroglifo.getNombre(), acuarela.getNombre(),SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(tempera.getNombre(), romantis.getNombre(),SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(tempera.getNombre(), yantra.getNombre(),SingletonCaminos.getMaritimo());
+
+        this.mapaService.conectar(romantis.getNombre(), romantis.getNombre(),SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(romantis.getNombre(), luminalia.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(romantis.getNombre(), fresco.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(vanitas.getNombre(), cenit.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(cenit.getNombre(), luminalia.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(cenit.getNombre(), novarte.getNombre(),SingletonCaminos.getAereo());
+        this.mapaService.conectar(cenit.getNombre(), vanitas.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(fresco.getNombre(), romantis.getNombre(),SingletonCaminos.getAereo());
+        this.mapaService.conectar(fresco.getNombre(), mosaico.getNombre(),SingletonCaminos.getAereo());
+        this.mapaService.conectar(fresco.getNombre(), luminalia.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(mosaico.getNombre(), fractal.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(fluxus.getNombre(), fresco.getNombre(),SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(fluxus.getNombre(), mosaico.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(fluxus.getNombre(), fractal.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(fractal.getNombre(), acuarela.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(novarte.getNombre(), fractal.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(novarte.getNombre(), vanitas.getNombre(),SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(acuarela.getNombre(), boceto.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(acuarela.getNombre(), novarte.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(acuarela.getNombre(), fractal.getNombre(),SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(boceto.getNombre(), acuarela.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(boceto.getNombre(), batik.getNombre(),SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(boceto.getNombre(), fractal.getNombre(),SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(batik.getNombre(), fractal.getNombre(),SingletonCaminos.getAereo());
+    }
+
+    private Pueblo crearPuebloConNombre(String nombre) {
+        Pueblo pueblo = new Pueblo();
+        pueblo.setNombre(nombre);
+        this.mapaService.crearUbicacion(pueblo);
+        return pueblo;
+    }
+
+    private static class SingletonCaminos {
+
+        private static Terrestre terrestre;
+        private static Aereo aereo;
+        private static Maritimo maritimo;
+
+        public static Terrestre getTerrestre() {
+            if (terrestre == null){
+                terrestre = new Terrestre();
+            }
+            return terrestre;
+        }
+        public static Aereo getAereo() {
+            if (aereo == null){
+                aereo = new Aereo();
+            }
+            return aereo;
+        }
+        public static Maritimo getMaritimo() {
+            if (maritimo == null){
+                maritimo = new Maritimo();
+            }
+            return maritimo;
+        }
+    }
+
 }

@@ -9,6 +9,8 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.exception.CaminoMuyCostosoException;
+import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.neo4j.driver.v1.Record;
 
@@ -30,11 +32,22 @@ public class MapaServiceImpl implements MapaService {
     }
 
     @Override
-    public void mover(String nombreEntrenador, String nombreUbicacion) {
+    public void mover(String nombreEntrenador, String nombreUbicacion)throws RuntimeException {
 
         Runner.runInSession(() -> {
+
+
+
             Entrenador entrenador = entrenadorDao.getById(nombreEntrenador);
             Ubicacion ubicacion = ubicacionDao.getById(nombreUbicacion);
+            Integer costo = neo4JUbicacionDao.costoCaminoMasCorto(entrenador.getUbicacion().getNombre(),nombreUbicacion);
+            if(costo == null){
+                throw new UbicacionMuyLejanaException("");
+            }
+            if(costo > entrenador.getBilletera()){
+                throw new CaminoMuyCostosoException("");
+            }
+            entrenador.setBilletera(entrenador.getBilletera()-costo);
             entrenador.moverA(ubicacion);
             entrenadorDao.actualizar(entrenador);
             return null;
@@ -67,12 +80,11 @@ public class MapaServiceImpl implements MapaService {
 
     @Override
     public void crearUbicacion(Ubicacion ubicacion){
-        Runner.runInSession(() -> {
+            Runner.runInSession(() -> {
             ubicacionDao.guardar(ubicacion);
-            return null;
+            return true;
         });
-
-        neo4JUbicacionDao.create(ubicacion);
+            neo4JUbicacionDao.create(ubicacion);
     }
 
     @Override
@@ -93,5 +105,28 @@ public class MapaServiceImpl implements MapaService {
         }
 
         return ubicaciones;
+    }
+
+    @Override
+    public void moverMasCorto(String nombreEntrenador, String destino) {
+        Runner.runInSession(() -> {
+                    Entrenador entrenador = entrenadorDao.getById(nombreEntrenador);
+
+                    Ubicacion ubicacion = ubicacionDao.getById(destino);
+
+        Integer costo = this.neo4JUbicacionDao.costoCaminoMasCorto(entrenador.getUbicacion().getNombre(),destino);
+        Integer recurso = entrenador.getBilletera();
+        if(costo > recurso)
+            throw new CaminoMuyCostosoException("necesitas " + (costo - recurso) + " para llegar" );
+        entrenador.setBilletera(recurso - costo);
+        entrenador.moverA(ubicacion);
+        entrenadorDao.actualizar(entrenador);
+        return null;
+        });
+    }
+
+    @Override
+    public boolean existeUbicacion(String pueblo) {
+        return Runner.runInSession(() -> this.neo4JUbicacionDao.existeUbicacion(pueblo));
     }
 }

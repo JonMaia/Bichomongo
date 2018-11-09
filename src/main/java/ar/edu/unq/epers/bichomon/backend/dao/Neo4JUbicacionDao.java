@@ -13,11 +13,22 @@ public interface Neo4JUbicacionDao {
 
     void create(Ubicacion ubicacion);
 
-    boolean existeUbicacion(Ubicacion ubicacion);
+    boolean existeUbicacion(String string);
 
-    boolean existeRelacion(TipoDeCamino tipoCamino);
+    //List<Record> caminoA(Ubicacion origen, Ubicacion destino);
+
+
+ //   Integer getPrecioCaminoRelacion(String nombre1, String nombre2);
+
+   // Integer getPrecioCaminoCorto(String nombre1, String nombre2);
+
+    Integer getPrecioCaminoCorto(String nombre1, String nombre2);
 
     void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino);
 
+    Integer costoCaminoMasCorto(String origen, String destino);
+
     List<Record> conectados(String ubicacion, String tipoCamino);
+
+    boolean existeRelacion(String nombre, String nombre1);
 }

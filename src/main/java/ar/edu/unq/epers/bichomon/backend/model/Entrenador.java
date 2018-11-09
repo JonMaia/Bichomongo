@@ -153,4 +153,12 @@ public class Entrenador {
     public void moverA(Ubicacion nuevaUbicacion) {
         this.ubicacion = nuevaUbicacion;
     }
+
+    public void setBilletera(Integer monedas) {
+        this.billetera = monedas;
+    }
+
+    public Integer getBilletera() {
+        return billetera;
+    }
 }

@@ -12,7 +12,8 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     private Driver driver;
 
     public Neo4JUbicacionDaoImple() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "password" ) );
+        //this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "very_strong_pasword" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
     }
 
     @Override
@@ -40,14 +41,14 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
-    public boolean existeUbicacion(Ubicacion ubicacion) {
+    public boolean existeUbicacion(String ubicacion) {
         Session session = this.driver.session();
 
         try {
             //MATCH (u:Ubicacion) return u
             String query = "MATCH (u:Ubicacion {nombre: {elNombre}}) " +
                     "RETURN u";
-            StatementResult result = session.run(query, Values.parameters("elNombre", ubicacion.getNombre()));
+            StatementResult result = session.run(query, Values.parameters("elNombre", ubicacion));
 
             return result.hasNext();
         } finally {
@@ -55,17 +56,36 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
         }
     }
 
-
     @Override
-    public boolean existeRelacion(TipoDeCamino tipoCamino) {
+    public boolean existeRelacion(String nombre1, String nombre2) {
         Session session = this.driver.session();
 
         try {
             //    MATCH (u)-[r:TERRESTRES]->(c) RETURN r
-            String query = "MATCH (u)-[r:" + tipoCamino.getTipo() + "]->(c) RETURN r";
-            StatementResult result = session.run(query);
+            String query = "MATCH (u:Ubicacion {nombre: {elNombre1}})-[r]->(u2:Ubicacion {nombre: {elNombre2}}) RETURN r";
+
+            StatementResult result = session.run(query, Values.parameters("elNombre1", nombre1,"elNombre2", nombre2));
 
             return result.hasNext();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public Integer getPrecioCaminoCorto(String nombre1, String nombre2) {
+        Session session = this.driver.session();
+        Integer costo = null;
+        try {
+            //    MATCH (u)-[r:TERRESTRES]->(c) RETURN r
+            String query = "MATCH (u:Ubicacion {nombre: {elNombre1}})-[r *1..]->(u2:Ubicacion {nombre: {elNombre2}}) RETURN min(r.costo)) as costoFinal";
+            Record result =  session.run(query,Values.parameters("idLugarOrigen",nombre1,
+                    "idLugarDestino",nombre2)).single();
+            if( result != null && !result.get("costoFinal").isNull()) {
+                costo = new Integer(result.get("costoFinal").asInt());
+            }
+
+            return costo;
         } finally {
             session.close();
         }
@@ -77,12 +97,37 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
 
         try {
             String query = "MATCH (u1:Ubicacion {nombre: {ubicacion1}}), (u2:Ubicacion {nombre: {ubicacion2}}) " +
-                    "CREATE (u1)-[r: "+ tipoCamino.getTipo() +"]->(u2)";
-            session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2));
+                    "MERGE (u1)-[r:"+ tipoCamino.getTipo() +" {costo: {costo1}}]->(u2)";
+            session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2,"costo1",tipoCamino.getCosto()));
         } finally {
             session.close();
         }
     }
+
+    @Override
+    public Integer costoCaminoMasCorto(String origen, String destino) {
+        Integer costo = null;
+        Session session = this.driver.session();
+        try{
+            String query = "MATCH (:Ubicacion{nombre:{ubicacionOrigen}})-[caminos *1.. ]->(:Ubicacion{nombre:{ubicacionDestino}}) " +
+                    "RETURN reduce(costoTotal=0, c IN caminos | costoTotal + c.costo) as costo, " +
+                    "       reduce(cantidadTramos=0, c IN caminos | cantidadTramos + 1) as tramos " +
+                    "ORDER BY tramos, costo LIMIT 1";
+
+            Record result =  session.run(query,Values.parameters("ubicacionOrigen",origen,
+                    "ubicacionDestino",destino)).single();
+
+            if( result != null && !result.get("costo").isNull()) {
+                costo = new Integer(result.get("costo").asInt());
+            }
+
+        } finally {
+            session.close();
+        }
+
+        return costo;
+    }
+
 
     @Override
     public List<Record> conectados(String ubicacion, String tipoCamino) {
@@ -99,11 +144,5 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
             session.close();
         }
     }
-/*
-esto sirve para buscar el camino de dos nodos
-    MATCH p = shortestPath((martin:Person)-[*..15]-(oliver:Person))
-    WHERE martin.name = 'Martin Sheen' AND oliver.name = 'Oliver Stone'
-    RETURN p
 
-    */
 }
