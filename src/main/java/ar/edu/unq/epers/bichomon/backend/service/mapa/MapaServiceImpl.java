@@ -40,7 +40,7 @@ public class MapaServiceImpl implements MapaService {
 
             Entrenador entrenador = entrenadorDao.getById(nombreEntrenador);
             Ubicacion ubicacion = ubicacionDao.getById(nombreUbicacion);
-            Integer costo = neo4JUbicacionDao.costoCaminoMasCorto(entrenador.getUbicacion().getNombre(),nombreUbicacion);
+            Integer costo = neo4JUbicacionDao.getPrecioCaminoCorto(entrenador.getUbicacion().getNombre(),nombreUbicacion);
             if(costo == null){
                 throw new UbicacionMuyLejanaException("");
             }

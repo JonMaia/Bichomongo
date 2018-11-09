@@ -12,8 +12,8 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     private Driver driver;
 
     public Neo4JUbicacionDaoImple() {
-        //this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "very_strong_pasword" ) );
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "very_strong_pasword" ) );
+       // this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
     }
 
     @Override
@@ -73,22 +73,22 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
-    public Integer getPrecioCaminoCorto(String nombre1, String nombre2) {
+    public Integer getPrecioCaminoCorto(String origen, String destino) {
         Session session = this.driver.session();
         Integer costo = null;
-        try {
-            //    MATCH (u)-[r:TERRESTRES]->(c) RETURN r
-            String query = "MATCH (u:Ubicacion {nombre: {elNombre1}})-[r *1..]->(u2:Ubicacion {nombre: {elNombre2}}) RETURN min(r.costo)) as costoFinal";
-            Record result =  session.run(query,Values.parameters("idLugarOrigen",nombre1,
-                    "idLugarDestino",nombre2)).single();
+        try{
+            String query = "MATCH (:Ubicacion {nombre: {origen}})-[camino *1..]->(:Ubicacion{nombre: {destino}}) " +
+                    "RETURN min(reduce(total=0,r IN camino|total + r.costo)) as costoFinal";
+            Record result =  session.run(query,Values.parameters("origen",origen,
+                    "destino",destino)).single();
             if( result != null && !result.get("costoFinal").isNull()) {
                 costo = new Integer(result.get("costoFinal").asInt());
             }
 
-            return costo;
         } finally {
             session.close();
         }
+        return costo;
     }
 
     @Override

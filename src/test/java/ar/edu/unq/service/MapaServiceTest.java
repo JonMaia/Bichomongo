@@ -9,6 +9,9 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.exception.CaminoMuyCostosoException;
+import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
+import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
@@ -42,20 +45,6 @@ public class MapaServiceTest {
     @After
     public void eliminar(){
         dataService.eliminarDatos();
-    }
-
-    @Test
-    public void si_se_mueve_a_un_entrenador_a_una_ubicacion_diferente_a_la_actual_su_ubicacion_cambia(){
-        Pueblo pueblito1 = this.dataService.crearPuebloConProbabilidadExitoYEspecie("pueblito1",0,"especie1");
-        Pueblo pueblito2 = this.dataService.crearPuebloConProbabilidadExitoYEspecie("pueblito2",0,"especie1");
-        Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion("Entrenador1", pueblito1);
-
-        assertEquals(pueblito1.getNombre(), entrenador.getUbicacion().getNombre());
-
-        this.mapaService.mover(entrenador.getNombre(), pueblito2.getNombre());
-        entrenador = Runner.runInSession(() -> this.entrenadorDao.getById("Entrenador1"));
-
-        assertEquals(entrenador.getUbicacion().getNombre(),pueblito2.getNombre());
     }
 
     @Test
@@ -214,6 +203,38 @@ public class MapaServiceTest {
         assertTrue("Ciudad Tempera".equalsIgnoreCase(elMismo.getUbicacion().getNombre()));
     }
 
+    @Test(expected = CaminoMuyCostosoException.class)
+    public void seQuiereMoverAUnaUbicacionAledaniaPeroSeOlvidoLaBilleteraEnCasa(){
+
+        crearMapa();
+
+        String TRACEY = "Tracey Sketchit";
+        Entrenador elMismo = Runner.runInSession(() -> {
+            Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
+            Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion(TRACEY , yantra);
+            entrenador.setBilletera(0);
+            entrenadorDao.actualizar(entrenador);
+            this.mapaService.mover(TRACEY, "Ciudad Tempera");
+            return entrenadorDao.getById(entrenador.getNombre());
+        });
+    }
+
+    @Test(expected = UbicacionMuyLejanaException.class)
+    public void seQuiereMoverPeroLaUbicacionEstaMuyLejos(){
+
+        crearMapa();
+
+        String TRACEY = "Tracey Sketchit";
+        Entrenador elMismo = Runner.runInSession(() -> {
+            crearPuebloConNombre("Pueblo Perdido");
+            Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
+            Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion(TRACEY , yantra);
+            entrenador.setBilletera(200);
+            entrenadorDao.actualizar(entrenador);
+            this.mapaService.mover(TRACEY, "Pueblo Perdido");
+            return entrenadorDao.getById(entrenador.getNombre());
+        });
+    }
 
 
     private void crearMapa() {
@@ -250,7 +271,7 @@ public class MapaServiceTest {
         this.mapaService.conectar(tempera.getNombre(), romantis.getNombre(),SingletonCaminos.getMaritimo());
         this.mapaService.conectar(tempera.getNombre(), yantra.getNombre(),SingletonCaminos.getMaritimo());
 
-        this.mapaService.conectar(romantis.getNombre(), romantis.getNombre(),SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(romantis.getNombre(), tempera.getNombre(),SingletonCaminos.getMaritimo());
         this.mapaService.conectar(romantis.getNombre(), luminalia.getNombre(),SingletonCaminos.getTerrestre());
         this.mapaService.conectar(romantis.getNombre(), fresco.getNombre(),SingletonCaminos.getTerrestre());
 
