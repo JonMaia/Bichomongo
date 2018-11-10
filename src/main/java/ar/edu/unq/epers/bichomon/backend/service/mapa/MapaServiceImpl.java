@@ -116,6 +116,9 @@ public class MapaServiceImpl implements MapaService {
 
         Integer costo = this.neo4JUbicacionDao.costoCaminoMasCorto(entrenador.getUbicacion().getNombre(),destino);
         Integer recurso = entrenador.getBilletera();
+        if (costo == null) {
+            throw new UbicacionMuyLejanaException("");
+        }
         if(costo > recurso)
             throw new CaminoMuyCostosoException("necesitas " + (costo - recurso) + " para llegar" );
         entrenador.setBilletera(recurso - costo);
