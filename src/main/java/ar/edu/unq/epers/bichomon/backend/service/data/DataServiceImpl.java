@@ -188,6 +188,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Entrenador crearEntrenador() {
+        return Runner.runInSession(() -> {
         Entrenador entrenador = entrenadorDao.getById("Ash");
         if(entrenador == null){
             entrenador =  new Entrenador();
@@ -197,6 +198,7 @@ public class DataServiceImpl implements DataService {
             this.entrenadorDao.actualizar(entrenador);
         }
         return entrenador;
+        });
     }
 
     private Nivel crearNivel(Integer numero) {
@@ -545,6 +547,16 @@ public class DataServiceImpl implements DataService {
             this.entrenadorDao.guardar(entrenador);
             return entrenador;
         });
+    }
+
+    @Override
+    public Entrenador actualizarExperienciaEntrenador(Entrenador entrenador, Integer experiencia){
+        entrenador.addExperiencia(experiencia);
+        Runner.runInSession(() -> {
+            entrenadorDao.actualizar(entrenador);
+            return null;
+        });
+        return entrenador;
     }
 
     @Override
