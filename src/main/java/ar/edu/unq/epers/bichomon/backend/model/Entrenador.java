@@ -154,6 +154,13 @@ public class Entrenador {
         this.ubicacion = nuevaUbicacion;
     }
 
+    public void evolucionarBicho(Bicho bicho){
+        if (bicho.puedeEvolucionar()) {
+            bicho.evolucionar();
+            addExperiencia(accion.getExperienciaPorEvolucion());
+        }
+    }
+
     public void setBilletera(Integer monedas) {
         this.billetera = monedas;
     }

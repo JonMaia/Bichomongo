@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.service.data;
 
 import ar.edu.unq.epers.bichomon.backend.model.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -74,6 +75,8 @@ public interface DataService {
 	Bicho crearBichoConEntrenadorYEspecieSinEvolucionEnPuebloConProbabilidad100();
 
     Entrenador crearEntrenador(String nombreEntrenador);
+
+	Entrenador actualizarExperienciaEntrenador(Entrenador entrenador, Integer experiencia);
 
 	Entrenador crearEntrenadorConUbicacion(String nombreEntrenador, Ubicacion ubicacion);
 }

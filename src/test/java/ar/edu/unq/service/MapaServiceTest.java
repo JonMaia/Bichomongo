@@ -38,6 +38,10 @@ public class MapaServiceTest {
     private DojoDao dojoDao = new HibernateDojoDaoImple();
     private UbicacionDao ubicacionDao = new HibernateUbicacionDaoImple();
 
+    /*/////////////////////////////////////////////////////////////////////////////
+     *
+     *
+    /////////////////////////////////////////////////////////////////////////////*/
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
