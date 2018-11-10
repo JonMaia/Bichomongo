@@ -1,6 +1,8 @@
 package ar.edu.unq.funcionalidades;
 
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionNivel;
 import ar.edu.unq.epers.bichomon.backend.model.exitoDeBusqueda.ExitoDeBusquedaNormal;
 import ar.edu.unq.mocks.ExitoDeBusquedaSiempreFalse;
 import ar.edu.unq.mocks.ExitoDeBusquedaSiempreTrue;
@@ -12,11 +14,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class EntrenadorUbicacionTest {
+public class EntrenadorTest {
 
     Entrenador entrenador;
     Entrenador entrenadorDos;
@@ -25,6 +25,9 @@ public class EntrenadorUbicacionTest {
     Guarderia guarderiaCIudadCarmin;
     private DataService dataService = new DataServiceImpl();
     Pueblo puebloPaleta;
+    Bicho rica;
+    Bicho bover;
+    Especie bichoMon;
 
 
     @Before
@@ -32,15 +35,20 @@ public class EntrenadorUbicacionTest {
         ciudadCarmín = new Pueblo();
         gimnasioCiudadCarmín = new Dojo();
         guarderiaCIudadCarmin = new Guarderia();
-        Especie macriMon = new Especie();
-        Especie peniaMon = new Especie();
-        Especie bichoMon = new Especie();
+        Especie macriMon = new Especie("Rica", TipoBicho.TIERRA,200, 30 , 200, "/image/tierramon.png");
+        Especie peniaMon = new Especie("Bover", TipoBicho.TIERRA,320, 30 , 200, "/image/tierramon.png");
+        bichoMon = new Especie("Boca", TipoBicho.TIERRA,800, 400 , 1000, "/image/tierramon.png");
         List<ProbabilidadDeOcurrencia> probabilidades = new ArrayList<>();
         ProbabilidadDeOcurrencia probabilidadDeMacrimon = new ProbabilidadDeOcurrencia(macriMon,30);
         ProbabilidadDeOcurrencia probabilidadDePeniamon = new ProbabilidadDeOcurrencia(peniaMon,70);
         probabilidades.add(probabilidadDeMacrimon);
         probabilidades.add(probabilidadDePeniamon);
         ciudadCarmín.setEspeciesEnPueblo(probabilidades);
+
+        rica = new Bicho(macriMon);
+        bover = new Bicho(peniaMon);
+        macriMon.setEvolucion(bichoMon);
+
 
 
         Nivel nivel1 = new Nivel(1,100,1,
@@ -49,6 +57,7 @@ public class EntrenadorUbicacionTest {
         Accion accion = new Accion(10,10,5);
         entrenador = new Entrenador("ash", ciudadCarmín,nivel1, accion);
         entrenadorDos = new  Entrenador("Red", guarderiaCIudadCarmin, nivel1, accion);
+        rica.setEntrenador(entrenador);
     }
 
 
@@ -63,6 +72,28 @@ public class EntrenadorUbicacionTest {
         entrenador.buscarBicho();
         assertEquals(10, (int) entrenador.getExperiencia());
         assertEquals(1, entrenador.getBichomones().size());
+    }
+
+    @Test
+    public void entrenadorGanaExperienciaPorCombateYNoEsSuficienteParaQueEstePaseDeNivel(){
+        entrenador.setUbicacion(gimnasioCiudadCarmín);
+        gimnasioCiudadCarmín.setCampeon(bover);
+        entrenador.getBichomones().add(rica);
+        entrenador.iniciarDuelo(rica);
+        float experienciaEntrenador = entrenador.getExperiencia();
+        assertEquals(10, experienciaEntrenador, 0);
+    }
+
+    @Test
+    public void entrenadorGanaExperienciaPorEvolucionarUnBichomon(){
+        Condicion condicionEvolucion = new CondicionNivel(0);
+        List<Condicion> condicionesEvolucion = new ArrayList<>();
+        condicionesEvolucion.add(condicionEvolucion);
+        rica.getEspecie().setCondicionDeEvolucion(condicionesEvolucion);
+        entrenador.evolucionarBicho(rica);
+        assertEquals(rica.getEspecie(), bichoMon);
+        assertEquals(entrenador.getExperiencia(), 5, 0);
+
     }
 
     @Test

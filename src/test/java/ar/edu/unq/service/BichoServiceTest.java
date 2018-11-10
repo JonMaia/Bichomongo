@@ -10,8 +10,6 @@ import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
-import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
-import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.mocks.ExitoDeBusquedaSiempreTrue;
 import org.junit.After;
@@ -25,7 +23,6 @@ public class BichoServiceTest {
     private BichoService bichoService = new BichoServiceImpl();
     private EntrenadorDao entrenadorDao = new HibernateEntrenadorDaoImple();
     private UbicacionDao ubicacionDao = new HibernateUbicacionDaoImple();
-    private MapaService mapaService = new MapaServiceImpl();
 
     @After
     public void clear(){
