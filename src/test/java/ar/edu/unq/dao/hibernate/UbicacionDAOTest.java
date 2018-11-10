@@ -23,19 +23,18 @@ public class UbicacionDAOTest {
 
 	@Test
 	public void retornaLaUbicacionDelEntrenador() {
-		/*
+
 		Ubicacion ubicacion = new Guarderia();
 
 		Nivel nivel = new Nivel(1, 100, 50, null,1.0);
 
-		Entrenador brock = new Entrenador("Brock", ubicacion, nivel );
+		Entrenador brock = new Entrenador("Brock", ubicacion, nivel, null );
 
 
 		ubicacion.setNombre("CiudadPlateada");
 
 		brock.setUbicacion(ubicacion);
 		assertEquals(brock.getUbicacion().getNombre(), "CiudadPlateada");
-		*/
-		assertTrue(true);
+
 	}
 }

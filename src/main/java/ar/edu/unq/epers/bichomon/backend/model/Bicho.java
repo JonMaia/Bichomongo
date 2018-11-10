@@ -116,10 +116,8 @@ public class Bicho {
 	}
 
 	public Bicho evolucionar(){
-		if(this.puedeEvolucionar()){
-			Especie evolucion = this.getEspecie().getEvolucion();
-			this.setEspecie(evolucion);
-		}
+		Especie evolucion = this.getEspecie().getEvolucion();
+		this.setEspecie(evolucion);
 		return this;
 	}
 
