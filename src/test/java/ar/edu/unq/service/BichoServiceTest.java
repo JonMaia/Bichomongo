@@ -37,14 +37,13 @@ public class BichoServiceTest {
 
         pueblo.setExitoDeBusqueda(new ExitoDeBusquedaSiempreTrue());
 
-        bichoService.buscar(entrenador.getNombre());
-
-        //TODO: Extraer a un metodo en dataservice
         Entrenador trainer = Runner.runInSession(()  -> {
+            ubicacionDao.actualizar(pueblo);
+            bichoService.buscar(entrenador.getNombre());
             return entrenadorDao.getById(entrenador.getNombre());
         });
 
-        assertEquals(1, trainer.getBichomones().size());
+        assertEquals(2, trainer.getBichomones().size());
     }
 
     @Test
