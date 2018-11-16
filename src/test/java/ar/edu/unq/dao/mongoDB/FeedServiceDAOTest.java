@@ -52,10 +52,10 @@ public class FeedServiceDAOTest {
         this.entrenadorDao = new HibernateEntrenadorDaoImple();
         this.eventoDao = new EventoDaoImple();
 
-        crearMapa();
-        Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
-        this.iris = this.dataService.crearEntrenadorConUbicacion("Iris" , yantra);
-	}
+    //    crearMapa();
+    //    Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
+    //    this.iris = this.dataService.crearEntrenadorConUbicacion("Iris" , yantra);
+    }
 	
 	@After
 	public void dropAll() {
