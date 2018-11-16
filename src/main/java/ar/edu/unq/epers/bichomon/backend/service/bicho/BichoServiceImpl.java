@@ -1,18 +1,24 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
+import ar.edu.unq.epers.bichomon.backend.dao.EventoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Abandono;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.joda.time.LocalDate;
 
 public class BichoServiceImpl implements BichoService{
 
     private HibernateBichoDaoImple bichoDAO;
     private HibernateEntrenadorDaoImple entrenadorDAO;
+    private EventoDao eventoDao;
 
     public BichoServiceImpl() {
         this.bichoDAO = new HibernateBichoDaoImple();
         this.entrenadorDAO = new HibernateEntrenadorDaoImple();
+        this.eventoDao = new EventoDaoImple();
     }
 
     @Override
@@ -20,9 +26,19 @@ public class BichoServiceImpl implements BichoService{
         return Runner.runInSession(() -> {
             Entrenador trainer = this.entrenadorDAO.getById(entrenador);
             Bicho bicho = trainer.buscarBicho();
+            crearEventoDeAbandono(trainer.getUbicacion(), trainer, bicho);
             entrenadorDAO.actualizar(trainer);
             return bicho;
         });
+    }
+
+    private void crearEventoDeAbandono(Ubicacion ubicacion, Entrenador entrenador, Bicho bicho) {
+        Abandono abandono = new Abandono();
+        abandono.setEntrenador(entrenador);
+        abandono.setUbicacion(ubicacion);
+        abandono.setFecha(LocalDate.now());
+        abandono.setBicho(bicho);
+        eventoDao.save(abandono);
     }
 
     @Override
