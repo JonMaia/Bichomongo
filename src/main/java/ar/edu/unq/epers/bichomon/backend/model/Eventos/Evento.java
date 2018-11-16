@@ -17,8 +17,8 @@ public abstract class Evento {
 	private ObjectId id;
 
 	private LocalDate fecha;
-	private Entrenador entrenador;
-	private Ubicacion ubicacion;
+	private String entrenador;
+	private String ubicacion;
 
 
     public ObjectId getId() {
@@ -37,19 +37,19 @@ public abstract class Evento {
         this.fecha = fecha;
     }
 
-    public Entrenador getEntrenador() {
+    public String getEntrenador() {
         return entrenador;
     }
 
-    public void setEntrenador(Entrenador entrenador) {
+    public void setEntrenador(String entrenador) {
         this.entrenador = entrenador;
     }
 
-    public Ubicacion getUbicacion() {
+    public String getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(Ubicacion ubicacion) {
+    public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
 }

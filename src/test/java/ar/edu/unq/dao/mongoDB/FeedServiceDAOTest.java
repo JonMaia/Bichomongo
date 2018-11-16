@@ -15,6 +15,7 @@ import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.service.MapaServiceTest;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,11 +64,8 @@ public class FeedServiceDAOTest {
 	
 	@Test
 	public void elEntrenadorSeMueveYSeGeneraUnEventoDeArribo() {
-        iris.setBilletera(4);
-        entrenadorDao.actualizar(iris);
-
-        this.mapaService.mover(iris.getNombre(), "Ciudad Tempera");
-	//	Assert.assertEquals(, 2);
+	    //TODO: Implementar
+        Assert.assertTrue(false);
 	}
 
     private void crearMapa() {

@@ -23,6 +23,7 @@ public class BichoServiceImpl implements BichoService{
     public BichoServiceImpl() {
         this.bichoDAO = new HibernateBichoDaoImple();
         this.entrenadorDAO = new HibernateEntrenadorDaoImple();
+        this.eventoDao = new EventoDaoImple();
     }
 
     @Override
@@ -65,8 +66,8 @@ public class BichoServiceImpl implements BichoService{
 
     private void crearEventoDeCoronacion(Entrenador entrenador, Entrenador trainer) {
         Coronacion coronacion = new Coronacion();
-        coronacion.setEntrenador(entrenador);
-        coronacion.setPerdedor(trainer);
+        coronacion.setEntrenador(entrenador.getNombre());
+        coronacion.setPerdedor(trainer.getNombre());
         coronacion.setFecha(LocalDate.now());
         eventoDao.save(coronacion);
     }

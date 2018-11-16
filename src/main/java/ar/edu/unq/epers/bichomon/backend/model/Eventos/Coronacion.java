@@ -4,13 +4,13 @@ import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 
 public class Coronacion extends Evento{
 
-    private Entrenador perdedor;
+    private String perdedor;
 
-    public void setPerdedor(Entrenador perdedor){
+    public void setPerdedor(String perdedor){
         this.perdedor = perdedor;
     }
 
-    public Entrenador getPerdedor(){
+    public String getPerdedor(){
         return this.perdedor;
     }
 

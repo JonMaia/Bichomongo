@@ -7,12 +7,12 @@ import org.joda.time.LocalDate;
 
 public class Captura extends Evento{
 
-    Bicho bichocapturado;
+    Integer bichocapturado;
 
     public Captura(Bicho bichocapturado, Entrenador entrenador, LocalDate fecha, Ubicacion ubicacion) {
-        this.bichocapturado = bichocapturado;
-        this.setEntrenador(entrenador);
+        this.bichocapturado = bichocapturado.getId();
+        this.setEntrenador(entrenador.getNombre());
         this.setFecha(fecha);
-        this.setUbicacion(ubicacion);
+        this.setUbicacion(ubicacion.getNombre());
     }
 }
