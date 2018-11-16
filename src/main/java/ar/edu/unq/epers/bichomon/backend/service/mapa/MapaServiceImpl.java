@@ -1,17 +1,17 @@
 package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
-import ar.edu.unq.epers.bichomon.backend.dao.DojoDao;
-import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
-import ar.edu.unq.epers.bichomon.backend.dao.Neo4JUbicacionDao;
-import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
+import ar.edu.unq.epers.bichomon.backend.dao.*;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateDojoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Arribo;
 import ar.edu.unq.epers.bichomon.backend.model.exception.CaminoMuyCostosoException;
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.joda.time.LocalDate;
 import org.neo4j.driver.v1.Record;
 
 import java.util.ArrayList;
@@ -23,12 +23,14 @@ public class MapaServiceImpl implements MapaService {
     private UbicacionDao ubicacionDao;
     private Neo4JUbicacionDao neo4JUbicacionDao;
     private DojoDao dojoDao;
+    private EventoDao eventoDao;
 
     public MapaServiceImpl() {
         this.entrenadorDao = new HibernateEntrenadorDaoImple();
         this.ubicacionDao = new HibernateUbicacionDaoImple();
         this.dojoDao = new HibernateDojoDaoImple();
         this.neo4JUbicacionDao = new Neo4JUbicacionDaoImple();
+        this.eventoDao = new EventoDaoImple();
     }
 
     @Override
@@ -48,10 +50,20 @@ public class MapaServiceImpl implements MapaService {
                 }
                 entrenador.setBilletera(entrenador.getBilletera() - costo);
                 entrenador.moverA(ubicacion);
+                crearEventoDeArribo(ubicacion,entrenador);
                 entrenadorDao.actualizar(entrenador);
+
             }
             return null;
         });
+    }
+
+    private void crearEventoDeArribo(Ubicacion ubicacion, Entrenador entrenador) {
+        Arribo arribo = new Arribo();
+        arribo.setEntrenador(entrenador);
+        arribo.setUbicacion(ubicacion);
+        arribo.setFecha(LocalDate.now());
+        eventoDao.save(arribo);
     }
 
     @Override

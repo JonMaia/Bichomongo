@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.model.Eventos;
 
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
+import de.undercouch.bson4jackson.types.ObjectId;
 import org.joda.time.LocalDate;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
@@ -13,7 +14,7 @@ public abstract class Evento {
 
 	@MongoId
 	@MongoObjectId
-	private String id;
+	private ObjectId id;
 
 	private LocalDate fecha;
 	private Entrenador entrenador;

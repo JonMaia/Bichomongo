@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenericMongoDAO<T> {
+public class GenericMongoDAOImple<T> {
 
 	private Class<T> entityType;
 	protected MongoCollection mongoCollection;
 	
-	public GenericMongoDAO(Class<T> entityType){
+	public GenericMongoDAOImple(Class<T> entityType){
 		this.entityType = entityType;
 		this.mongoCollection = this.getCollectionFor(entityType);
 	}
