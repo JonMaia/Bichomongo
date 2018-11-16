@@ -4,6 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Captura;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
 
 import ar.edu.unq.epers.bichomon.backend.service.BaseService;
@@ -32,6 +33,7 @@ public class EntrenadorServiceImple extends BaseService<Entrenador,String> imple
     @Override
     public void capturaBicho(Entrenador entrenador, Bicho bicho){
         entrenador.obtenerBicho(bicho);
+        new Captura(bicho,entrenador,LocalDate.now(),entrenador.getUbicacion());
     }
 
     @Override
