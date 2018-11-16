@@ -1,14 +1,24 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
+import ar.edu.unq.epers.bichomon.backend.dao.EventoDao;
+import ar.edu.unq.epers.bichomon.backend.dao.GenericMongoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Arribo;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Coronacion;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Evento;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import org.joda.time.LocalDate;
+
+import java.util.List;
 
 public class BichoServiceImpl implements BichoService{
 
     private HibernateBichoDaoImple bichoDAO;
     private HibernateEntrenadorDaoImple entrenadorDAO;
+    private EventoDao eventoDao;
 
     public BichoServiceImpl() {
         this.bichoDAO = new HibernateBichoDaoImple();
@@ -44,8 +54,21 @@ public class BichoServiceImpl implements BichoService{
             ResultadoCombate resultadoCombate = null;
             resultadoCombate = trainer.iniciarDuelo(bichomon);
             entrenadorDAO.actualizar(trainer);
+            if(resultadoCombate.getGanadorCombate() == bichomon){
+                crearEventoDeCoronacion(bichomon.getEntrenador(), trainer);
+            }else{
+                crearEventoDeCoronacion(trainer, bichomon.getEntrenador());
+            }
             return resultadoCombate;
         });
+    }
+
+    private void crearEventoDeCoronacion(Entrenador entrenador, Entrenador trainer) {
+        Coronacion coronacion = new Coronacion();
+        coronacion.setEntrenador(entrenador);
+        coronacion.setPerdedor(trainer);
+        coronacion.setFecha(LocalDate.now());
+        eventoDao.save(coronacion);
     }
 
     @Override
