@@ -2,13 +2,12 @@ package ar.edu.unq.dao.mongoDB;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EventoDao;
-import ar.edu.unq.epers.bichomon.backend.dao.FeedService;
+import ar.edu.unq.epers.bichomon.backend.service.FeedService.FeedService;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.FeedServiceImple;
+import ar.edu.unq.epers.bichomon.backend.service.FeedService.FeedServiceImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
@@ -16,13 +15,11 @@ import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
 import ar.edu.unq.service.MapaServiceTest;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class FeedServiceDAOTest {
 

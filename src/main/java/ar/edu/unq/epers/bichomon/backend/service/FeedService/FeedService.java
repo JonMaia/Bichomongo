@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.dao;
+package ar.edu.unq.epers.bichomon.backend.service.FeedService;
 
 import ar.edu.unq.epers.bichomon.backend.model.Eventos.Evento;
 
