@@ -1,9 +1,13 @@
 package ar.edu.unq.dao.mongoDB;
 
+import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
+import ar.edu.unq.epers.bichomon.backend.dao.EventoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.FeedService;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.FeedServiceImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
@@ -31,24 +35,28 @@ public class FeedServiceDAOTest {
     private DataService dataService;
     private MapaService mapaService;
     private UbicacionDao ubicacionDao;
+    private EntrenadorDao entrenadorDao;
+    private EventoDao eventoDao;
 	@SuppressWarnings("unchecked")
 	private <T> List<T> list(T... elements) {
 		return Arrays.asList(elements);
 	}
-	
+
+
+    Entrenador iris;
+
 	@Before
 	public void setup() {
 		this.dao = new FeedServiceImple();
         this.dataService = new DataServiceImpl();
         this.mapaService = new MapaServiceImpl();
         this.ubicacionDao = new HibernateUbicacionDaoImple();
-
+        this.entrenadorDao = new HibernateEntrenadorDaoImple();
+        this.eventoDao = new EventoDaoImple();
 
         crearMapa();
         Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
-        Pueblo tempera = (Pueblo) ubicacionDao.recuperar("Ciudad Tempera");
-        Entrenador iris = this.dataService.crearEntrenadorConUbicacion("Iris" , yantra);
-
+        this.iris = this.dataService.crearEntrenadorConUbicacion("Iris" , yantra);
 	}
 	
 	@After
@@ -57,9 +65,12 @@ public class FeedServiceDAOTest {
 	}
 	
 	@Test
-	public void test_save_and_get_by_id() {
+	public void elEntrenadorSeMueveYSeGeneraUnEventoDeArribo() {
+        iris.setBilletera(4);
+        entrenadorDao.actualizar(iris);
 
-		Assert.assertEquals(2, 2);
+        this.mapaService.mover(iris.getNombre(), "Ciudad Tempera");
+	//	Assert.assertEquals(, 2);
 	}
 
     private void crearMapa() {
