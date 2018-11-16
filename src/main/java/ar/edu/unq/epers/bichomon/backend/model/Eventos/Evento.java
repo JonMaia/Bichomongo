@@ -21,11 +21,11 @@ public abstract class Evento {
 	private Ubicacion ubicacion;
 
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
