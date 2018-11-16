@@ -1,28 +1,31 @@
 package ar.edu.unq.epers.bichomon.backend.service.entrenador;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
+import ar.edu.unq.epers.bichomon.backend.dao.EventoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Eventos.Captura;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
-
+import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.BaseService;
 import org.joda.time.LocalDate;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class EntrenadorServiceImple extends BaseService<Entrenador,String> implements EntrenadorService {
 
     private EntrenadorDao dao;
+    private EventoDao eventoDao;
 
     public void setDao(EntrenadorDao dao) {
         this.dao = new HibernateEntrenadorDaoImple();
     }
 
-    public EntrenadorServiceImple(EntrenadorDao dao){
-        this.dao = dao;
+    public EntrenadorServiceImple() {
+        this.dao = new HibernateEntrenadorDaoImple();
+        this.eventoDao = new EventoDaoImple();
     }
 
     @Override
@@ -33,7 +36,11 @@ public class EntrenadorServiceImple extends BaseService<Entrenador,String> imple
     @Override
     public void capturaBicho(Entrenador entrenador, Bicho bicho){
         entrenador.obtenerBicho(bicho);
-        new Captura(bicho,entrenador,LocalDate.now(),entrenador.getUbicacion());
+        crearEventoDeCaptura(bicho,entrenador,LocalDate.now(),entrenador.getUbicacion());
+    }
+
+    private void crearEventoDeCaptura(Bicho bichocapturado, Entrenador entrenador, LocalDate fecha, Ubicacion ubicacion) {
+        eventoDao.save(new Captura(bichocapturado,entrenador,fecha,ubicacion));
     }
 
     @Override
