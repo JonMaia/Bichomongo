@@ -123,12 +123,5 @@ public class BichoServiceTest {
 
         bichoService.duelo(entrenador.getNombre(), bicho.getId());
     }
-    /**
-    @Test
-    public void dado_un_bicho_campeon_de_un_dojo_y_un_entrenador_lo_enfrenta_se_guarda_el_evento_de_coronacion_del_campeon(){
-        Bicho bicho = dataService.crearBichoCampeonConEntrenadorYEspecieYEnDojo("Bulbasaur", "Ash", "Dojo");
-        Entrenador entrenador = dataService.crearBichoConEntrenadorYEspecieSinEvolucion().getEntrenador();
-        ResultadoCombate combate = this.bichoService.duelo(entrenador.getNombre(), bicho.getId());
-        assertEquals(combate.getGanadorCombate(), entrenador.getBichomones().get(0));
-    }**/
+    
 }
