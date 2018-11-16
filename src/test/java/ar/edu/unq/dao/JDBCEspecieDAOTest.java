@@ -1,22 +1,5 @@
 package ar.edu.unq.dao;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
-import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.model.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
-import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
-import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 
 public class JDBCEspecieDAOTest {
 /*

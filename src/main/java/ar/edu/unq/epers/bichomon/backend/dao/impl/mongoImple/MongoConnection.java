@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.dao.mongoImple;
+package ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple;
 
 import com.mongodb.MongoClient;
 import org.jongo.Jongo;

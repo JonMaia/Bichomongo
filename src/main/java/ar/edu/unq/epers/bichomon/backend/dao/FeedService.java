@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.dao;
 
-import ar.edu.unq.epers.bichomon.backend.model.Evento;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Evento;
 
 import java.util.List;
 

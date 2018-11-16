@@ -2,8 +2,8 @@ package ar.edu.unq.service;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;

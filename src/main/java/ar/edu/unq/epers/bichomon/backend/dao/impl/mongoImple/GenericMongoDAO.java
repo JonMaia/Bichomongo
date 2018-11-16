@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.dao.mongoImple;
+package ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple;
 
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -57,7 +57,7 @@ public class GenericMongoDAO<T> {
 	/**
 	 * Copia el contenido de un iterable en una lista
 	 */
-	protected <X> List<X> copyToList(Iterable<X> iterable) {
+	protected  <X> List<X> copyToList(Iterable<X> iterable) {
 		List<X> result = new ArrayList<>();
 		iterable.forEach(x -> result.add(x));
 		return result;

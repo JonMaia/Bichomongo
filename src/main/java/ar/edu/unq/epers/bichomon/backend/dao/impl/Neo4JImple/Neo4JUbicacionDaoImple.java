@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.dao.impl;
+package ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.Neo4JUbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.model.TipoDeCamino;

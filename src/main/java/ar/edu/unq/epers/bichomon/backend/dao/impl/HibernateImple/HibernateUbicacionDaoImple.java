@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.dao.impl;
+package ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.model.Guarderia;

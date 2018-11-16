@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.dao.impl;
+package ar.edu.unq.epers.bichomon.backend.dao.impl.JDBCImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;

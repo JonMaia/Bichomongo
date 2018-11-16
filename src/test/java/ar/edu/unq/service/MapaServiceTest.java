@@ -4,13 +4,12 @@ import ar.edu.unq.epers.bichomon.backend.dao.DojoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.Neo4JUbicacionDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateDojoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateDojoDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.exception.CaminoMuyCostosoException;
-import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
@@ -318,7 +317,7 @@ public class MapaServiceTest {
         return pueblo;
     }
 
-    private static class SingletonCaminos {
+    public static class SingletonCaminos {
 
         private static Terrestre terrestre;
         private static Aereo aereo;

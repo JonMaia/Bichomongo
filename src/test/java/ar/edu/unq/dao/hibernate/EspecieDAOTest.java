@@ -2,8 +2,8 @@ package ar.edu.unq.dao.hibernate;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEspecieDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateNivelDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;

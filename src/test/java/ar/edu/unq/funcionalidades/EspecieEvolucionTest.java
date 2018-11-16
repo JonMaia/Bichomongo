@@ -4,25 +4,17 @@ import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.dao.NivelDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEspecieDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateNivelDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.TipoBicho;
-import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
-import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
-import org.junit.After;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

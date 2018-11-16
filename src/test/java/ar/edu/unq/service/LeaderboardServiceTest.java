@@ -2,8 +2,8 @@ package ar.edu.unq.service;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
@@ -11,10 +11,8 @@ import ar.edu.unq.epers.bichomon.backend.service.leaderboard.LeaderboardService;
 import ar.edu.unq.epers.bichomon.backend.service.leaderboard.LeaderboardServiceImple;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

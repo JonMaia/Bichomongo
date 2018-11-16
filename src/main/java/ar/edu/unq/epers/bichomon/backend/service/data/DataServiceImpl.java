@@ -1,7 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.service.data;
 
 import ar.edu.unq.epers.bichomon.backend.dao.*;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.*;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;

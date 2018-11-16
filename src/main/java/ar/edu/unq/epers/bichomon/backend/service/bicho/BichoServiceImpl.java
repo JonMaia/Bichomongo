@@ -1,9 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
-import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 public class BichoServiceImpl implements BichoService{

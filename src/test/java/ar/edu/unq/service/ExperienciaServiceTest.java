@@ -1,13 +1,11 @@
 package ar.edu.unq.service;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.model.Dojo;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
-import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;

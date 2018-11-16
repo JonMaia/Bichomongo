@@ -1,12 +1,11 @@
 package ar.edu.unq.epers.bichomon.backend.service.especie;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEspecieDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;

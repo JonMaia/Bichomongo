@@ -1,11 +1,10 @@
-package ar.edu.unq.epers.bichomon.backend.dao.impl;
+package ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

@@ -1,11 +1,16 @@
 package ar.edu.unq.dao.mongoDB;
 
-import ar.edu.unq.epers.unidad5.dao.ProductoDAO;
-import ar.edu.unq.epers.unidad5.dao.result.PrecioPromedio;
-import ar.edu.unq.epers.unidad5.model.Precio;
-import ar.edu.unq.epers.unidad5.model.Producto;
-import ar.edu.unq.epers.unidad5.model.Usuario;
-import ar.edu.unq.epers.unidad5.model.Zona;
+import ar.edu.unq.epers.bichomon.backend.dao.FeedService;
+import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.FeedServiceImple;
+import ar.edu.unq.epers.bichomon.backend.model.*;
+import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
+import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
+import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaServiceImpl;
+import ar.edu.unq.service.MapaServiceTest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,8 +27,10 @@ public class FeedServiceDAOTest {
 	private static final String CODIGO_PRODUCTO_3 = "333";
 	private static final String CODIGO_PRODUCTO_4 = "444";
 	
-	private ProductoDAO dao;
-	
+	private FeedService dao;
+    private DataService dataService;
+    private MapaService mapaService;
+    private UbicacionDao ubicacionDao;
 	@SuppressWarnings("unchecked")
 	private <T> List<T> list(T... elements) {
 		return Arrays.asList(elements);
@@ -31,32 +38,17 @@ public class FeedServiceDAOTest {
 	
 	@Before
 	public void setup() {
-		this.dao = new ProductoDAO();
-		
-		List<Usuario> usuarios = this.list(new Usuario("Pepe"), new Usuario("Juan"), new Usuario("Cosme"));
-		
-		List<Zona> zonas = this.list(new Zona("Bernal", "Saens Peña", "3550", "Argentina"),
-						new Zona("Quilmes", "Rivadavia", "435", "Argentina"),
-						new Zona("Ciudad De Buenos Aires", "Callao", "1500", "Argentina"));
-		
-		List<Producto> productos = this.list(
-						new Producto(CODIGO_PRODUCTO_1, "Triple de chocolate", "Capitan del Espacio"),
-						new Producto(CODIGO_PRODUCTO_2, "Dulce de leche 500 grs", "La Serenisima"),
-						new Producto(CODIGO_PRODUCTO_3, "Sprite 2.25lts", "Cocacola"),
-						new Producto(CODIGO_PRODUCTO_4, "Express x3", "Terrabusi")
-		);
-				
-		IntStream.range(0, 1000).forEach(i -> {;
-			productos.forEach(p -> {
-				zonas.forEach(z -> {
-					usuarios.forEach(u -> {
-						Precio precio = new Precio(z, u, i + Integer.parseInt(p.getCodigo()));
-						p.addPrecio(precio);
-					});
-				});
-			});
-		});
-		this.dao.save(productos);
+		this.dao = new FeedServiceImple();
+        this.dataService = new DataServiceImpl();
+        this.mapaService = new MapaServiceImpl();
+        this.ubicacionDao = new HibernateUbicacionDaoImple();
+
+
+        crearMapa();
+        Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
+        Pueblo tempera = (Pueblo) ubicacionDao.recuperar("Ciudad Tempera");
+        Entrenador iris = this.dataService.crearEntrenadorConUbicacion("Iris" , yantra);
+
 	}
 	
 	@After
@@ -66,87 +58,85 @@ public class FeedServiceDAOTest {
 	
 	@Test
 	public void test_save_and_get_by_id() {
-		Zona zonaUS = new Zona("Amazon St.", "1024", "Dellaware", "USA");
-		Zona zonaUK = new Zona("Amazon Rd.", "1024", "London", "UK");
-		
-		Usuario user = new Usuario("claudio");
-		
-		Producto producto = new Producto("0001", "Longboard", "Santa Cruz");
-		producto.addPrecio(new Precio(zonaUS, user, 78));
-		producto.addPrecio(new Precio(zonaUK, user, 82));
-		this.dao.save(producto);
-		
-		Assert.assertNotNull(producto.getId());
-		
-		Producto producto2 = this.dao.get(producto.getId());
-		Assert.assertEquals("0001", producto2.getCodigo());
-		Assert.assertEquals("Longboard", producto2.getNombre());
-		Assert.assertEquals("Santa Cruz", producto2.getMarca());
-		Assert.assertEquals(2, producto2.getPrecios().size());
-	}
-	
-	@Test
-	public void test_find_by_property() {
-		List<Producto> productos = this.dao.getByMarca("Terrabusi");
-		
-		Assert.assertEquals(1, productos.size());
-		Producto producto = productos.get(0);
-		
-		Assert.assertEquals("444", producto.getCodigo());
-		Assert.assertEquals("Express x3", producto.getNombre());
-		Assert.assertEquals("Terrabusi", producto.getMarca());
-	}
-	
-	@Test
-	public void test_find_by_property_in_collection() {
-		List<Producto> productos = this.dao.getByPrecio(446);
-		Assert.assertEquals("Todos los productos deben tener algún precio igual a 446", 4, productos.size());
 
-		productos = this.dao.getByPrecio(112);
-		Assert.assertEquals("Solo el primer producto debe tener precios menores a 222", 1, productos.size());
+		Assert.assertEquals(2, 2);
 	}
-	
-	@Test
-	public void test_find_by_property_in_collection_with_range() {
-		List<Producto> productos = this.dao.getByRangoPrecio(100, 500);
-		Assert.assertEquals("Todos los productos deben tener algún precio entre 100 y 500", 4, productos.size());
 
-		productos = this.dao.getByRangoPrecio(100, 250);
-		Assert.assertEquals("Solo los dos primeros producto debe ntener precios entre 100 y 250", 2, productos.size());
-	}
-	
-	@Test
-	public void test_find_by_properties_in_collection() {
-		Zona zonaUS = new Zona("Amazon St.", "1024", "Dellaware", "USA");
-		Zona zonaUK = new Zona("Amazon Rd.", "1024", "London", "UK");
-		
-		Usuario user = new Usuario("claudio");
-		
-		Producto producto1 = new Producto("0001", "Longboard", "Santa Cruz");
-		producto1.addPrecio(new Precio(zonaUS, user, 78));
-		producto1.addPrecio(new Precio(zonaUK, user, 82));
-		this.dao.save(producto1);
-		
-		Producto producto2 = new Producto("0002", "Skateboard", "Santa Cruz");
-		producto2.addPrecio(new Precio(zonaUS, user, 60));
-		producto2.addPrecio(new Precio(zonaUK, user, 62));
-		this.dao.save(producto2);
-		
-		List<Producto> productos = this.dao.getPorPrecioEnZona(80, zonaUK);
-		Assert.assertEquals("Solo el Skateboard es mas barato en que 80 en UK", 1, productos.size());
-	}
-	
-	@Test
-	public void test_aggregations() {
-		List<PrecioPromedio> precios = this.dao.getPrecioPromedio(this.list(CODIGO_PRODUCTO_1, CODIGO_PRODUCTO_2));
-		
-		Assert.assertEquals(CODIGO_PRODUCTO_1, precios.get(0).getCodigo());
-		Assert.assertEquals(610, precios.get(0).getValue());
-		
-		Assert.assertEquals(CODIGO_PRODUCTO_2, precios.get(1).getCodigo());
-		Assert.assertEquals(721, precios.get(1).getValue());
-	}
-	
-	
-	
+    private void crearMapa() {
+        Pueblo yantra = crearPuebloConNombre("Ciudad Yantra");
+        Pueblo cromlech = crearPuebloConNombre("Pueblo Cromlech");
+        Pueblo relieve = crearPuebloConNombre("Ciudad Relieve");
+        Pueblo petroglifo = crearPuebloConNombre("Pueblo Petroglifo");
+        Pueblo tempera = crearPuebloConNombre("Ciudad Tempera");
+        Pueblo romantis = crearPuebloConNombre("Ciudad Romantis");
+        Pueblo luminalia = crearPuebloConNombre("Ciudad Luminalia");
+        Pueblo fresco = crearPuebloConNombre("Pueblo Fresco");
+        Pueblo acuarela = crearPuebloConNombre("Pueblo Acuarela");
+        Pueblo vanitas = crearPuebloConNombre("Pueblo Vanitas");
+        Pueblo novarte = crearPuebloConNombre("Ciudad Novarte");
+        Pueblo mosaico = crearPuebloConNombre("Pueblo Mosaico");
+        Pueblo fluxus = crearPuebloConNombre("Ciudad Fluxus");
+        Pueblo fractal = crearPuebloConNombre("Ciudad Fractal");
+        Pueblo batik = crearPuebloConNombre("Ciudad Batik");
+        Pueblo boceto = crearPuebloConNombre("Pueblo Boceto");
+        Pueblo cenit = crearPuebloConNombre("Palacio Cenit(4)");
+
+
+
+        this.mapaService.conectar(yantra.getNombre(), cromlech.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(yantra.getNombre(), tempera.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(cromlech.getNombre(), relieve.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(relieve.getNombre(), petroglifo.getNombre(), MapaServiceTest.SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(relieve.getNombre(), cenit.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(petroglifo.getNombre(), cromlech.getNombre(), MapaServiceTest.SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(petroglifo.getNombre(), relieve.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(petroglifo.getNombre(), acuarela.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(tempera.getNombre(), romantis.getNombre(), MapaServiceTest.SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(tempera.getNombre(), yantra.getNombre(), MapaServiceTest.SingletonCaminos.getMaritimo());
+
+        this.mapaService.conectar(romantis.getNombre(), tempera.getNombre(), MapaServiceTest.SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(romantis.getNombre(), luminalia.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(romantis.getNombre(), fresco.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(vanitas.getNombre(), cenit.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(cenit.getNombre(), luminalia.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(cenit.getNombre(), novarte.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+        this.mapaService.conectar(cenit.getNombre(), vanitas.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(fresco.getNombre(), romantis.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+        this.mapaService.conectar(fresco.getNombre(), mosaico.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+        this.mapaService.conectar(fresco.getNombre(), luminalia.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(mosaico.getNombre(), fractal.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(fluxus.getNombre(), fresco.getNombre(), MapaServiceTest.SingletonCaminos.getMaritimo());
+        this.mapaService.conectar(fluxus.getNombre(), mosaico.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(fluxus.getNombre(), fractal.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(fractal.getNombre(), acuarela.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(novarte.getNombre(), fractal.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(novarte.getNombre(), vanitas.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+
+        this.mapaService.conectar(acuarela.getNombre(), boceto.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(acuarela.getNombre(), novarte.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(acuarela.getNombre(), fractal.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(boceto.getNombre(), acuarela.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(boceto.getNombre(), batik.getNombre(), MapaServiceTest.SingletonCaminos.getTerrestre());
+        this.mapaService.conectar(boceto.getNombre(), fractal.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+
+        this.mapaService.conectar(batik.getNombre(), fractal.getNombre(), MapaServiceTest.SingletonCaminos.getAereo());
+    }
+
+    private Pueblo crearPuebloConNombre(String nombre) {
+        Pueblo pueblo = new Pueblo();
+        pueblo.setNombre(nombre);
+        this.mapaService.crearUbicacion(pueblo);
+        return pueblo;
+    }
+
 }

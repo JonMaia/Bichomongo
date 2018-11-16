@@ -1,5 +1,7 @@
-package ar.edu.unq.epers.bichomon.backend.model;
+package ar.edu.unq.epers.bichomon.backend.model.Eventos;
 
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 import org.joda.time.LocalDate;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;

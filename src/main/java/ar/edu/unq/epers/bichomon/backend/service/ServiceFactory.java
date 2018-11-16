@@ -1,9 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.service;
 
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDaoImple;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDaoImple;
-import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEspecieDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateNivelDaoImple;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorServiceImple;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;

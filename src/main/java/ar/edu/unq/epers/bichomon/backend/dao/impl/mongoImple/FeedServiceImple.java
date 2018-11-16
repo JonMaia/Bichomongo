@@ -1,7 +1,7 @@
-package ar.edu.unq.epers.bichomon.backend.dao.mongoImple;
+package ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.FeedService;
-import ar.edu.unq.epers.bichomon.backend.model.Evento;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.Evento;
 
 import java.util.List;
 
