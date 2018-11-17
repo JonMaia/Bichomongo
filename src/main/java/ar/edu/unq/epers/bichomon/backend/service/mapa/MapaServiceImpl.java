@@ -60,8 +60,8 @@ public class MapaServiceImpl implements MapaService {
 
     private void crearEventoDeArribo(Ubicacion ubicacion, Entrenador entrenador) {
         Arribo arribo = new Arribo();
-        arribo.setEntrenador(entrenador);
-        arribo.setUbicacion(ubicacion);
+        arribo.setEntrenador(entrenador.getNombre());
+        arribo.setUbicacion(ubicacion.getNombre());
         arribo.setFecha(LocalDate.now());
         eventoDao.save(arribo);
     }

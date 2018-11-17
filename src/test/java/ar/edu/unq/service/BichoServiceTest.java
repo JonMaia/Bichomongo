@@ -123,4 +123,5 @@ public class BichoServiceTest {
 
         bichoService.duelo(entrenador.getNombre(), bicho.getId());
     }
+    
 }

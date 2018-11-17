@@ -1,16 +1,15 @@
 package ar.edu.unq.epers.bichomon.backend.model.Eventos;
 
-import ar.edu.unq.epers.bichomon.backend.model.Bicho;
 
 public class Abandono extends Evento{
 
-    Bicho bicho;
+    Integer bicho;
 
-    public void setBicho(Bicho bicho){
+    public void setBicho(Integer bicho){
         this.bicho = bicho;
     }
 
-    public Bicho getBicho(){
+    public Integer getBicho(){
         return bicho;
     }
 

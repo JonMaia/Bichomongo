@@ -368,6 +368,10 @@ public class DataServiceImpl implements DataService {
             especieCampeon.setEnergiaIncial(20);
             Bicho retador = especie.crearBicho();
             Bicho campeon = especieCampeon.crearBicho();
+            Entrenador entrenadorCampeon = entrenadorDao.getById("EntrenadorCampeon");
+            if(entrenadorCampeon == null)
+                entrenadorCampeon = crearEntrenador("EntrenadorCampeon");
+            campeon.setEntrenador(entrenadorCampeon);
             retador.setEntrenador(entrenador);
             dojo.setCampeon(campeon);
 
