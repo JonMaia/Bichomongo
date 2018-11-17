@@ -37,6 +37,8 @@ public interface MapaService {
     List<Ubicacion> conectados(String ubicacion, String tipoCamino);
 
 
+    List<Ubicacion> todosLosConectados(String ubicacion);
+
     /**
      * se mueve y toma la ruta mas corta entre ambas ubicaciones (no implica que sea la más barata)
      * @param entrenador
