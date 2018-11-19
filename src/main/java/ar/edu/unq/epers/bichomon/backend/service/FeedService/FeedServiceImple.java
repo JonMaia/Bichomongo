@@ -15,6 +15,7 @@ import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FeedServiceImple implements FeedService {
 
@@ -41,7 +42,7 @@ public class FeedServiceImple implements FeedService {
         });
         ubicacionesConectadas = mapaService.todosLosConectados(trainer.getUbicacion().getNombre());
 
-        //eventos = eventoDAO.eventosPorEntrenadorYUbicaciones(entrenador, ubicacionesConectadas); TODO REDEFINIR TODOS LOS CONECTADOS PARA QUE DEVUELVA STRING
+        eventos = eventoDAO.eventosPorEntrenadorYUbicaciones(entrenador, ubicacionesConectadas.stream().map( u -> u.getNombre()).collect(Collectors.toList()));
 
         return eventos;
     }
