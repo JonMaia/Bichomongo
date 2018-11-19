@@ -53,7 +53,20 @@ public class GenericMongoDAOImple<T> {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	public List<T> findAndSortBy(String query, String sortCriteria, Object... parameters) {
+		try {
+			MongoCursor<T> all = this.mongoCollection.find(query, parameters).sort(sortCriteria).as(this.entityType);
+
+			List<T> result = this.copyToList(all);
+			all.close();
+
+			return result;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	/**
 	 * Copia el contenido de un iterable en una lista
 	 */

@@ -13,6 +13,8 @@ public interface GenericMongoDao<T> {
 
     T get(String id);
 
+    List<T> findAndSortBy(String query, String sortCriteria, Object... parameters);
+
     List<T> find(String query, Object... parameters);
 
 }

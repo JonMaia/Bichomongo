@@ -29,7 +29,7 @@ public class FeedServiceImple implements FeedService {
     }
     @Override
     public List<Evento> feedEntrenador(String entrenador) {
-        return null;
+        return eventoDAO.findAndSortBy("{ entrenador: # }","{fecha: -1}" ,entrenador);
     }
 
     @Override
