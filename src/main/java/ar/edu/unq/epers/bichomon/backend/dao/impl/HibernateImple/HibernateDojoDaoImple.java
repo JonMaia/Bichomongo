@@ -10,6 +10,7 @@ public class HibernateDojoDaoImple extends BaseHibernateDAO<Dojo, String> implem
 
     @Override
     public Bicho getCampeonHistorico(String nombreDojo) {
+
         Session session = Runner.getCurrentSession();
         StringBuffer hql = new StringBuffer();
         hql.append("SELECT c.campeon FROM " + Dojo.class.getName() + " d ");

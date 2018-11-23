@@ -9,6 +9,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.Eventos.Arribo;
 import ar.edu.unq.epers.bichomon.backend.model.exception.CaminoMuyCostosoException;
+import ar.edu.unq.epers.bichomon.backend.model.exception.NoHayCampeonHistoricoException;
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.neo4j.driver.v1.Record;
@@ -41,7 +42,7 @@ public class MapaServiceImpl implements MapaService {
             Entrenador entrenador = entrenadorDao.getById(nombreEntrenador);
             Ubicacion ubicacion = ubicacionDao.getById(nombreUbicacion);
             if(!entrenador.getUbicacion().getNombre().equals(ubicacion.getNombre())) {
-                Integer costo = neo4JUbicacionDao.getPrecioCaminoCorto(entrenador.getUbicacion().getNombre(), nombreUbicacion);
+                Integer costo = neo4JUbicacionDao.costoCaminoMasBarato(entrenador.getUbicacion().getNombre(), nombreUbicacion);
                 if (costo == null) {
                     throw new UbicacionMuyLejanaException("");
                 }
@@ -86,8 +87,17 @@ public class MapaServiceImpl implements MapaService {
 
     @Override
     public Bicho campeonHistorico(String dojo) {
-        /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.*/
-        return Runner.runInSession(() -> this.dojoDao.getCampeonHistorico(dojo));
+        /*retorna el bicho que haya sido campeon por mas tiempo en el Dojo.
+        * Sino retorna una exception debido a que no hay ninguno*/
+        return Runner.runInSession(() -> {
+            Bicho campeonHistorico;
+            if (this.dojoDao.getCampeonHistorico(dojo) == null) {
+                throw new NoHayCampeonHistoricoException("No hay campeon historico en el dojo");
+            }else {
+                campeonHistorico = this.dojoDao.getCampeonHistorico(dojo);
+            }
+            return campeonHistorico;
+         });
     }
 
     @Override

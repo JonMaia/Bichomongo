@@ -10,6 +10,8 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicac
 import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.exception.CaminoMuyCostosoException;
+import ar.edu.unq.epers.bichomon.backend.model.exception.NoHayCampeonHistoricoException;
+import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionIncorrectaException;
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
@@ -36,11 +38,6 @@ public class MapaServiceTest {
     private EntrenadorDao entrenadorDao = new HibernateEntrenadorDaoImple();
     private DojoDao dojoDao = new HibernateDojoDaoImple();
     private UbicacionDao ubicacionDao = new HibernateUbicacionDaoImple();
-
-    /*/////////////////////////////////////////////////////////////////////////////
-     *
-     *
-    /////////////////////////////////////////////////////////////////////////////*/
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -343,4 +340,16 @@ public class MapaServiceTest {
         }
     }
 
+    @Test(expected = NoHayCampeonHistoricoException.class)
+    public void dado_un_dojo_le_pregunto_los_campeones_historicos_y_retorna_que_no_hay_ninguno() throws NoHayCampeonHistoricoException{
+        Dojo dojo = this.dataService.crearDojo();
+        Bicho bicho = this.dataService.crearBichoDeEspecieYDeEntrenador("Bulbasaur", "Ash");
+
+        Runner.runInSession(() -> {
+            dojoDao.actualizar(dojo);
+            return null;
+        });
+
+        mapaService.campeonHistorico("dojo");
+    }
 }

@@ -12,8 +12,8 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     private Driver driver;
 
     public Neo4JUbicacionDaoImple() {
-        // this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "password" ) );
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "password" ) );
+        //this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
-    public Integer getPrecioCaminoCorto(String origen, String destino) {
+    public Integer costoCaminoMasBarato(String origen, String destino) {
         Session session = this.driver.session();
         Integer costo = null;
         try{
@@ -89,19 +89,6 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
             session.close();
         }
         return costo;
-    }
-
-    @Override
-    public void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino) {
-        Session session = this.driver.session();
-
-        try {
-            String query = "MATCH (u1:Ubicacion {nombre: {ubicacion1}}), (u2:Ubicacion {nombre: {ubicacion2}}) " +
-                    "MERGE (u1)-[r:"+ tipoCamino.getTipo() +" {costo: {costo1}}]->(u2)";
-            session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2,"costo1",tipoCamino.getCosto()));
-        } finally {
-            session.close();
-        }
     }
 
     @Override
@@ -128,6 +115,18 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
         return costo;
     }
 
+    @Override
+    public void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino) {
+        Session session = this.driver.session();
+
+        try {
+            String query = "MATCH (u1:Ubicacion {nombre: {ubicacion1}}), (u2:Ubicacion {nombre: {ubicacion2}}) " +
+                    "MERGE (u1)-[r:"+ tipoCamino.getTipo() +" {costo: {costo1}}]->(u2)";
+            session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2,"costo1",tipoCamino.getCosto()));
+        } finally {
+            session.close();
+        }
+    }
 
     @Override
     public List<Record> conectados(String ubicacion, String tipoCamino) {
