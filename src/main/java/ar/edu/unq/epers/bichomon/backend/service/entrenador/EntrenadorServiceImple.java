@@ -37,10 +37,10 @@ public class EntrenadorServiceImple extends BaseService<Entrenador,String> imple
     @Override
     public void capturaBicho(Entrenador entrenador, Bicho bicho){
         entrenador.obtenerBicho(bicho);
-        crearEventoDeCaptura(bicho,entrenador,LocalDate.now(),entrenador.getUbicacion());
+        crearEventoDeCaptura(bicho.getId(),entrenador.getNombre(),LocalDate.now(),entrenador.getUbicacion().getNombre());
     }
 
-    private void crearEventoDeCaptura(Bicho bichocapturado, Entrenador entrenador, LocalDate fecha, Ubicacion ubicacion) {
+    private void crearEventoDeCaptura(Integer bichocapturado, String entrenador, LocalDate fecha, String ubicacion) {
         eventoDao.save(new Captura(bichocapturado,entrenador,fecha,ubicacion));
     }
 

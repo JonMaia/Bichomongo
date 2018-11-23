@@ -13,10 +13,10 @@ public class Captura extends Evento{
     public Captura() {
     }
 
-    public Captura(Bicho bichocapturado, Entrenador entrenador, LocalDate fecha, Ubicacion ubicacion) {
-        this.bichocapturado = bichocapturado.getId();
-        this.setEntrenador(entrenador.getNombre());
+    public Captura(Integer bichocapturado, String entrenador, LocalDate fecha, String ubicacion) {
+        this.bichocapturado = bichocapturado;
+        this.setEntrenador(entrenador);
         this.setFecha(fecha);
-        this.setUbicacion(ubicacion.getNombre());
+        this.setUbicacion(ubicacion);
     }
 }

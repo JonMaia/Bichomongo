@@ -6,10 +6,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoD
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateEntrenadorDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
-import ar.edu.unq.epers.bichomon.backend.model.Eventos.Abandono;
-import ar.edu.unq.epers.bichomon.backend.model.Eventos.Arribo;
-import ar.edu.unq.epers.bichomon.backend.model.Eventos.Coronacion;
-import ar.edu.unq.epers.bichomon.backend.model.Eventos.Evento;
+import ar.edu.unq.epers.bichomon.backend.model.Eventos.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 import java.time.LocalDate;
@@ -27,12 +24,17 @@ public class BichoServiceImpl implements BichoService{
         this.eventoDao = new EventoDaoImple();
     }
 
+    private void crearEventoDeCaptura(String ubicacion, String entrenador, Integer bicho){
+        Captura captura = new Captura(bicho, entrenador, LocalDate.now(), ubicacion);
+        eventoDao.save(captura);
+    }
+
     @Override
     public Bicho buscar(String entrenador) {
         return Runner.runInSession(() -> {
             Entrenador trainer = this.entrenadorDAO.getById(entrenador);
             Bicho bicho = trainer.buscarBicho();
-            crearEventoDeAbandono(trainer.getUbicacion().getNombre(), trainer.getNombre(), bicho.getId());
+            crearEventoDeCaptura(trainer.getUbicacion().getNombre(), trainer.getNombre(), bicho.getId());
             entrenadorDAO.actualizar(trainer);
             return bicho;
         });
@@ -53,6 +55,7 @@ public class BichoServiceImpl implements BichoService{
             Entrenador trainer = this.entrenadorDAO.getById(entrenador);
             Bicho bichomon = this.bichoDAO.getById(bicho);
             trainer.abandonarBicho(bichomon);
+            crearEventoDeAbandono(trainer.getUbicacion().getNombre(), trainer.getNombre(), bichomon.getId());
             entrenadorDAO.actualizar(trainer);
             return null;
         });
