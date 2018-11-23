@@ -280,5 +280,10 @@ public class EntrenadorTest {
 
     }
 
+    @Test
+    public void dadoUnEntrenadorRecienCreadoLePreguntoCuantaPlataTieneYMeRetorna0(){
+        Entrenador entrenador = new Entrenador();
+        assertEquals(entrenador.getBilletera(), java.util.Optional.of(0));
+    }
 
 }
