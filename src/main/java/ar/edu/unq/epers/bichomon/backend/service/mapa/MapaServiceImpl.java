@@ -11,9 +11,9 @@ import ar.edu.unq.epers.bichomon.backend.model.Eventos.Arribo;
 import ar.edu.unq.epers.bichomon.backend.model.exception.CaminoMuyCostosoException;
 import ar.edu.unq.epers.bichomon.backend.model.exception.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
-import org.joda.time.LocalDate;
 import org.neo4j.driver.v1.Record;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

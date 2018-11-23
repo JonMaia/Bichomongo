@@ -10,7 +10,8 @@ import ar.edu.unq.epers.bichomon.backend.model.Eventos.Captura;
 import ar.edu.unq.epers.bichomon.backend.model.Nivel;
 import ar.edu.unq.epers.bichomon.backend.model.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.BaseService;
-import org.joda.time.LocalDate;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

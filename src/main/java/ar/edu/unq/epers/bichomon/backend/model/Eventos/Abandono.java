@@ -5,6 +5,9 @@ public class Abandono extends Evento{
 
     Integer bicho;
 
+    public Abandono() {
+    }
+
     public void setBicho(Integer bicho){
         this.bicho = bicho;
     }

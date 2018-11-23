@@ -11,8 +11,8 @@ import ar.edu.unq.epers.bichomon.backend.model.Eventos.Arribo;
 import ar.edu.unq.epers.bichomon.backend.model.Eventos.Coronacion;
 import ar.edu.unq.epers.bichomon.backend.model.Eventos.Evento;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
-import org.joda.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class BichoServiceImpl implements BichoService{

@@ -14,10 +14,10 @@ public class EventoDaoImple extends GenericMongoDAOImple<Evento> implements Even
     }
 
      @Override
-    public List<Evento> eventosPorEntrenadorYUbicaciones(String entrnador, List<String> ubicaciones) {
+    public List<Evento> eventosPorEntrenadorYUbicaciones(String entrenador, List<String> ubicaciones) {
         Jongo jongo = MongoConnection.getInstance().getJongo();
-        String command = "{ ubicacion: {$in:#}}";
+        String command = "{ entrenador: #},{ ubicacion: {$in:#}}";
 
-        return find(command, ubicaciones);
+        return find(command, entrenador, ubicaciones);
     }
 }

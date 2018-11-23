@@ -6,6 +6,9 @@ public class Coronacion extends Evento{
 
     private String perdedor;
 
+    public Coronacion() {
+    }
+
     public void setPerdedor(String perdedor){
         this.perdedor = perdedor;
     }
