@@ -1,8 +1,6 @@
 package ar.edu.unq.service;
 
-import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDao;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateBichoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.HibernateUbicacionDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
@@ -16,7 +14,6 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class LeaderboardServiceTest {
@@ -24,7 +21,6 @@ public class LeaderboardServiceTest {
     private UbicacionDao ubicacionDao = new HibernateUbicacionDaoImple();
     private DataService dataService = new DataServiceImpl();
     private LeaderboardService leaderboardService = new LeaderboardServiceImple();
-    private BichoDao bichoDao = new HibernateBichoDaoImple();
 
 
     @After

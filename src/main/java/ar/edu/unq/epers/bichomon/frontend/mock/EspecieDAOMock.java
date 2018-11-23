@@ -95,6 +95,11 @@ public class EspecieDAOMock implements EspecieDao {
 	}
 
 	@Override
+	public Especie getEspecieLider() {
+		return null;
+	}
+
+	@Override
 	public void guardar(Especie especie) {
 		DATA.put(especie.getNombre(), especie);
 	}

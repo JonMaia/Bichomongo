@@ -2,9 +2,11 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDao;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Champion;
 import ar.edu.unq.epers.bichomon.backend.model.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -85,5 +87,22 @@ public class HibernateEspecieDaoImple extends BaseHibernateDAO<Especie,Integer> 
         hql.append("GROUP BY b.especie " );
         hql.append("ORDER BY COUNT(*) DESC " );
         return session.createQuery(hql.toString(), Especie.class).setMaxResults(10).list();
+    }
+
+    @Override
+    public Especie getEspecieLider() {
+
+
+        StringBuffer squery = new StringBuffer();
+        squery.append(" SELECT c.campeon.especie");
+        squery.append(" FROM " + Champion.class.getSimpleName() + " c ");
+        squery.append(" GROUP BY c.campeon.especie");
+        squery.append(" ORDER BY count(distinct c.campeon) DESC");
+
+        System.out.println(squery.toString());
+        Session session = Runner.getCurrentSession();
+        Query<Especie> query = session.createQuery(squery.toString(), Especie.class);
+        query.setMaxResults(1);
+        return query.getSingleResult();
     }
 }

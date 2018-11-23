@@ -2,8 +2,10 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDao;
 import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Champion;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -33,4 +35,17 @@ public class HibernateBichoDaoImple extends BaseHibernateDAO<Bicho, Integer> imp
         criteriaQuery.where(cb.isNull(root.get("entrenador")));
         return session.createQuery(criteriaQuery).getResultList();
     }
+
+    @Override
+    public List<Bicho> getBichoChamion() {
+        StringBuffer squery = new StringBuffer();
+
+        squery.append("SELECT c.campeon ");
+        squery.append(" FROM " + Champion.class.getSimpleName() + " c ");
+
+        Session session = Runner.getCurrentSession();
+        Query query = session.createQuery(squery.toString());
+        return query.list();
+    }
+
 }
