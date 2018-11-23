@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.service.data;
 import ar.edu.unq.epers.bichomon.backend.dao.*;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple.*;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.Neo4JImple.Neo4JUbicacionDaoImple;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.mongoImple.EventoDaoImple;
 import ar.edu.unq.epers.bichomon.backend.model.*;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -20,6 +21,7 @@ public class DataServiceImpl implements DataService {
     private DojoDao dojoDao = new HibernateDojoDaoImple();
     private PuebloDao puebloDao = new HibernatePuebloDaoImple();
     private Neo4JUbicacionDao neo4JUbicacionDao = new Neo4JUbicacionDaoImple();
+    private EventoDao eventoDao = new EventoDaoImple();
 
     public DataServiceImpl(EspecieDao especieDao,NivelDao nivelDao){
         this.especieDao = especieDao;
@@ -45,6 +47,7 @@ public class DataServiceImpl implements DataService {
     public void eliminarDatos() {
         SessionFactoryProvider.destroy();
         neo4JUbicacionDao.eliminarDatos();
+        eventoDao.deleteAll();
     }
 
     @Override
