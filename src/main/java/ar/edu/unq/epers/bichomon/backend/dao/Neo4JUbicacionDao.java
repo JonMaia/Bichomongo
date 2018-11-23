@@ -14,7 +14,7 @@ public interface Neo4JUbicacionDao {
 
     boolean existeUbicacion(String string);
 
-    Integer getPrecioCaminoCorto(String nombre1, String nombre2);
+    Integer costoCaminoMasBarato(String nombre1, String nombre2);
 
     void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino);
 
