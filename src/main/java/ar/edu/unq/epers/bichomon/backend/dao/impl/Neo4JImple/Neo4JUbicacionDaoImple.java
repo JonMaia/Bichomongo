@@ -92,19 +92,6 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
     }
 
     @Override
-    public void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino) {
-        Session session = this.driver.session();
-
-        try {
-            String query = "MATCH (u1:Ubicacion {nombre: {ubicacion1}}), (u2:Ubicacion {nombre: {ubicacion2}}) " +
-                    "MERGE (u1)-[r:"+ tipoCamino.getTipo() +" {costo: {costo1}}]->(u2)";
-            session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2,"costo1",tipoCamino.getCosto()));
-        } finally {
-            session.close();
-        }
-    }
-
-    @Override
     public Integer costoCaminoMasCorto(String origen, String destino) {
         Integer costo = null;
         Session session = this.driver.session();
@@ -128,6 +115,18 @@ public class Neo4JUbicacionDaoImple implements Neo4JUbicacionDao {
         return costo;
     }
 
+    @Override
+    public void conectar(String ubicacion1, String ubicacion2, TipoDeCamino tipoCamino) {
+        Session session = this.driver.session();
+
+        try {
+            String query = "MATCH (u1:Ubicacion {nombre: {ubicacion1}}), (u2:Ubicacion {nombre: {ubicacion2}}) " +
+                    "MERGE (u1)-[r:"+ tipoCamino.getTipo() +" {costo: {costo1}}]->(u2)";
+            session.run(query, Values.parameters("ubicacion1", ubicacion1,"ubicacion2", ubicacion2,"costo1",tipoCamino.getCosto()));
+        } finally {
+            session.close();
+        }
+    }
 
     @Override
     public List<Record> conectados(String ubicacion, String tipoCamino) {
