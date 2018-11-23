@@ -14,9 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 public class UbicacionDAOTest {
 
-	private UbicacionService ubicacionService = new UbicacionService();
-
-
 	@Before
 	public void crearModelo() {
 	}

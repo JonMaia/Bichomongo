@@ -1,6 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateImple;
 
 import ar.edu.unq.epers.bichomon.backend.dao.GenericDao;
+import ar.edu.unq.epers.bichomon.backend.model.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -46,6 +48,5 @@ public abstract class BaseHibernateDAO<T, ID extends Serializable> implements Ge
         Session session = Runner.getCurrentSession();
         session.delete(object);
     }
-
 
 }

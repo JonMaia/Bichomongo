@@ -13,7 +13,6 @@ import static junit.framework.TestCase.assertEquals;
 public class ExperienciaServiceTest {
 
     private DataService dataService = new DataServiceImpl();
-    private EntrenadorDao entrenadorDao = new HibernateEntrenadorDaoImple();
 
     @Test
     public void un_entrenador_nivel_1_va_ganando_experiencia_y_subiendo_de_nivel_hasta_llegar_al_nivel_5(){

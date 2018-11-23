@@ -22,4 +22,6 @@ public interface EspecieDao extends GenericDao<Especie, Integer> {
     List<Especie> getPopulares();
 
     List<Especie> getImpopulares();
+
+    Especie getEspecieLider();
 }

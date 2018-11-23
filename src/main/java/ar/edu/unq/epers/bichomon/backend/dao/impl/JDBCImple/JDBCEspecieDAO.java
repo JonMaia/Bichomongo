@@ -151,6 +151,11 @@ public class JDBCEspecieDAO implements EspecieDao {
 	}
 
 	@Override
+	public Especie getEspecieLider() {
+		return null;
+	}
+
+	@Override
 	public void eliminarEspecies() {
         conection.executeWithConnection(conn -> {
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM especie");
