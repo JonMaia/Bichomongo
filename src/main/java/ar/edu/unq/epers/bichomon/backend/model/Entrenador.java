@@ -40,6 +40,7 @@ public class Entrenador {
         this.ubicacion = ubicacion;
         this.bichomones = new ArrayList<>();
         this.experiencia = 0;
+        this.billetera = 0;
         this.nivel = nivel;
         this.accion = accion;
 
@@ -47,6 +48,7 @@ public class Entrenador {
 
     public Entrenador() {
         experiencia = 0;
+        billetera = 0;
     }
 
     //GETTERS AND SETTERS

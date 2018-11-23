@@ -563,4 +563,16 @@ public class DataServiceImpl implements DataService {
         });
     }
 
+    @Override
+    public Entrenador crearEntrenadorConUbicacionYPlata(String nombreEntrenador, Ubicacion ubicacion) {
+        return Runner.runInSession(() -> {
+            Entrenador entrenador = new Entrenador();
+            entrenador.setNombre(nombreEntrenador);
+            entrenador.setUbicacion(ubicacion);
+            entrenador.setBilletera(999);
+            this.entrenadorDao.guardar(entrenador);
+            return entrenador;
+        });
+    }
+
 }

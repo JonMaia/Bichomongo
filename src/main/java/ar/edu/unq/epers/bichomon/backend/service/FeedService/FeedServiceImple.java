@@ -35,14 +35,11 @@ public class FeedServiceImple implements FeedService {
 
     @Override
     public List<Evento> feedUbicacion(String entrenador) {
-        List<Evento> eventos = new ArrayList<>();
-        List<Ubicacion> ubicacionesConectadas = new ArrayList<>();
-        Entrenador trainer = Runner.runInSession(()  -> {
-            return entrenadorDAO.getById(entrenador);
-        });
-        ubicacionesConectadas = mapaService.todosLosConectados(trainer.getUbicacion().getNombre());
+        Entrenador trainer = Runner.runInSession(()  -> entrenadorDAO.getById(entrenador));
+        List<Ubicacion> ubicacionesConectadas = mapaService.todosLosConectados(trainer.getUbicacion().getNombre());
+        ubicacionesConectadas.add(trainer.getUbicacion());
 
-        eventos = eventoDAO.eventosPorEntrenadorYUbicaciones(entrenador, ubicacionesConectadas.stream().map( u -> u.getNombre()).collect(Collectors.toList()));
+        List<Evento> eventos = eventoDAO.eventosPorEntrenadorYUbicaciones(entrenador, ubicacionesConectadas.stream().map( u -> u.getNombre()).collect(Collectors.toList()));
 
         return eventos;
     }

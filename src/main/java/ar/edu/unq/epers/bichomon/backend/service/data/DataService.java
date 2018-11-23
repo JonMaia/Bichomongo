@@ -79,4 +79,6 @@ public interface DataService {
 	Entrenador actualizarExperienciaEntrenador(Entrenador entrenador, Integer experiencia);
 
 	Entrenador crearEntrenadorConUbicacion(String nombreEntrenador, Ubicacion ubicacion);
+
+	Entrenador crearEntrenadorConUbicacionYPlata(String nombreEntrenador, Ubicacion ubicacion);
 }

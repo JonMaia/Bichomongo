@@ -122,11 +122,19 @@ public class MapaServiceImpl implements MapaService {
     @Override
     public List<Ubicacion> todosLosConectados(String ubicacion){
         List<Ubicacion> ubicaciones = new ArrayList<Ubicacion>();
-        List<TipoDeCamino> tiposDeCamino = new ArrayList<>();
-        List<Record> nombresDeUbicaciones = new ArrayList<>();
+
         Aereo aereo = new Aereo();
         Terrestre terrestre = new Terrestre();
         Maritimo maritimo = new Maritimo();
+
+        List<TipoDeCamino> tiposDeCamino = new ArrayList<TipoDeCamino>(){{
+            add(aereo);
+            add(terrestre);
+            add(maritimo);
+        }};
+
+        List<Record> nombresDeUbicaciones = new ArrayList<>();
+
         for (TipoDeCamino tc: tiposDeCamino) {
             nombresDeUbicaciones.addAll(neo4JUbicacionDao.conectados(ubicacion, tc.getTipo()));
         }

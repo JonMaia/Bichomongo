@@ -20,6 +20,14 @@ public abstract class Evento {
 	private String entrenador;
 	private String ubicacion;
 
+    public Evento() {
+    }
+
+    public Evento(ObjectId id, String entrenador, String ubicacion) {
+        this.id = id;
+        this.entrenador =entrenador;
+        this.ubicacion = ubicacion;
+    }
 
     public ObjectId getId() {
         return id;
