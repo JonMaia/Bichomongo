@@ -28,4 +28,28 @@ public class EventoDaoImple extends GenericMongoDAOImple<Evento> implements Even
 
         return find(command, "Arribo");
     }
+
+    @Override
+    public List<Evento> findAbandonos() {
+        Jongo jongo = MongoConnection.getInstance().getJongo();
+        String command = "{ type: #}";
+
+        return find(command, "Abandono");
+    }
+
+    @Override
+    public List<Evento> findCapturas() {
+        Jongo jongo = MongoConnection.getInstance().getJongo();
+        String command = "{ type: #}";
+
+        return find(command, "Captura");
+    }
+
+    @Override
+    public List<Evento> findCoronaciones() {
+        Jongo jongo = MongoConnection.getInstance().getJongo();
+        String command = "{ type: #}";
+
+        return find(command, "Coronacion");
+    }
 }

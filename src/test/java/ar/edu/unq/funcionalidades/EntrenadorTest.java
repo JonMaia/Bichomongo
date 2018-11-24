@@ -8,6 +8,7 @@ import ar.edu.unq.mocks.ExitoDeBusquedaSiempreFalse;
 import ar.edu.unq.mocks.ExitoDeBusquedaSiempreTrue;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpl;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -280,5 +281,10 @@ public class EntrenadorTest {
 
     }
 
+    @Test
+    public void dadoUnEntrenadorRecienCreadoLePreguntoCuantaPlataTieneYMeRetorna0(){
+        Entrenador entrenador = new Entrenador();
+        Assert.assertEquals(0, entrenador.getBilletera(), 0);
+    }
 
 }

@@ -237,6 +237,7 @@ public class DataServiceImpl implements DataService {
             Pueblo pueblo = crearPuebloConProbabilidadExitoYEspecie("PuebloPaleta100", 100, "Pidgey");
             bichos.add(bichoBase);
             Entrenador entrenador = crearEntrenador("Farafa");
+            entrenador.setBilletera(999);
             bichoBase.setEntrenador(entrenador);
             entrenador.setBichomones(bichos);
             entrenador.setUbicacion(pueblo);

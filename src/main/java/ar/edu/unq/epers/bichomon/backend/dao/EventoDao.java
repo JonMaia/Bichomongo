@@ -8,4 +8,10 @@ public interface EventoDao extends GenericMongoDao<Evento> {
     List<Evento> eventosPorEntrenadorYUbicaciones(String entrnador, List<String> ubicaciones);
 
     List<Evento> findArribos();
+
+    List<Evento> findAbandonos();
+
+    List<Evento> findCapturas();
+
+    List<Evento> findCoronaciones();
 }
