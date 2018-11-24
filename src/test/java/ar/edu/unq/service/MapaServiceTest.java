@@ -343,8 +343,7 @@ public class MapaServiceTest {
     @Test(expected = NoHayCampeonHistoricoException.class)
     public void dado_un_dojo_le_pregunto_los_campeones_historicos_y_retorna_que_no_hay_ninguno() throws NoHayCampeonHistoricoException{
         Dojo dojo = this.dataService.crearDojo();
-        Bicho bicho = this.dataService.crearBichoDeEspecieYDeEntrenador("Bulbasaur", "Ash");
-
+        
         Runner.runInSession(() -> {
             dojoDao.actualizar(dojo);
             return null;
