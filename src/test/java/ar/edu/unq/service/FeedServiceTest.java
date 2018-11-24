@@ -50,4 +50,30 @@ public class FeedServiceTest {
         Assert.assertEquals(1,eventos.size());
     }
 
+
+    @Test
+    public void si_un_entrenador_se_mueve_se_crea_un_evento_con_la_ubicacion_destino() {
+        String nombreOrigen ="PueblitoOrigen";
+        Pueblo puebloOrigen = new Pueblo();
+        puebloOrigen.setNombre(nombreOrigen);
+        this.mapaService.crearUbicacion(puebloOrigen);
+
+        String nombreDestino ="PueblitoDestino";
+        Pueblo puebloDestino = new Pueblo();
+        puebloDestino.setNombre(nombreDestino);
+        this.mapaService.crearUbicacion(puebloDestino);
+
+        this.mapaService.conectar(puebloOrigen.getNombre(), puebloDestino.getNombre(),new Terrestre());
+        this.mapaService.conectar(puebloDestino.getNombre(), puebloOrigen.getNombre(),new Aereo());
+
+        Entrenador entrenador = dataService.crearEntrenadorConUbicacionYPlata("unEntrenador", puebloOrigen);
+
+        mapaService.mover(entrenador.getNombre(),puebloDestino.getNombre());
+
+        List<Evento> eventos = feedService.feedUbicacion(entrenador.getNombre());
+
+        Assert.assertEquals(1,eventos.size());
+        Assert.assertEquals(nombreDestino,eventos.get(0).getUbicacion());
+    }
+
 }

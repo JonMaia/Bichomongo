@@ -144,19 +144,19 @@ public class MapaServiceTest {
     @Test
     public void si_hay_una_ubicacion_conectada_por_un_camino_terrestre_la_retorna(){
 
-        String nombreOrigen ="NodoPueblitoOrigen";
-        Pueblo puebloOrigen = new Pueblo();
-        puebloOrigen.setNombre(nombreOrigen);
-        this.mapaService.crearUbicacion(puebloOrigen);
+            String nombreOrigen ="NodoPueblitoOrigen";
+            Pueblo puebloOrigen = new Pueblo();
+            puebloOrigen.setNombre(nombreOrigen);
+            this.mapaService.crearUbicacion(puebloOrigen);
 
-        String nombreDestino ="NodoPueblitoDestino";
-        Pueblo puebloDestino = new Pueblo();
-        puebloDestino.setNombre(nombreDestino);
-        this.mapaService.crearUbicacion(puebloDestino);
+            String nombreDestino ="NodoPueblitoDestino";
+            Pueblo puebloDestino = new Pueblo();
+            puebloDestino.setNombre(nombreDestino);
+            this.mapaService.crearUbicacion(puebloDestino);
 
-        Terrestre camino = new Terrestre();
+            Terrestre camino = new Terrestre();
 
-        this.mapaService.conectar(nombreOrigen, nombreDestino,camino);
+            this.mapaService.conectar(nombreOrigen, nombreDestino,camino);
 
         List<Ubicacion> ubicaciones = this.mapaService.conectados(nombreOrigen,camino.getTipo());
 

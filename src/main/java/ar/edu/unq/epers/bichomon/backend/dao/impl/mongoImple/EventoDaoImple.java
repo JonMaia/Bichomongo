@@ -20,4 +20,12 @@ public class EventoDaoImple extends GenericMongoDAOImple<Evento> implements Even
 
         return find(command, entrenador, ubicaciones);
     }
+
+    @Override
+    public List<Evento> findArribos() {
+        Jongo jongo = MongoConnection.getInstance().getJongo();
+        String command = "{ type: #}";
+
+        return find(command, "Arribo");
+    }
 }

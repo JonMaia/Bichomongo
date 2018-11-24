@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-public class FeedServiceDAOTest {
+public class EventoDAOTest {
 
     private DataService dataService = new DataServiceImpl();
     private EventoDao eventoDAO = new EventoDaoImple();
@@ -41,10 +41,10 @@ public class FeedServiceDAOTest {
 
         eventoDAO.save(arribo);
 
-        //Evento arribo2 = eventoDAO.findArribos().get(0);
+        Arribo arribo2 = (Arribo) eventoDAO.findArribos().get(0);
 
 
-        //Assert.assertEquals();
+        Assert.assertEquals(arribo.getId(),arribo2.getId());
 	}
 
 }

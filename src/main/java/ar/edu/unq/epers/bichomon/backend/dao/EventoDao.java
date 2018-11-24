@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface EventoDao extends GenericMongoDao<Evento> {
     List<Evento> eventosPorEntrenadorYUbicaciones(String entrnador, List<String> ubicaciones);
+
+    List<Evento> findArribos();
 }

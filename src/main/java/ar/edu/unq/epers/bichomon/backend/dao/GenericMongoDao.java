@@ -10,7 +10,6 @@ public interface GenericMongoDao<T> {
 
     void deleteAll();
 
-
     T get(String id);
 
     List<T> findAndSortBy(String query, String sortCriteria, Object... parameters);
