@@ -343,12 +343,29 @@ public class MapaServiceTest {
     @Test(expected = NoHayCampeonHistoricoException.class)
     public void dado_un_dojo_le_pregunto_los_campeones_historicos_y_retorna_que_no_hay_ninguno() throws NoHayCampeonHistoricoException{
         Dojo dojo = this.dataService.crearDojo();
-        
+
         Runner.runInSession(() -> {
             dojoDao.actualizar(dojo);
             return null;
         });
 
         mapaService.campeonHistorico("dojo");
+    }
+
+    @Test
+    public void seMueveAUnaUbicacionAledaniaLaCualLeDescuentaPlataDeLaBilleteraAlEntrenador(){
+
+        crearMapa();
+
+        String TRACEY = "Tracey Sketchit";
+        Entrenador elMismo = Runner.runInSession(() -> {
+            Pueblo yantra = (Pueblo) ubicacionDao.recuperar("Ciudad Yantra");
+            Entrenador entrenador = this.dataService.crearEntrenadorConUbicacion(TRACEY , yantra);
+            entrenador.setBilletera(5);
+            entrenadorDao.actualizar(entrenador);
+            this.mapaService.mover(TRACEY, "Ciudad Tempera");
+            return entrenadorDao.getById(entrenador.getNombre());
+        });
+        assertTrue(elMismo.getBilletera() == 4);
     }
 }
