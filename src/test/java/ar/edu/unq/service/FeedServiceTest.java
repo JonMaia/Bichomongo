@@ -98,4 +98,16 @@ public class FeedServiceTest {
 
     }
 
+    @Test
+    public void entrenador_combate_en_dojo_y_ocurre_evento(){
+        Bicho bicho = dataService.crearBichoConEntrenadorYEspecieYEnergia200EnDojo();
+        Entrenador entrenador = bicho.getEntrenador();
+        Ubicacion dojo = entrenador.getUbicacion();
+        ubicacionDao.create(dojo);
+        ResultadoCombate resultadoCombate = bichoService.duelo(entrenador.getNombre(), bicho.getId());
+        List<Evento> eventos = feedService.feedEntrenador(entrenador.getNombre());
+        Assert.assertEquals(1, eventos.size());
+
+    }
+
 }
